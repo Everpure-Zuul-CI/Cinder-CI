@@ -1,0 +1,201 @@
+all:
+  hosts: {}
+  vars:
+    zuul:
+      _inheritance_path:
+      - '<Job base branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#2>'
+      - '<Job pure-ci-buildset-reporter branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#33>'
+      - '<Job pure-ci-buildset-reporter branches: None source: thirdparty-ci-config/zuul.d/project.yaml@master#20>'
+      ansible_version: '8'
+      artifacts:
+      - branch: master
+        change: '988747'
+        job: pure-devstack-cinder-tempest-iscsi-aio-noble
+        metadata:
+          type: zuul_manifest
+        name: Zuul Manifest
+        patchset: '13'
+        project: openstack/cinder
+        url: https://github.com/Everpure-Zuul-CI/Cinder-CI/tree/gh-pages/a2f16d9361254d39a149238920503c09/pure-devstack-cinder-tempest-iscsi-aio-noble/d23b39ed16e24921b12d324fbbc4250d/zuul-manifest.json
+      - branch: master
+        change: '988747'
+        job: pure-devstack-cinder-tempest-iscsi-aio-noble
+        metadata:
+          type: unit_test_report
+        name: Unit Test Report
+        patchset: '13'
+        project: openstack/cinder
+        url: https://github.com/Everpure-Zuul-CI/Cinder-CI/tree/gh-pages/a2f16d9361254d39a149238920503c09/pure-devstack-cinder-tempest-iscsi-aio-noble/d23b39ed16e24921b12d324fbbc4250d/testr_results.html
+      - branch: master
+        change: '988747'
+        job: pure-devstack-cinder-tempest-fc-aio-noble
+        metadata:
+          type: zuul_manifest
+        name: Zuul Manifest
+        patchset: '13'
+        project: openstack/cinder
+        url: https://github.com/Everpure-Zuul-CI/Cinder-CI/tree/gh-pages/a2f16d9361254d39a149238920503c09/pure-devstack-cinder-tempest-fc-aio-noble/072976be586549c8b30e032ff7415dfc/zuul-manifest.json
+      - branch: master
+        change: '988747'
+        job: pure-devstack-cinder-tempest-fc-aio-noble
+        metadata:
+          type: unit_test_report
+        name: Unit Test Report
+        patchset: '13'
+        project: openstack/cinder
+        url: https://github.com/Everpure-Zuul-CI/Cinder-CI/tree/gh-pages/a2f16d9361254d39a149238920503c09/pure-devstack-cinder-tempest-fc-aio-noble/072976be586549c8b30e032ff7415dfc/testr_results.html
+      - branch: master
+        change: '988747'
+        job: pure-devstack-cinder-tempest-nvme-roce-aio-noble
+        metadata:
+          type: zuul_manifest
+        name: Zuul Manifest
+        patchset: '13'
+        project: openstack/cinder
+        url: https://github.com/Everpure-Zuul-CI/Cinder-CI/tree/gh-pages/a2f16d9361254d39a149238920503c09/pure-devstack-cinder-tempest-nvme-roce-aio-noble/27736fa5f4dd4f6cb7fc4b383f178026/zuul-manifest.json
+      - branch: master
+        change: '988747'
+        job: pure-devstack-cinder-tempest-nvme-roce-aio-noble
+        metadata:
+          type: unit_test_report
+        name: Unit Test Report
+        patchset: '13'
+        project: openstack/cinder
+        url: https://github.com/Everpure-Zuul-CI/Cinder-CI/tree/gh-pages/a2f16d9361254d39a149238920503c09/pure-devstack-cinder-tempest-nvme-roce-aio-noble/27736fa5f4dd4f6cb7fc4b383f178026/testr_results.html
+      - branch: master
+        change: '988747'
+        job: pure-devstack-cinder-tempest-nvme-tcp-aio-noble
+        metadata:
+          type: zuul_manifest
+        name: Zuul Manifest
+        patchset: '13'
+        project: openstack/cinder
+        url: https://github.com/Everpure-Zuul-CI/Cinder-CI/tree/gh-pages/a2f16d9361254d39a149238920503c09/pure-devstack-cinder-tempest-nvme-tcp-aio-noble/4e8c47978ca94a59b648d7abdecadeed/zuul-manifest.json
+      - branch: master
+        change: '988747'
+        job: pure-devstack-cinder-tempest-nvme-tcp-aio-noble
+        metadata:
+          type: unit_test_report
+        name: Unit Test Report
+        patchset: '13'
+        project: openstack/cinder
+        url: https://github.com/Everpure-Zuul-CI/Cinder-CI/tree/gh-pages/a2f16d9361254d39a149238920503c09/pure-devstack-cinder-tempest-nvme-tcp-aio-noble/4e8c47978ca94a59b648d7abdecadeed/testr_results.html
+      attempts: 1
+      branch: master
+      build: f969d49a70744fd3b92e658727fc4bf4
+      buildset: a2f16d9361254d39a149238920503c09
+      change: '988747'
+      change_message: 'Add jobs to run unit and func test (no-eventlet)
+
+
+        This adds unit and functional jobs for eventlet removal
+
+        testing as part of the openstack-wide goal to remove eventlet.
+
+
+        added jobs set OS_CINDER_DISABLE_EVENTLET_PATCHING=true to disable
+
+        eventlet and use oslo.service threading instead.
+
+        Both jobs are non-voting to discover threading compatibility issues
+
+        without blocking new patches.
+
+
+        Also skip unit tests that verify eventlet-specific behavior (tpool,
+
+        greenpool, eventlet.Semaphore) when running in threading mode as these
+
+        tests verify eventlet impl details not used with native threads.
+
+
+        Change-Id: I0cd1da31a132bb709c8e8c1b42f20cebfcd1c889
+
+        Signed-off-by: Amit Uniyal <auniyal@redhat.com>
+
+        '
+      change_url: https://review.opendev.org/c/openstack/cinder/+/988747
+      child_jobs: []
+      commit_id: 3c77f8457a69442aba1377e3e3335b28de1881b9
+      event_id: 009b8e1ad7d14afa836d4f482013ca8b
+      executor:
+        hostname: managesf.cinderci-sf.dev.purestorage.com
+        inventory_file: /var/lib/zuul/builds/f969d49a70744fd3b92e658727fc4bf4/ansible/inventory.yaml
+        log_root: /var/lib/zuul/builds/f969d49a70744fd3b92e658727fc4bf4/work/logs
+        result_data_file: /var/lib/zuul/builds/f969d49a70744fd3b92e658727fc4bf4/work/results.json
+        src_root: /var/lib/zuul/builds/f969d49a70744fd3b92e658727fc4bf4/work/src
+        work_root: /var/lib/zuul/builds/f969d49a70744fd3b92e658727fc4bf4/work
+      items:
+      - branch: master
+        change: '990681'
+        change_url: https://review.opendev.org/c/openstack/cinder/+/990681
+        patchset: '11'
+        project:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/cinder
+          name: openstack/cinder
+          short_name: cinder
+          src_dir: src/opendev.org/openstack/cinder
+      - branch: master
+        change: '988747'
+        change_url: https://review.opendev.org/c/openstack/cinder/+/988747
+        patchset: '13'
+        project:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/cinder
+          name: openstack/cinder
+          short_name: cinder
+          src_dir: src/opendev.org/openstack/cinder
+      job: pure-ci-buildset-reporter
+      jobtags: []
+      max_attempts: 3
+      message: QWRkIGpvYnMgdG8gcnVuIHVuaXQgYW5kIGZ1bmMgdGVzdCAobm8tZXZlbnRsZXQpCgpUaGlzIGFkZHMgdW5pdCBhbmQgZnVuY3Rpb25hbCBqb2JzIGZvciBldmVudGxldCByZW1vdmFsCnRlc3RpbmcgYXMgcGFydCBvZiB0aGUgb3BlbnN0YWNrLXdpZGUgZ29hbCB0byByZW1vdmUgZXZlbnRsZXQuCgphZGRlZCBqb2JzIHNldCBPU19DSU5ERVJfRElTQUJMRV9FVkVOVExFVF9QQVRDSElORz10cnVlIHRvIGRpc2FibGUKZXZlbnRsZXQgYW5kIHVzZSBvc2xvLnNlcnZpY2UgdGhyZWFkaW5nIGluc3RlYWQuCkJvdGggam9icyBhcmUgbm9uLXZvdGluZyB0byBkaXNjb3ZlciB0aHJlYWRpbmcgY29tcGF0aWJpbGl0eSBpc3N1ZXMKd2l0aG91dCBibG9ja2luZyBuZXcgcGF0Y2hlcy4KCkFsc28gc2tpcCB1bml0IHRlc3RzIHRoYXQgdmVyaWZ5IGV2ZW50bGV0LXNwZWNpZmljIGJlaGF2aW9yICh0cG9vbCwKZ3JlZW5wb29sLCBldmVudGxldC5TZW1hcGhvcmUpIHdoZW4gcnVubmluZyBpbiB0aHJlYWRpbmcgbW9kZSBhcyB0aGVzZQp0ZXN0cyB2ZXJpZnkgZXZlbnRsZXQgaW1wbCBkZXRhaWxzIG5vdCB1c2VkIHdpdGggbmF0aXZlIHRocmVhZHMuCgpDaGFuZ2UtSWQ6IEkwY2QxZGEzMWExMzJiYjcwOWM4ZThjMWI0MmYyMGNlYmZjZDFjODg5ClNpZ25lZC1vZmYtYnk6IEFtaXQgVW5peWFsIDxhdW5peWFsQHJlZGhhdC5jb20+Cg==
+      patchset: '13'
+      pipeline: thirdparty-check
+      playbook_context:
+        playbook_projects:
+          trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config:
+            canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            checkout: master
+            commit: c7888375825cb3c28bb4e41ddfb1f80c96dc4482
+          trusted/project_1/opendev.org/zuul/zuul-jobs:
+            canonical_name: opendev.org/zuul/zuul-jobs
+            checkout: master
+            commit: d2ea119f1a11cb5176f19cb4e2729190b4000e37
+        playbooks:
+        - path: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config/playbooks/base/report-buildset.yaml
+          roles:
+          - checkout: master
+            checkout_description: playbook branch
+            link_name: ansible/playbook_0/role_0/thirdparty-ci-config
+            link_target: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            role_path: ansible/playbook_0/role_0/thirdparty-ci-config/roles
+          - checkout: master
+            checkout_description: zuul branch
+            link_name: ansible/playbook_0/role_1/zuul-jobs
+            link_target: trusted/project_1/opendev.org/zuul/zuul-jobs
+            role_path: ansible/playbook_0/role_1/zuul-jobs/roles
+      post_review: false
+      project:
+        canonical_hostname: opendev.org
+        canonical_name: opendev.org/openstack/cinder
+        name: openstack/cinder
+        short_name: cinder
+        src_dir: src/opendev.org/openstack/cinder
+      projects:
+        opendev.org/openstack/cinder:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/cinder
+          checkout: master
+          checkout_description: zuul branch
+          commit: 3c77f8457a69442aba1377e3e3335b28de1881b9
+          name: openstack/cinder
+          required: false
+          short_name: cinder
+          src_dir: src/opendev.org/openstack/cinder
+      ref: refs/changes/47/988747/13
+      resources: {}
+      tenant: third-party-ci
+      timeout: 1800
+      voting: false
+    zuul_use_fetch_output: true
