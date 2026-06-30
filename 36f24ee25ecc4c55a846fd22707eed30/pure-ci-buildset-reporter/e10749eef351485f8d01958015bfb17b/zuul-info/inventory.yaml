@@ -1,0 +1,104 @@
+all:
+  hosts: {}
+  vars:
+    zuul:
+      _inheritance_path:
+      - '<Job base branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#2>'
+      - '<Job pure-ci-buildset-reporter branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#33>'
+      - '<Job pure-ci-buildset-reporter branches: None source: thirdparty-ci-config/zuul.d/project.yaml@master#20>'
+      ansible_version: '8'
+      attempts: 1
+      branch: master
+      build: e10749eef351485f8d01958015bfb17b
+      buildset: 36f24ee25ecc4c55a846fd22707eed30
+      change: '990681'
+      change_message: 'Adds threading mode tests for semaphore funcs
+
+
+        Add test coverage for semaphore_factory() and Semaphore class in
+
+        threading mode, these tests verify the same functionality as the
+
+        existing eventlet tests, which skip in threading mode.
+
+
+        Change-Id: I9eb0e7451095e7db2e453d9fe9b703b1dfa73c56
+
+        Signed-off-by: Amit Uniyal <auniyal@redhat.com>
+
+        '
+      change_url: https://review.opendev.org/c/openstack/cinder/+/990681
+      child_jobs: []
+      commit_id: 2a8f7ce8a2f4f438de8c9cc1cade31b36493d737
+      event_id: f134d29af2f1408da8649ca8dc24ea15
+      executor:
+        hostname: managesf.cinderci-sf.dev.purestorage.com
+        inventory_file: /var/lib/zuul/builds/e10749eef351485f8d01958015bfb17b/ansible/inventory.yaml
+        log_root: /var/lib/zuul/builds/e10749eef351485f8d01958015bfb17b/work/logs
+        result_data_file: /var/lib/zuul/builds/e10749eef351485f8d01958015bfb17b/work/results.json
+        src_root: /var/lib/zuul/builds/e10749eef351485f8d01958015bfb17b/work/src
+        work_root: /var/lib/zuul/builds/e10749eef351485f8d01958015bfb17b/work
+      items:
+      - branch: master
+        change: '990681'
+        change_url: https://review.opendev.org/c/openstack/cinder/+/990681
+        patchset: '11'
+        project:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/cinder
+          name: openstack/cinder
+          short_name: cinder
+          src_dir: src/opendev.org/openstack/cinder
+      job: pure-ci-buildset-reporter
+      jobtags: []
+      max_attempts: 3
+      message: QWRkcyB0aHJlYWRpbmcgbW9kZSB0ZXN0cyBmb3Igc2VtYXBob3JlIGZ1bmNzCgpBZGQgdGVzdCBjb3ZlcmFnZSBmb3Igc2VtYXBob3JlX2ZhY3RvcnkoKSBhbmQgU2VtYXBob3JlIGNsYXNzIGluCnRocmVhZGluZyBtb2RlLCB0aGVzZSB0ZXN0cyB2ZXJpZnkgdGhlIHNhbWUgZnVuY3Rpb25hbGl0eSBhcyB0aGUKZXhpc3RpbmcgZXZlbnRsZXQgdGVzdHMsIHdoaWNoIHNraXAgaW4gdGhyZWFkaW5nIG1vZGUuCgpDaGFuZ2UtSWQ6IEk5ZWIwZTc0NTEwOTVlN2RiMmU0NTNkOWZlOWI3MDNiMWRmYTczYzU2ClNpZ25lZC1vZmYtYnk6IEFtaXQgVW5peWFsIDxhdW5peWFsQHJlZGhhdC5jb20+Cg==
+      patchset: '11'
+      pipeline: thirdparty-check
+      playbook_context:
+        playbook_projects:
+          trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config:
+            canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            checkout: master
+            commit: c7888375825cb3c28bb4e41ddfb1f80c96dc4482
+          trusted/project_1/opendev.org/zuul/zuul-jobs:
+            canonical_name: opendev.org/zuul/zuul-jobs
+            checkout: master
+            commit: d2ea119f1a11cb5176f19cb4e2729190b4000e37
+        playbooks:
+        - path: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config/playbooks/base/report-buildset.yaml
+          roles:
+          - checkout: master
+            checkout_description: playbook branch
+            link_name: ansible/playbook_0/role_0/thirdparty-ci-config
+            link_target: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            role_path: ansible/playbook_0/role_0/thirdparty-ci-config/roles
+          - checkout: master
+            checkout_description: zuul branch
+            link_name: ansible/playbook_0/role_1/zuul-jobs
+            link_target: trusted/project_1/opendev.org/zuul/zuul-jobs
+            role_path: ansible/playbook_0/role_1/zuul-jobs/roles
+      post_review: false
+      project:
+        canonical_hostname: opendev.org
+        canonical_name: opendev.org/openstack/cinder
+        name: openstack/cinder
+        short_name: cinder
+        src_dir: src/opendev.org/openstack/cinder
+      projects:
+        opendev.org/openstack/cinder:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/cinder
+          checkout: master
+          checkout_description: zuul branch
+          commit: 2a8f7ce8a2f4f438de8c9cc1cade31b36493d737
+          name: openstack/cinder
+          required: false
+          short_name: cinder
+          src_dir: src/opendev.org/openstack/cinder
+      ref: refs/changes/81/990681/11
+      resources: {}
+      tenant: third-party-ci
+      timeout: 1800
+      voting: false
+    zuul_use_fetch_output: true
