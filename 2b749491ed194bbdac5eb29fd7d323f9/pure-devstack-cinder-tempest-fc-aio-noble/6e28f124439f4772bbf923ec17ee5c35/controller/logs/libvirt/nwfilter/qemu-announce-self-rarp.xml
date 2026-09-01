@@ -1,0 +1,16 @@
+<!--
+WARNING: THIS IS AN AUTO-GENERATED FILE. CHANGES TO IT ARE LIKELY TO BE
+OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
+  virsh nwfilter-edit qemu-announce-self-rarp
+or other application using the libvirt API.
+-->
+
+<filter name='qemu-announce-self-rarp' chain='rarp' priority='-400'>
+  <uuid>ce48c3a1-ea24-4508-81e6-6985626ddba4</uuid>
+  <rule action='accept' direction='out' priority='500'>
+    <rarp srcmacaddr='$MAC' dstmacaddr='ff:ff:ff:ff:ff:ff' opcode='Request_Reverse' arpsrcmacaddr='$MAC' arpdstmacaddr='$MAC' arpsrcipaddr='0.0.0.0' arpdstipaddr='0.0.0.0'/>
+  </rule>
+  <rule action='accept' direction='in' priority='500'>
+    <rarp dstmacaddr='ff:ff:ff:ff:ff:ff' opcode='Request_Reverse' arpsrcmacaddr='$MAC' arpdstmacaddr='$MAC' arpsrcipaddr='0.0.0.0' arpdstipaddr='0.0.0.0'/>
+  </rule>
+</filter>
