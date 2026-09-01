@@ -1,0 +1,17 @@
+<!--
+WARNING: THIS IS AN AUTO-GENERATED FILE. CHANGES TO IT ARE LIKELY TO BE
+OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
+  virsh nwfilter-edit no-ip-spoofing
+or other application using the libvirt API.
+-->
+
+<filter name='no-ip-spoofing' chain='ipv4-ip' priority='-710'>
+  <uuid>83ec653b-8f21-4c94-a3f3-f5f726a6f8bd</uuid>
+  <rule action='return' direction='out' priority='100'>
+    <ip srcipaddr='0.0.0.0' protocol='udp'/>
+  </rule>
+  <rule action='return' direction='out' priority='500'>
+    <ip srcipaddr='$IP'/>
+  </rule>
+  <rule action='drop' direction='out' priority='1000'/>
+</filter>
