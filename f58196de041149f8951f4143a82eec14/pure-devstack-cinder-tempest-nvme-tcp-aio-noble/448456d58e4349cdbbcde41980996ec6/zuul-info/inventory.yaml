@@ -1,0 +1,692 @@
+all:
+  children:
+    tempest:
+      hosts:
+        controller: null
+  hosts:
+    controller:
+      ansible_connection: ssh
+      ansible_host: 192.168.1.116
+      ansible_port: 22
+      ansible_python_interpreter: auto
+      ansible_user: zuul
+      configure_swap_size: 8192
+      devstack_local_conf:
+        post-config:
+          $NEUTRON_CONF:
+            DEFAULT:
+              global_physnet_mtu: '{{ external_bridge_mtu }}'
+        test-config:
+          $TEMPEST_CONFIG:
+            compute:
+              min_compute_nodes: '{{ groups[''compute''] | default([''controller''])
+                | length }}'
+            service-clients:
+              http_timeout: 90
+      devstack_localrc:
+        ADMIN_PASSWORD: secretadmin
+        DATABASE_PASSWORD: secretdatabase
+        DEBUG_LIBVIRT_COREDUMPS: true
+        ENABLE_SYSCTL_MEM_TUNING: true
+        ENABLE_SYSCTL_NET_TUNING: true
+        ENABLE_ZSWAP: true
+        ERROR_ON_CLONE: true
+        FIXED_RANGE: 10.1.0.0/20
+        FLOATING_RANGE: 172.24.5.0/24
+        HOST_IP: '{{ hostvars[''controller''][''nodepool''][''private_ipv4''] }}'
+        IMAGE_URLS: http://download.cirros-cloud.net/0.6.2/cirros-0.6.2-x86_64-disk.img,
+          http://download.cirros-cloud.net/0.6.1/cirros-0.6.1-x86_64-disk.img
+        IPV4_ADDRS_SAFE_TO_USE: 10.1.0.0/20
+        LIBVIRT_TYPE: '{{ devstack_libvirt_type | default("qemu") }}'
+        LOGFILE: /opt/stack/logs/devstacklog.txt
+        LOG_COLOR: false
+        NETWORK_GATEWAY: 10.1.0.1
+        NOVA_LIBVIRT_TB_CACHE_SIZE: 128
+        NOVA_VNC_ENABLED: true
+        OVN_DBS_LOG_LEVEL: dbg
+        PUBLIC_BRIDGE_MTU: '{{ external_bridge_mtu }}'
+        PUBLIC_NETWORK_GATEWAY: 172.24.5.1
+        RABBIT_PASSWORD: secretrabbit
+        SERVICE_HOST: '{{ hostvars[''controller''][''nodepool''][''private_ipv4'']
+          }}'
+        SERVICE_PASSWORD: secretservice
+        SWIFT_HASH: 1234123412341234
+        SWIFT_REPLICAS: 1
+        SWIFT_START_ALL_SERVICES: false
+        VERBOSE: true
+        VERBOSE_NO_TIMESTAMP: true
+      devstack_services:
+        base: false
+        c-api: true
+        c-bak: false
+        c-sch: true
+        c-vol: true
+        dstat: false
+        etcd3: true
+        file_tracker: true
+        g-api: true
+        horizon: false
+        key: true
+        memory_tracker: true
+        mysql: true
+        n-api: true
+        n-api-meta: true
+        n-cond: true
+        n-cpu: true
+        n-novnc: true
+        n-sch: true
+        neutron-placement: true
+        neutron-qos: true
+        openstack-cli-server: true
+        ovn-controller: true
+        ovn-northd: true
+        ovs-vswitchd: true
+        ovsdb-server: true
+        placement-api: true
+        q-ovn-agent: true
+        q-svc: true
+        rabbit: true
+        s-account: false
+        s-container: false
+        s-object: false
+        s-proxy: false
+        tempest: true
+        tls-proxy: true
+      extensions_to_txt:
+        auto: true
+        conf: true
+        localrc: true
+        log: true
+        stackenv: true
+        yaml: true
+        yml: true
+      external_bridge_mtu: 1500
+      nodepool:
+        az: nova
+        cloud: kolla-admin
+        external_id: e477fc1f-180e-4cf1-ba6c-b158f1826745
+        host_id: d1e6ba4ea16e41712ad0524895b2a54de8e6e91fd298dc848ee0799c
+        interface_ip: 192.168.1.116
+        label: dsvm-noble-NVME-TCP-aio
+        private_ipv4: 192.168.1.116
+        private_ipv6: null
+        provider: cinderci
+        public_ipv4: 192.168.1.116
+        public_ipv6: ''
+        region: cinderci
+        slot: null
+      pure:
+        backend: fa
+        chap_enabled: false
+        multiattach: false
+        multipath: true
+        nvme_protocol: tcp
+        protocol: nvme
+        replication: false
+        scale_test: false
+        secondary_backend: none
+        topology: aio
+      tempest_concurrency: 4
+      tempest_plugins:
+      - cinder-tempest-plugin
+      tempest_test_regex: (volume|^cinder_tempest_plugin)
+      test_results_stage_name: test_results
+      tox_envlist: all
+      zuul_copy_output:
+        /etc/ceph: logs
+        /etc/glusterfs/glusterd.vol: logs
+        /etc/libvirt: logs
+        /etc/lvm: logs
+        /etc/resolv.conf: logs
+        /etc/sudoers: logs
+        /etc/sudoers.d: logs
+        /var/log/ceph: logs
+        /var/log/glusterfs: logs
+        /var/log/libvirt: logs
+        /var/log/mysql: logs
+        /var/log/openvswitch: logs
+        /var/log/ovn: logs
+        /var/log/postgresql: logs
+        /var/log/rabbitmq: logs
+        /var/log/unbound.log: logs
+        '{{ devstack_base_dir }}/tempest/etc/accounts.yaml': logs
+        '{{ devstack_base_dir }}/tempest/etc/tempest.conf': logs
+        '{{ devstack_base_dir }}/tempest/tempest.log': logs
+        '{{ devstack_conf_dir }}/.localrc.auto': logs
+        '{{ devstack_conf_dir }}/.stackenv': logs
+        '{{ devstack_conf_dir }}/local.conf': logs
+        '{{ devstack_conf_dir }}/localrc': logs
+        '{{ devstack_full_log}}': logs
+        '{{ devstack_log_dir }}/atop': logs
+        '{{ devstack_log_dir }}/devstacklog.txt': logs
+        '{{ devstack_log_dir }}/devstacklog.txt.summary': logs
+        '{{ devstack_log_dir }}/dstat-csv.log': logs
+        '{{ devstack_log_dir }}/qemu.coredump': logs
+        '{{ devstack_log_dir }}/tcpdump.pcap': logs
+        '{{ devstack_log_dir }}/worlddump-latest.txt': logs
+        '{{ stage_dir }}/apache': logs
+        '{{ stage_dir }}/apache_config': logs
+        '{{ stage_dir }}/audit.log': logs
+        '{{ stage_dir }}/core': logs
+        '{{ stage_dir }}/deprecations.log': logs
+        '{{ stage_dir }}/df.txt': logs
+        '{{ stage_dir }}/dpkg-l.txt': logs
+        '{{ stage_dir }}/etc': logs
+        '{{ stage_dir }}/iptables.txt': logs
+        '{{ stage_dir }}/listen53.txt': logs
+        '{{ stage_dir }}/mount.txt': logs
+        '{{ stage_dir }}/performance.json': logs
+        '{{ stage_dir }}/pip2-freeze.txt': logs
+        '{{ stage_dir }}/pip3-freeze.txt': logs
+        '{{ stage_dir }}/rpm-qa.txt': logs
+        '{{ stage_dir }}/services.txt': logs
+        '{{ stage_dir }}/stackviz': logs
+        '{{ stage_dir }}/verify_tempest_conf.log': logs
+        '{{ stage_dir }}/{{ test_results_stage_name }}.html': logs
+        '{{ stage_dir }}/{{ test_results_stage_name }}.subunit': logs
+      zuul_log_url: https://everpure-zuul-ci.github.io/Cinder-CI
+      zuul_use_fetch_output: true
+  vars:
+    configure_swap_size: 8192
+    devstack_local_conf:
+      post-config:
+        $NEUTRON_CONF:
+          DEFAULT:
+            global_physnet_mtu: '{{ external_bridge_mtu }}'
+      test-config:
+        $TEMPEST_CONFIG:
+          compute:
+            min_compute_nodes: '{{ groups[''compute''] | default([''controller''])
+              | length }}'
+          service-clients:
+            http_timeout: 90
+    devstack_localrc:
+      ADMIN_PASSWORD: secretadmin
+      DATABASE_PASSWORD: secretdatabase
+      DEBUG_LIBVIRT_COREDUMPS: true
+      ENABLE_SYSCTL_MEM_TUNING: true
+      ENABLE_SYSCTL_NET_TUNING: true
+      ENABLE_ZSWAP: true
+      ERROR_ON_CLONE: true
+      FIXED_RANGE: 10.1.0.0/20
+      FLOATING_RANGE: 172.24.5.0/24
+      HOST_IP: '{{ hostvars[''controller''][''nodepool''][''private_ipv4''] }}'
+      IMAGE_URLS: http://download.cirros-cloud.net/0.6.2/cirros-0.6.2-x86_64-disk.img,
+        http://download.cirros-cloud.net/0.6.1/cirros-0.6.1-x86_64-disk.img
+      IPV4_ADDRS_SAFE_TO_USE: 10.1.0.0/20
+      LIBVIRT_TYPE: '{{ devstack_libvirt_type | default("qemu") }}'
+      LOGFILE: /opt/stack/logs/devstacklog.txt
+      LOG_COLOR: false
+      NETWORK_GATEWAY: 10.1.0.1
+      NOVA_LIBVIRT_TB_CACHE_SIZE: 128
+      NOVA_VNC_ENABLED: true
+      OVN_DBS_LOG_LEVEL: dbg
+      PUBLIC_BRIDGE_MTU: '{{ external_bridge_mtu }}'
+      PUBLIC_NETWORK_GATEWAY: 172.24.5.1
+      RABBIT_PASSWORD: secretrabbit
+      SERVICE_HOST: '{{ hostvars[''controller''][''nodepool''][''private_ipv4''] }}'
+      SERVICE_PASSWORD: secretservice
+      SWIFT_HASH: 1234123412341234
+      SWIFT_REPLICAS: 1
+      SWIFT_START_ALL_SERVICES: false
+      VERBOSE: true
+      VERBOSE_NO_TIMESTAMP: true
+    devstack_services:
+      base: false
+      c-api: true
+      c-bak: false
+      c-sch: true
+      c-vol: true
+      dstat: false
+      etcd3: true
+      file_tracker: true
+      g-api: true
+      horizon: false
+      key: true
+      memory_tracker: true
+      mysql: true
+      n-api: true
+      n-api-meta: true
+      n-cond: true
+      n-cpu: true
+      n-novnc: true
+      n-sch: true
+      neutron-placement: true
+      neutron-qos: true
+      openstack-cli-server: true
+      ovn-controller: true
+      ovn-northd: true
+      ovs-vswitchd: true
+      ovsdb-server: true
+      placement-api: true
+      q-ovn-agent: true
+      q-svc: true
+      rabbit: true
+      s-account: false
+      s-container: false
+      s-object: false
+      s-proxy: false
+      tempest: true
+      tls-proxy: true
+    extensions_to_txt:
+      auto: true
+      conf: true
+      localrc: true
+      log: true
+      stackenv: true
+      yaml: true
+      yml: true
+    external_bridge_mtu: 1500
+    pure:
+      backend: fa
+      chap_enabled: false
+      multiattach: false
+      multipath: true
+      nvme_protocol: tcp
+      protocol: nvme
+      replication: false
+      scale_test: false
+      secondary_backend: none
+      topology: aio
+    tempest_concurrency: 4
+    tempest_plugins:
+    - cinder-tempest-plugin
+    tempest_test_regex: (volume|^cinder_tempest_plugin)
+    test_results_stage_name: test_results
+    tox_envlist: all
+    zuul:
+      _inheritance_path:
+      - '<Job base branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#2>'
+      - '<Job openstack-multinode-fips branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#401>'
+      - '<Job devstack-base branches: {MatchAny:{ImpliedBranchMatcher:master}} source:
+        openstack/devstack/.zuul.yaml@master#378>'
+      - '<Job devstack-minimal branches: {MatchAny:{ImpliedBranchMatcher:master}}
+        source: openstack/devstack/.zuul.yaml@master#512>'
+      - '<Job devstack branches: {MatchAny:{ImpliedBranchMatcher:master}} source:
+        openstack/devstack/.zuul.yaml@master#555>'
+      - '<Job devstack-tempest branches: None source: openstack/tempest/zuul.d/base.yaml@master#1>'
+      - '<Job pure-devstack-cinder-tempest branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#165>'
+      - '<Job pure-devstack-cinder-tempest-nvme-tcp-aio-noble branches: {MatchAny:{BranchMatcher:master},{BranchMatcher:stable/2026.1},{BranchMatcher:stable/2025.2}}
+        source: thirdparty-ci-config/zuul.d/jobs.yaml@master#66>'
+      - '<Job pure-devstack-cinder-tempest-nvme-tcp-aio-noble branches: None source:
+        thirdparty-ci-config/zuul.d/project.yaml@master#12>'
+      ansible_version: '8'
+      attempts: 1
+      branch: master
+      build: 448456d58e4349cdbbcde41980996ec6
+      buildset: f58196de041149f8951f4143a82eec14
+      change: '988426'
+      change_message: 'Revert attachment creation on failure
+
+
+        When creating a volume attachment with an already specified connector
+
+        and the call to cinder-volume fails, we leave a volume attachment in the
+
+        state "reserved" behind and have the volume also in the state
+
+        "reserved".
+
+
+        If the same call succeeds afterwards the volume has two attachments.
+
+        One in "in-use" and one in "reserved". If the volume is later detached
+
+        the one in "reserved" will still exist and cause the volume to be stuck
+
+        in this state.
+
+
+        This can especially happen during live-migrations as nova already passes
+
+        the connector information during the _pre_live_migration phase. [2]
+
+        Nova will then just receive an http 500 return from cinder and reverts
+
+        everything (which is fine!).
+
+
+        To work around this issue we remove the volume attachment completely
+
+        if the call to cinder-volume fails.
+
+        This will not have any implications for callers that do not pass the
+
+        connector information. If the caller passes the connector information
+
+        then the method will now either succeed or cleanly roll back but
+
+        will no longer leave resources behind.
+
+
+        Cases of failing attachment_update''s do not have to be bad cinder-volume
+
+        services, it could also be that the format_inspector fails/denies/raises
+
+        during initialize_connection of the driver(e.g. nfs).
+
+
+        Reopening + rebase of [1].
+
+
+        [1] https://review.opendev.org/c/openstack/cinder/+/793136
+
+        [2] https://github.com/openstack/nova/blob/b2d747f7d7248edb632e5982203d2e90e8e57703/nova/compute/manager.py#L9521
+
+
+        Co-authored-by: Felix Huettner <felix.huettner@digits.schwarz>
+
+        Closes-Bug: #1929678
+
+        Change-Id: I454c25e7285a1d734780d3470842d6e95e6c9c1a
+
+        Signed-off-by: Max Lamprecht <max.lamprecht@digits.schwarz>
+
+        Signed-off-by: Dr. Jens Harbott <harbott@osism.tech>
+
+        '
+      change_url: https://review.opendev.org/c/openstack/cinder/+/988426
+      child_jobs: []
+      commit_id: 135ab30d7559c21f6ec18843952ef1468a3bc6d4
+      event_id: d919a9d7d09e43879c6bec9e5e2492cf
+      executor:
+        hostname: managesf.cinderci-sf.dev.purestorage.com
+        inventory_file: /var/lib/zuul/builds/448456d58e4349cdbbcde41980996ec6/ansible/inventory.yaml
+        log_root: /var/lib/zuul/builds/448456d58e4349cdbbcde41980996ec6/work/logs
+        result_data_file: /var/lib/zuul/builds/448456d58e4349cdbbcde41980996ec6/work/results.json
+        src_root: /var/lib/zuul/builds/448456d58e4349cdbbcde41980996ec6/work/src
+        work_root: /var/lib/zuul/builds/448456d58e4349cdbbcde41980996ec6/work
+      items:
+      - branch: master
+        change: '988426'
+        change_url: https://review.opendev.org/c/openstack/cinder/+/988426
+        patchset: '2'
+        project:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/cinder
+          name: openstack/cinder
+          short_name: cinder
+          src_dir: src/opendev.org/openstack/cinder
+      job: pure-devstack-cinder-tempest-nvme-tcp-aio-noble
+      jobtags: []
+      max_attempts: 3
+      message: UmV2ZXJ0IGF0dGFjaG1lbnQgY3JlYXRpb24gb24gZmFpbHVyZQoKV2hlbiBjcmVhdGluZyBhIHZvbHVtZSBhdHRhY2htZW50IHdpdGggYW4gYWxyZWFkeSBzcGVjaWZpZWQgY29ubmVjdG9yCmFuZCB0aGUgY2FsbCB0byBjaW5kZXItdm9sdW1lIGZhaWxzLCB3ZSBsZWF2ZSBhIHZvbHVtZSBhdHRhY2htZW50IGluIHRoZQpzdGF0ZSAicmVzZXJ2ZWQiIGJlaGluZCBhbmQgaGF2ZSB0aGUgdm9sdW1lIGFsc28gaW4gdGhlIHN0YXRlCiJyZXNlcnZlZCIuCgpJZiB0aGUgc2FtZSBjYWxsIHN1Y2NlZWRzIGFmdGVyd2FyZHMgdGhlIHZvbHVtZSBoYXMgdHdvIGF0dGFjaG1lbnRzLgpPbmUgaW4gImluLXVzZSIgYW5kIG9uZSBpbiAicmVzZXJ2ZWQiLiBJZiB0aGUgdm9sdW1lIGlzIGxhdGVyIGRldGFjaGVkCnRoZSBvbmUgaW4gInJlc2VydmVkIiB3aWxsIHN0aWxsIGV4aXN0IGFuZCBjYXVzZSB0aGUgdm9sdW1lIHRvIGJlIHN0dWNrCmluIHRoaXMgc3RhdGUuCgpUaGlzIGNhbiBlc3BlY2lhbGx5IGhhcHBlbiBkdXJpbmcgbGl2ZS1taWdyYXRpb25zIGFzIG5vdmEgYWxyZWFkeSBwYXNzZXMKdGhlIGNvbm5lY3RvciBpbmZvcm1hdGlvbiBkdXJpbmcgdGhlIF9wcmVfbGl2ZV9taWdyYXRpb24gcGhhc2UuIFsyXQpOb3ZhIHdpbGwgdGhlbiBqdXN0IHJlY2VpdmUgYW4gaHR0cCA1MDAgcmV0dXJuIGZyb20gY2luZGVyIGFuZCByZXZlcnRzCmV2ZXJ5dGhpbmcgKHdoaWNoIGlzIGZpbmUhKS4KClRvIHdvcmsgYXJvdW5kIHRoaXMgaXNzdWUgd2UgcmVtb3ZlIHRoZSB2b2x1bWUgYXR0YWNobWVudCBjb21wbGV0ZWx5CmlmIHRoZSBjYWxsIHRvIGNpbmRlci12b2x1bWUgZmFpbHMuClRoaXMgd2lsbCBub3QgaGF2ZSBhbnkgaW1wbGljYXRpb25zIGZvciBjYWxsZXJzIHRoYXQgZG8gbm90IHBhc3MgdGhlCmNvbm5lY3RvciBpbmZvcm1hdGlvbi4gSWYgdGhlIGNhbGxlciBwYXNzZXMgdGhlIGNvbm5lY3RvciBpbmZvcm1hdGlvbgp0aGVuIHRoZSBtZXRob2Qgd2lsbCBub3cgZWl0aGVyIHN1Y2NlZWQgb3IgY2xlYW5seSByb2xsIGJhY2sgYnV0CndpbGwgbm8gbG9uZ2VyIGxlYXZlIHJlc291cmNlcyBiZWhpbmQuCgpDYXNlcyBvZiBmYWlsaW5nIGF0dGFjaG1lbnRfdXBkYXRlJ3MgZG8gbm90IGhhdmUgdG8gYmUgYmFkIGNpbmRlci12b2x1bWUKc2VydmljZXMsIGl0IGNvdWxkIGFsc28gYmUgdGhhdCB0aGUgZm9ybWF0X2luc3BlY3RvciBmYWlscy9kZW5pZXMvcmFpc2VzCmR1cmluZyBpbml0aWFsaXplX2Nvbm5lY3Rpb24gb2YgdGhlIGRyaXZlcihlLmcuIG5mcykuCgpSZW9wZW5pbmcgKyByZWJhc2Ugb2YgWzFdLgoKWzFdIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2NpbmRlci8rLzc5MzEzNgpbMl0gaHR0cHM6Ly9naXRodWIuY29tL29wZW5zdGFjay9ub3ZhL2Jsb2IvYjJkNzQ3ZjdkNzI0OGVkYjYzMmU1OTgyMjAzZDJlOTBlOGU1NzcwMy9ub3ZhL2NvbXB1dGUvbWFuYWdlci5weSNMOTUyMQoKQ28tYXV0aG9yZWQtYnk6IEZlbGl4IEh1ZXR0bmVyIDxmZWxpeC5odWV0dG5lckBkaWdpdHMuc2Nod2Fyej4KQ2xvc2VzLUJ1ZzogIzE5Mjk2NzgKQ2hhbmdlLUlkOiBJNDU0YzI1ZTcyODVhMWQ3MzQ3ODBkMzQ3MDg0MmQ2ZTk1ZTZjOWMxYQpTaWduZWQtb2ZmLWJ5OiBNYXggTGFtcHJlY2h0IDxtYXgubGFtcHJlY2h0QGRpZ2l0cy5zY2h3YXJ6PgpTaWduZWQtb2ZmLWJ5OiBEci4gSmVucyBIYXJib3R0IDxoYXJib3R0QG9zaXNtLnRlY2g+Cg==
+      patchset: '2'
+      pipeline: thirdparty-check
+      playbook_context:
+        playbook_projects:
+          trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config:
+            canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            checkout: master
+            commit: 979fda809828490d1a0e42474ce711b036956c9a
+          trusted/project_1/opendev.org/zuul/zuul-jobs:
+            canonical_name: opendev.org/zuul/zuul-jobs
+            checkout: master
+            commit: 9b835d0194f05a1b60885a2bbc740d1361c5a672
+          trusted/project_2/opendev.org/openstack/tempest:
+            canonical_name: opendev.org/openstack/tempest
+            checkout: master
+            commit: ea2da20690b04b3cd62de1cc57ed5c1a1b370a2e
+          trusted/project_3/opendev.org/openstack/devstack:
+            canonical_name: opendev.org/openstack/devstack
+            checkout: master
+            commit: 9b0a00865c2537338f72ed5b9b44a0d6bff16eb4
+          trusted/project_4/opendev.org/openstack/openstack-zuul-jobs:
+            canonical_name: opendev.org/openstack/openstack-zuul-jobs
+            checkout: master
+            commit: 7034a45c416d30a350109d93bfb2457e6fa75618
+          untrusted/project_0/opendev.org/openstack/devstack:
+            canonical_name: opendev.org/openstack/devstack
+            checkout: master
+            commit: 9b0a00865c2537338f72ed5b9b44a0d6bff16eb4
+          untrusted/project_1/opendev.org/openstack/openstack-zuul-jobs:
+            canonical_name: opendev.org/openstack/openstack-zuul-jobs
+            checkout: master
+            commit: 7034a45c416d30a350109d93bfb2457e6fa75618
+          untrusted/project_2/cinderci-sf.dev.purestorage.com/thirdparty-ci-config:
+            canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            checkout: master
+            commit: 979fda809828490d1a0e42474ce711b036956c9a
+          untrusted/project_3/opendev.org/zuul/zuul-jobs:
+            canonical_name: opendev.org/zuul/zuul-jobs
+            checkout: master
+            commit: 9b835d0194f05a1b60885a2bbc740d1361c5a672
+          untrusted/project_4/opendev.org/openstack/tempest:
+            canonical_name: opendev.org/openstack/tempest
+            checkout: master
+            commit: ea2da20690b04b3cd62de1cc57ed5c1a1b370a2e
+        playbooks:
+        - path: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config/playbooks/devstack/pure-devstack.yaml
+          roles:
+          - checkout: master
+            checkout_description: zuul branch
+            link_name: ansible/playbook_0/role_0/tempest
+            link_target: trusted/project_2/opendev.org/openstack/tempest
+            role_path: ansible/playbook_0/role_0/tempest/roles
+          - checkout: master
+            checkout_description: zuul branch
+            link_name: ansible/playbook_0/role_1/devstack
+            link_target: trusted/project_3/opendev.org/openstack/devstack
+            role_path: ansible/playbook_0/role_1/devstack/roles
+          - checkout: master
+            checkout_description: zuul branch
+            link_name: ansible/playbook_0/role_2/openstack-zuul-jobs
+            link_target: trusted/project_4/opendev.org/openstack/openstack-zuul-jobs
+            role_path: ansible/playbook_0/role_2/openstack-zuul-jobs/roles
+          - checkout: master
+            checkout_description: playbook branch
+            link_name: ansible/playbook_0/role_3/thirdparty-ci-config
+            link_target: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            role_path: ansible/playbook_0/role_3/thirdparty-ci-config/roles
+          - checkout: master
+            checkout_description: zuul branch
+            link_name: ansible/playbook_0/role_4/zuul-jobs
+            link_target: trusted/project_1/opendev.org/zuul/zuul-jobs
+            role_path: ansible/playbook_0/role_4/zuul-jobs/roles
+      post_review: false
+      project:
+        canonical_hostname: opendev.org
+        canonical_name: opendev.org/openstack/cinder
+        name: openstack/cinder
+        short_name: cinder
+        src_dir: src/opendev.org/openstack/cinder
+      projects:
+        cinderci-sf.dev.purestorage.com/novnc/novnc:
+          canonical_hostname: cinderci-sf.dev.purestorage.com
+          canonical_name: cinderci-sf.dev.purestorage.com/novnc/novnc
+          checkout: master
+          checkout_description: zuul branch
+          commit: 73e2be701efe750c1380b7aa6d19c6e22dd9bdfa
+          name: novnc/novnc
+          required: true
+          short_name: novnc
+          src_dir: src/cinderci-sf.dev.purestorage.com/novnc/novnc
+        opendev.org/openstack/cinder:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/cinder
+          checkout: master
+          checkout_description: zuul branch
+          commit: 135ab30d7559c21f6ec18843952ef1468a3bc6d4
+          name: openstack/cinder
+          required: true
+          short_name: cinder
+          src_dir: src/opendev.org/openstack/cinder
+        opendev.org/openstack/cinder-tempest-plugin:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/cinder-tempest-plugin
+          checkout: master
+          checkout_description: zuul branch
+          commit: d4894b4df9916d5f7b1968a4e3093f40af4eed44
+          name: openstack/cinder-tempest-plugin
+          required: true
+          short_name: cinder-tempest-plugin
+          src_dir: src/opendev.org/openstack/cinder-tempest-plugin
+        opendev.org/openstack/devstack:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/devstack
+          checkout: master
+          checkout_description: zuul branch
+          commit: 9b0a00865c2537338f72ed5b9b44a0d6bff16eb4
+          name: openstack/devstack
+          required: true
+          short_name: devstack
+          src_dir: src/opendev.org/openstack/devstack
+        opendev.org/openstack/glance:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/glance
+          checkout: master
+          checkout_description: zuul branch
+          commit: 4b369fc380fa17aa6a21b4a46530439bedee211e
+          name: openstack/glance
+          required: true
+          short_name: glance
+          src_dir: src/opendev.org/openstack/glance
+        opendev.org/openstack/keystone:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/keystone
+          checkout: master
+          checkout_description: zuul branch
+          commit: cb0889563f4dd9a0db11b84261362c995fbc6ac9
+          name: openstack/keystone
+          required: true
+          short_name: keystone
+          src_dir: src/opendev.org/openstack/keystone
+        opendev.org/openstack/neutron:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/neutron
+          checkout: master
+          checkout_description: zuul branch
+          commit: bcafcebb405d710360a295b4b348770f7217e727
+          name: openstack/neutron
+          required: true
+          short_name: neutron
+          src_dir: src/opendev.org/openstack/neutron
+        opendev.org/openstack/nova:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/nova
+          checkout: master
+          checkout_description: zuul branch
+          commit: d3a1c95d06c2d97368207c2728fc262796683ad8
+          name: openstack/nova
+          required: true
+          short_name: nova
+          src_dir: src/opendev.org/openstack/nova
+        opendev.org/openstack/os-brick:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/os-brick
+          checkout: master
+          checkout_description: zuul branch
+          commit: 46ca08f930a1eb874fc16d4c3c72b961069c78b1
+          name: openstack/os-brick
+          required: true
+          short_name: os-brick
+          src_dir: src/opendev.org/openstack/os-brick
+        opendev.org/openstack/os-test-images:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/os-test-images
+          checkout: master
+          checkout_description: zuul branch
+          commit: 5d0367e03788764f41da8effffa14e3eac513201
+          name: openstack/os-test-images
+          required: true
+          short_name: os-test-images
+          src_dir: src/opendev.org/openstack/os-test-images
+        opendev.org/openstack/placement:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/placement
+          checkout: master
+          checkout_description: zuul branch
+          commit: 7d35f974d52fdbb457ff2b6b7bff3741165dd30d
+          name: openstack/placement
+          required: true
+          short_name: placement
+          src_dir: src/opendev.org/openstack/placement
+        opendev.org/openstack/requirements:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/requirements
+          checkout: master
+          checkout_description: zuul branch
+          commit: e7f5b22a07aa8ec5ed47d92507cd16a1d80b99e3
+          name: openstack/requirements
+          required: true
+          short_name: requirements
+          src_dir: src/opendev.org/openstack/requirements
+        opendev.org/openstack/swift:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/swift
+          checkout: master
+          checkout_description: zuul branch
+          commit: 4ff57666f016d4054a46dc2dcaa3ca2ad7ed4766
+          name: openstack/swift
+          required: true
+          short_name: swift
+          src_dir: src/opendev.org/openstack/swift
+        opendev.org/openstack/tempest:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/tempest
+          checkout: master
+          checkout_description: zuul branch
+          commit: ea2da20690b04b3cd62de1cc57ed5c1a1b370a2e
+          name: openstack/tempest
+          required: true
+          short_name: tempest
+          src_dir: src/opendev.org/openstack/tempest
+      ref: refs/changes/26/988426/2
+      resources: {}
+      tenant: third-party-ci
+      timeout: 10800
+      voting: true
+    zuul_copy_output:
+      /etc/ceph: logs
+      /etc/glusterfs/glusterd.vol: logs
+      /etc/libvirt: logs
+      /etc/lvm: logs
+      /etc/resolv.conf: logs
+      /etc/sudoers: logs
+      /etc/sudoers.d: logs
+      /var/log/ceph: logs
+      /var/log/glusterfs: logs
+      /var/log/libvirt: logs
+      /var/log/mysql: logs
+      /var/log/openvswitch: logs
+      /var/log/ovn: logs
+      /var/log/postgresql: logs
+      /var/log/rabbitmq: logs
+      /var/log/unbound.log: logs
+      '{{ devstack_base_dir }}/tempest/etc/accounts.yaml': logs
+      '{{ devstack_base_dir }}/tempest/etc/tempest.conf': logs
+      '{{ devstack_base_dir }}/tempest/tempest.log': logs
+      '{{ devstack_conf_dir }}/.localrc.auto': logs
+      '{{ devstack_conf_dir }}/.stackenv': logs
+      '{{ devstack_conf_dir }}/local.conf': logs
+      '{{ devstack_conf_dir }}/localrc': logs
+      '{{ devstack_full_log}}': logs
+      '{{ devstack_log_dir }}/atop': logs
+      '{{ devstack_log_dir }}/devstacklog.txt': logs
+      '{{ devstack_log_dir }}/devstacklog.txt.summary': logs
+      '{{ devstack_log_dir }}/dstat-csv.log': logs
+      '{{ devstack_log_dir }}/qemu.coredump': logs
+      '{{ devstack_log_dir }}/tcpdump.pcap': logs
+      '{{ devstack_log_dir }}/worlddump-latest.txt': logs
+      '{{ stage_dir }}/apache': logs
+      '{{ stage_dir }}/apache_config': logs
+      '{{ stage_dir }}/audit.log': logs
+      '{{ stage_dir }}/core': logs
+      '{{ stage_dir }}/deprecations.log': logs
+      '{{ stage_dir }}/df.txt': logs
+      '{{ stage_dir }}/dpkg-l.txt': logs
+      '{{ stage_dir }}/etc': logs
+      '{{ stage_dir }}/iptables.txt': logs
+      '{{ stage_dir }}/listen53.txt': logs
+      '{{ stage_dir }}/mount.txt': logs
+      '{{ stage_dir }}/performance.json': logs
+      '{{ stage_dir }}/pip2-freeze.txt': logs
+      '{{ stage_dir }}/pip3-freeze.txt': logs
+      '{{ stage_dir }}/rpm-qa.txt': logs
+      '{{ stage_dir }}/services.txt': logs
+      '{{ stage_dir }}/stackviz': logs
+      '{{ stage_dir }}/verify_tempest_conf.log': logs
+      '{{ stage_dir }}/{{ test_results_stage_name }}.html': logs
+      '{{ stage_dir }}/{{ test_results_stage_name }}.subunit': logs
+    zuul_log_url: https://everpure-zuul-ci.github.io/Cinder-CI
+    zuul_use_fetch_output: true
