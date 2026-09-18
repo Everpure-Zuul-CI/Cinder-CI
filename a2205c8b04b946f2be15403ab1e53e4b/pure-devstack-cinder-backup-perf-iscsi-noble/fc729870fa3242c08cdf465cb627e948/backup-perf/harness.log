@@ -1,0 +1,15 @@
+[14:53:03] environment: {"hostname": "np0000044969", "kernel": "6.8.0-139-generic", "python": "3.12.3", "nproc": 8, "cpu_model": "Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz", "mem_total_kib": 8129360, "cinder_sha": "8313581b64a1b5b9422714f769a04d1a87f110ca", "os-brick_sha": "44c01994e45c781cb5fd3a9a9f9e8e3e5522d04c", "zstd_module": "1.5.7.2", "boto3_module": "1.43.97", "backup_s3_object_size": "52428800 (default)", "backup_s3_block_size": "32768 (default)", "backup_swift_object_size": "52428800 (default)", "backup_swift_block_size": "32768 (default)", "backup_native_threads_pool_size": "60 (default)"}
+[14:53:03] 59.3 GiB free under /opt/stack/data
+[14:53:03] generating 4 GiB image at /opt/stack/data/backup-perf.raw (zero 30%, text 40%, random 30%)
+[14:53:03] scrubbed S3 credentials from cinder.conf
+Traceback (most recent call last):
+  File "/home/zuul/backup_perf.py", line 865, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/zuul/backup_perf.py", line 797, in main
+    blocks = generate_image(image_path, args.image_size_gb, args.zero_pct,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zuul/backup_perf.py", line 156, in generate_image
+    with open(path, 'wb') as f:
+         ^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/opt/stack/data/backup-perf.raw'
