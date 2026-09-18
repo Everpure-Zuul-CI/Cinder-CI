@@ -1,0 +1,52 @@
+[16:48:58] environment: {"hostname": "np0000044973", "kernel": "6.8.0-139-generic", "python": "3.12.3", "nproc": 8, "cpu_model": "Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz", "mem_total_kib": 8129364, "cinder_sha": "8313581b64a1b5b9422714f769a04d1a87f110ca", "os-brick_sha": "44c01994e45c781cb5fd3a9a9f9e8e3e5522d04c", "zstd_module": "1.5.7.2", "boto3_module": "1.43.97", "backup_s3_object_size": "52428800 (default)", "backup_s3_block_size": "32768 (default)", "backup_swift_object_size": "52428800 (default)", "backup_swift_block_size": "32768 (default)", "backup_native_threads_pool_size": "60 (default)"}
+[16:48:58] 59.3 GiB free under /home/zuul
+[16:48:58] generating 4 GiB image at /home/zuul/backup-perf.raw (zero 30%, text 40%, random 30%)
+[16:49:04] image written: {'zero': 1236, 'text': 1643, 'random': 1217}
+[16:49:04] uploading image to Glance
+[16:49:30] creating 10 GiB volume from image 4e233913-afcd-4e68-8537-2a7e2ba4344c
+[16:49:34] volume 7033b478-691f-451e-b224-d930d795bbeb: creating
+[16:50:45] volume 7033b478-691f-451e-b224-d930d795bbeb: downloading
+[16:50:58] volume 7033b478-691f-451e-b224-d930d795bbeb: available
+[16:50:59] FlashBlade: creating object-store account cinder-perf-dac770
+[16:50:59] FlashBlade: bucket cinder-perf-dac770 ready, key PSFBSAZQIFENEFHIIDICAOJNIAMIKHLFACABKGKM
+[16:50:59] === s3-threading-zlib: configuring c-bak
+[16:53:04] scheduler reports backend_state=True for c-bak
+[16:53:04] === s3-threading-zlib: starting backup
+[16:53:17] backup 81d9f906-5849-420d-b830-96f74987fe0e: creating
+[16:55:52] backup 81d9f906-5849-420d-b830-96f74987fe0e: available
+[16:55:54] === s3-threading-zlib: deleting backup 81d9f906-5849-420d-b830-96f74987fe0e
+[16:55:57] result: {"target": "s3", "mode": "threading", "algorithm": "zlib", "journal_file": "c-bak-journal-s3-threading-zlib.txt", "mode_confirmed": "threading", "backup_id": "81d9f906-5849-420d-b830-96f74987fe0e", "status": "available", "object_count": 205, "backup_size_gb": 10, "container": "cinder-perf-dac770", "wall_s": 167.6, "cpu": {"cpu_us_avg_pct": 13.3, "cpu_sy_avg_pct": 2.1, "cpu_id_avg_pct": 84.5, "cpu_wa_avg_pct": 0.0, "samples": 167}, "analysis": {"chunks": 205, "stages": {"read_sha_refresh": {"sum_s": 19.66, "median_s": 0.096, "p95_s": 0.106, "max_s": 0.114}, "compress": {"sum_s": 107.85, "median_s": 0.223, "p95_s": 1.069, "max_s": 1.166}, "upload_md5": {"sum_s": 30.49, "median_s": 0.083, "p95_s": 0.28, "max_s": 0.321}}, "bytes_in": 10737418240, "bytes_out": 1859817787, "compression_ratio": 5.77, "chunks_stored_uncompressed": 0, "first_chunk_to_finished_s": 159.22, "stage_share_pct": {"read_sha_refresh": 12.4, "compress": 68.3, "upload_md5": 19.3}}, "fb_bucket_virtual_bytes": 1882824192, "throughput_mib_s": 61.1}
+[16:55:57] === s3-threading-zstd: configuring c-bak
+[16:57:52] scheduler reports backend_state=True for c-bak
+[16:57:52] === s3-threading-zstd: starting backup
+[16:58:04] backup 89cf25da-8962-4101-b08a-b85a8e4bf525: creating
+[16:59:03] backup 89cf25da-8962-4101-b08a-b85a8e4bf525: available
+[16:59:05] === s3-threading-zstd: deleting backup 89cf25da-8962-4101-b08a-b85a8e4bf525
+[16:59:08] result: {"target": "s3", "mode": "threading", "algorithm": "zstd", "journal_file": "c-bak-journal-s3-threading-zstd.txt", "mode_confirmed": "threading", "backup_id": "89cf25da-8962-4101-b08a-b85a8e4bf525", "status": "available", "object_count": 205, "backup_size_gb": 10, "container": "cinder-perf-dac770", "wall_s": 71.5, "cpu": {"cpu_us_avg_pct": 10.8, "cpu_sy_avg_pct": 4.5, "cpu_id_avg_pct": 84.2, "cpu_wa_avg_pct": 0.5, "samples": 71}, "analysis": {"chunks": 205, "stages": {"read_sha_refresh": {"sum_s": 20.77, "median_s": 0.102, "p95_s": 0.113, "max_s": 0.121}, "compress": {"sum_s": 12.96, "median_s": 0.025, "p95_s": 0.137, "max_s": 0.153}, "upload_md5": {"sum_s": 29.04, "median_s": 0.082, "p95_s": 0.264, "max_s": 0.302}}, "bytes_in": 10737418240, "bytes_out": 1662658171, "compression_ratio": 6.46, "chunks_stored_uncompressed": 0, "first_chunk_to_finished_s": 63.98, "stage_share_pct": {"read_sha_refresh": 33.1, "compress": 20.6, "upload_md5": 46.3}}, "fb_bucket_virtual_bytes": 1662585344, "throughput_mib_s": 143.2}
+[16:59:08] === s3-threading-none: configuring c-bak
+[17:01:12] scheduler reports backend_state=True for c-bak
+[17:01:12] === s3-threading-none: starting backup
+[17:01:25] backup a3814004-da70-4c4a-bc0b-5eac19d0655c: creating
+[17:03:15] backup a3814004-da70-4c4a-bc0b-5eac19d0655c: available
+[17:03:17] === s3-threading-none: deleting backup a3814004-da70-4c4a-bc0b-5eac19d0655c
+[17:03:20] result: {"target": "s3", "mode": "threading", "algorithm": "none", "journal_file": "c-bak-journal-s3-threading-none.txt", "mode_confirmed": "threading", "backup_id": "a3814004-da70-4c4a-bc0b-5eac19d0655c", "status": "available", "object_count": 205, "backup_size_gb": 10, "container": "cinder-perf-dac770", "wall_s": 122.4, "cpu": {"cpu_us_avg_pct": 8.9, "cpu_sy_avg_pct": 6.3, "cpu_id_avg_pct": 84.5, "cpu_wa_avg_pct": 0.1, "samples": 122}, "analysis": {"chunks": 205, "stages": {"read_sha_refresh": {"sum_s": 19.99, "median_s": 0.097, "p95_s": 0.108, "max_s": 0.12}, "compress": {"sum_s": 0.02, "median_s": 0.0, "p95_s": 0.0, "max_s": 0.001}, "upload_md5": {"sum_s": 94.95, "median_s": 0.461, "p95_s": 0.482, "max_s": 0.503}}, "bytes_in": 0, "bytes_out": 0, "compression_ratio": null, "chunks_stored_uncompressed": 0, "first_chunk_to_finished_s": 116.14, "stage_share_pct": {"read_sha_refresh": 17.4, "compress": 0.0, "upload_md5": 82.6}}, "fb_bucket_virtual_bytes": 9130999808, "throughput_mib_s": 83.7}
+[17:03:20] scrubbed S3 credentials from cinder.conf
+[17:03:20] FlashBlade: bucket destroy ok
+[17:03:20] FlashBlade: bucket eradicate ok
+[17:03:20] FlashBlade: access key delete ok
+[17:03:20] FlashBlade: user delete ok
+[17:03:20] FlashBlade: account delete ok
+# cinder-backup chunked driver measurement
+
+cinder 8313581b64 on Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz x8, kernel 6.8.0-139-generic, python 3.12.3, zstd module 1.5.7.2, boto3 1.43.97.
+S3 chunk 52428800 (default) bytes, sha block 32768 (default) bytes; S3 target is the lab FlashBlade over the network, Swift (if run) is on the same node.
+volume 10 GiB; image 4 GiB = 1236 zero / 1643 text / 1217 random MiB blocks; the rest of the volume is zeros.
+
+| target | mode | algorithm | wall s | MiB/s | chunks | ratio | read+sha+refresh med s | compress med s | upload+md5 med s | loop share r/c/u % | cpu us/sy/id % |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|
+| s3 | threading | zlib | 167.6 | 61.1 | 205 | 5.77 | 0.096 | 0.223 | 0.083 | 12.4/68.3/19.3 | 13.3/2.1/84.5 |
+| s3 | threading | zstd | 71.5 | 143.2 | 205 | 6.46 | 0.102 | 0.025 | 0.082 | 33.1/20.6/46.3 | 10.8/4.5/84.2 |
+| s3 | threading | none | 122.4 | 83.7 | 205 | None | 0.097 | 0.0 | 0.461 | 17.4/0.0/82.6 | 8.9/6.3/84.5 |
+
+Stage medians are per chunk.  "loop share" is the fraction of the chunk loop spent reading+hashing, compressing and uploading; the driver does these strictly one after another, so their sum is the loop.
+
