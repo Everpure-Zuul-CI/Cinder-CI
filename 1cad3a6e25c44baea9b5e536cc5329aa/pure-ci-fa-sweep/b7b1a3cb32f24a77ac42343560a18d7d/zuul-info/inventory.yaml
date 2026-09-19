@@ -1,0 +1,113 @@
+all:
+  children:
+    tempest:
+      hosts:
+        controller: null
+  hosts:
+    controller:
+      ansible_connection: ssh
+      ansible_host: 192.168.1.145
+      ansible_port: 22
+      ansible_python_interpreter: auto
+      ansible_user: zuul
+      nodepool:
+        az: nova
+        cloud: kolla-admin
+        external_id: 19d004ea-ff7e-41d5-898b-b43bbfa34420
+        host_id: d1e6ba4ea16e41712ad0524895b2a54de8e6e91fd298dc848ee0799c
+        interface_ip: 192.168.1.145
+        label: dsvm-noble-ISCSI-aio
+        private_ipv4: 192.168.1.145
+        private_ipv6: null
+        provider: cinderci
+        public_ipv4: 192.168.1.145
+        public_ipv6: ''
+        region: cinderci
+        slot: null
+      pure_sweep_api_token: a2fbcd5e-fdd5-29c8-727c-91cd35cdbeee
+      pure_sweep_older_than_hours: 6
+      pure_sweep_san_ip: 10.241.127.20
+      zuul_use_fetch_output: true
+  vars:
+    pure_sweep_api_token: a2fbcd5e-fdd5-29c8-727c-91cd35cdbeee
+    pure_sweep_older_than_hours: 6
+    pure_sweep_san_ip: 10.241.127.20
+    zuul:
+      _inheritance_path:
+      - '<Job base branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#2>'
+      - '<Job pure-ci-fa-sweep branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#48>'
+      - '<Job pure-ci-fa-sweep branches: None source: thirdparty-ci-config/zuul.d/project.yaml@master#104>'
+      ansible_version: '8'
+      attempts: 1
+      branch: master
+      build: b7b1a3cb32f24a77ac42343560a18d7d
+      buildset: 1cad3a6e25c44baea9b5e536cc5329aa
+      change_url: https://cinderci-sf.dev.purestorage.com/r/plugins/gitiles/thirdparty-ci-config/+/None^!/
+      child_jobs: []
+      event_id: d9994de301ff4c569780908213a9d698
+      executor:
+        hostname: managesf.cinderci-sf.dev.purestorage.com
+        inventory_file: /var/lib/zuul/builds/b7b1a3cb32f24a77ac42343560a18d7d/ansible/inventory.yaml
+        log_root: /var/lib/zuul/builds/b7b1a3cb32f24a77ac42343560a18d7d/work/logs
+        result_data_file: /var/lib/zuul/builds/b7b1a3cb32f24a77ac42343560a18d7d/work/results.json
+        src_root: /var/lib/zuul/builds/b7b1a3cb32f24a77ac42343560a18d7d/work/src
+        work_root: /var/lib/zuul/builds/b7b1a3cb32f24a77ac42343560a18d7d/work
+      items:
+      - branch: master
+        project:
+          canonical_hostname: cinderci-sf.dev.purestorage.com
+          canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+          name: thirdparty-ci-config
+          short_name: thirdparty-ci-config
+          src_dir: src/cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+      job: pure-ci-fa-sweep
+      jobtags: []
+      max_attempts: 3
+      pipeline: periodic
+      playbook_context:
+        playbook_projects:
+          trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config:
+            canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            checkout: master
+            commit: b6383bbb7c2f9d831120df8cbe2c1e8f79b29829
+          trusted/project_1/opendev.org/zuul/zuul-jobs:
+            canonical_name: opendev.org/zuul/zuul-jobs
+            checkout: master
+            commit: 84e38666fab1ba8fda552ad6faff9404811352ca
+        playbooks:
+        - path: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config/playbooks/devstack/pure-fa-sweep.yaml
+          roles:
+          - checkout: master
+            checkout_description: playbook branch
+            link_name: ansible/playbook_0/role_0/thirdparty-ci-config
+            link_target: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            role_path: ansible/playbook_0/role_0/thirdparty-ci-config/roles
+          - checkout: master
+            checkout_description: zuul branch
+            link_name: ansible/playbook_0/role_1/zuul-jobs
+            link_target: trusted/project_1/opendev.org/zuul/zuul-jobs
+            role_path: ansible/playbook_0/role_1/zuul-jobs/roles
+      post_review: true
+      project:
+        canonical_hostname: cinderci-sf.dev.purestorage.com
+        canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+        name: thirdparty-ci-config
+        short_name: thirdparty-ci-config
+        src_dir: src/cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+      projects:
+        cinderci-sf.dev.purestorage.com/thirdparty-ci-config:
+          canonical_hostname: cinderci-sf.dev.purestorage.com
+          canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+          checkout: master
+          checkout_description: zuul branch
+          commit: b6383bbb7c2f9d831120df8cbe2c1e8f79b29829
+          name: thirdparty-ci-config
+          required: false
+          short_name: thirdparty-ci-config
+          src_dir: src/cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+      ref: refs/heads/master
+      resources: {}
+      tenant: third-party-ci
+      timeout: 1800
+      voting: true
+    zuul_use_fetch_output: true
