@@ -1,0 +1,34 @@
+[20:19:02] puredriver-1: cinderci-fa2 (10.241.127.20)
+[20:19:02] puredriver-2: cinderci-fa1 (10.241.127.14)
+[20:19:02] run prefix '4a3d42-'; assisted peer configured: True
+[20:19:06] migration targets: np0000045546@puredriver-1#puredriver-1 -> np0000045546@puredriver-2#puredriver-2
+[20:19:06] === phase: migrate
+[20:19:11]   volume 120696eb-84cc-49ab-9026-ac637af2d6d5: status=downloading migstat=None host=np0000045546@puredriver-1#puredriver-1
+[20:19:36]   volume 120696eb-84cc-49ab-9026-ac637af2d6d5: status=available migstat=None host=np0000045546@puredriver-1#puredriver-1
+[20:19:36]   ok: 4a3d42-120696eb-84cc-49ab-9026-ac637af2d6d5-cinder exists on cinderci-fa2 before migration
+[20:19:52]   volume 120696eb-84cc-49ab-9026-ac637af2d6d5: status=available migstat=None host=np0000045546@puredriver-1#puredriver-1
+[20:19:54]   mig-before-4a3d42-img: df02e72ba5a4221c7718508aac75d127
+[20:19:56]   volume 120696eb-84cc-49ab-9026-ac637af2d6d5: status=available migstat=error host=np0000045546@puredriver-1#puredriver-1
+[20:19:59]   FAIL: phase migrate raised RuntimeError('volume 120696eb-84cc-49ab-9026-ac637af2d6d5 is available/error')
+[20:19:59] === phase: fallback
+[20:20:03]   volume 6c7110d6-0b94-4502-b8f6-b9126ab31331: status=available migstat=None host=np0000045546@puredriver-1#puredriver-1
+[20:20:05]   volume 6c7110d6-0b94-4502-b8f6-b9126ab31331: status=available migstat=error host=np0000045546@puredriver-1#puredriver-1
+[20:20:09]   FAIL: phase fallback raised RuntimeError('volume 6c7110d6-0b94-4502-b8f6-b9126ab31331 is available/error')
+[20:20:09] === phase: stale replica
+[20:20:12]   volume 67e4b588-4e0f-462e-9b4c-db8e93ea74d3: status=available migstat=None host=np0000045546@puredriver-1#puredriver-1
+[20:20:12]   ok: planted a send of 4a3d42-67e4b588-4e0f-462e-9b4c-db8e93ea74d3-cinder to cinderci-fa1 (HTTP 200)
+[20:20:17]   ok: planted send arrived on cinderci-fa1
+[20:20:17]   ok: stale replica cinderci-fa2:4a3d42-67e4b588-4e0f-462e-9b4c-db8e93ea74d3-cinder.1 present on cinderci-fa1
+[20:20:19]   volume 67e4b588-4e0f-462e-9b4c-db8e93ea74d3: status=available migstat=error host=np0000045546@puredriver-1#puredriver-1
+[20:20:22]   removing leftover cinderci-fa2:4a3d42-67e4b588-4e0f-462e-9b4c-db8e93ea74d3-cinder.1 on cinderci-fa1
+[20:20:22]   FAIL: phase stale replica raised RuntimeError('volume 67e4b588-4e0f-462e-9b4c-db8e93ea74d3 is available/error')
+[20:20:22] === phase: collision
+[20:20:24]   volume 7b3b3636-fcc2-4ce4-aa54-19bd58f79e93: status=available migstat=None host=np0000045546@puredriver-1#puredriver-1
+[20:20:24]   ok: planted decoy 4a3d42-7b3b3636-fcc2-4ce4-aa54-19bd58f79e93-cinder on cinderci-fa1 (HTTP 200)
+[20:20:27]   volume 7b3b3636-fcc2-4ce4-aa54-19bd58f79e93: status=available migstat=error host=np0000045546@puredriver-1#puredriver-1
+[20:20:30]   FAIL: phase collision raised RuntimeError('volume 7b3b3636-fcc2-4ce4-aa54-19bd58f79e93 is available/error')
+[20:20:30] FAILED checks:
+[20:20:30]   - migrate: RuntimeError('volume 120696eb-84cc-49ab-9026-ac637af2d6d5 is available/error')
+[20:20:30]   - fallback: RuntimeError('volume 6c7110d6-0b94-4502-b8f6-b9126ab31331 is available/error')
+[20:20:30]   - stale replica: RuntimeError('volume 67e4b588-4e0f-462e-9b4c-db8e93ea74d3 is available/error')
+[20:20:30]   - collision: RuntimeError('volume 7b3b3636-fcc2-4ce4-aa54-19bd58f79e93 is available/error')
