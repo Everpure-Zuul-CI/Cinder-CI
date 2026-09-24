@@ -1,0 +1,30 @@
+[19:09:27] puredriver-1: cinderci-fa2 (10.241.127.20)
+[19:09:27] puredriver-2: cinderci-fa1 (10.241.127.14)
+[19:09:27] run prefix 'f31cb4-'; assisted peer configured: True
+[19:09:31] pools: pure-cluster-1@puredriver-1#puredriver-1 -> pure-cluster-1@puredriver-2#puredriver-2
+[19:09:31] === phase: migrate
+[19:09:37]   volume 7d183cc2-9734-445d-ae6d-fd9486441faf: status=downloading migstat=None host=np0000045534@puredriver-1#puredriver-1
+[19:10:02]   volume 7d183cc2-9734-445d-ae6d-fd9486441faf: status=available migstat=None host=np0000045534@puredriver-1#puredriver-1
+[19:10:02]   ok: f31cb4-7d183cc2-9734-445d-ae6d-fd9486441faf-cinder exists on cinderci-fa2 before migration
+[19:10:20]   volume 7d183cc2-9734-445d-ae6d-fd9486441faf: status=available migstat=None host=np0000045534@puredriver-1#puredriver-1
+[19:10:21]   mig-before-f31cb4-img: df02e72ba5a4221c7718508aac75d127
+[19:10:25]   FAIL: phase migrate raised RuntimeError("command failed (1): /usr/local/bin/openstack volume migrate --host pure-cluster-1@puredriver-2#puredriver-2 7d183cc2-9734-445d-ae6d-fd9486441faf\nBadRequestException: 400: Client Error for url: https://192.168.1.109/volume/v3/volumes/7d183cc2-9734-445d-ae6d-fd9486441faf/action, Invalid host: No available service named 'pure-cluster-1@puredriver-2#puredriver-2'\n")
+[19:10:25] === phase: fallback
+[19:10:29]   volume df3ce6f8-c7a4-4095-8071-e4c5100946ee: status=available migstat=None host=np0000045534@puredriver-1#puredriver-1
+[19:10:35]   FAIL: phase fallback raised RuntimeError("command failed (1): /usr/local/bin/openstack volume migrate --host pure-cluster-1@puredriver-2#puredriver-2 df3ce6f8-c7a4-4095-8071-e4c5100946ee\nBadRequestException: 400: Client Error for url: https://192.168.1.109/volume/v3/volumes/df3ce6f8-c7a4-4095-8071-e4c5100946ee/action, Invalid host: No available service named 'pure-cluster-1@puredriver-2#puredriver-2'\n")
+[19:10:35] === phase: stale replica
+[19:10:38]   volume 994ed766-2c66-4261-b149-a12cbc6fe0c5: status=available migstat=None host=np0000045534@puredriver-1#puredriver-1
+[19:10:38]   ok: planted a send of f31cb4-994ed766-2c66-4261-b149-a12cbc6fe0c5-cinder to cinderci-fa1 (HTTP 200)
+[19:10:43]   ok: planted send arrived on cinderci-fa1
+[19:10:43]   ok: stale replica cinderci-fa2:f31cb4-994ed766-2c66-4261-b149-a12cbc6fe0c5-cinder.1 present on cinderci-fa1
+[19:10:47]   removing leftover cinderci-fa2:f31cb4-994ed766-2c66-4261-b149-a12cbc6fe0c5-cinder.1 on cinderci-fa1
+[19:10:47]   FAIL: phase stale replica raised RuntimeError("command failed (1): /usr/local/bin/openstack volume migrate --host pure-cluster-1@puredriver-2#puredriver-2 994ed766-2c66-4261-b149-a12cbc6fe0c5\nBadRequestException: 400: Client Error for url: https://192.168.1.109/volume/v3/volumes/994ed766-2c66-4261-b149-a12cbc6fe0c5/action, Invalid host: No available service named 'pure-cluster-1@puredriver-2#puredriver-2'\n")
+[19:10:47] === phase: collision
+[19:10:49]   volume a919c5cd-a9d5-4329-b3e7-d8626b017a77: status=available migstat=None host=np0000045534@puredriver-1#puredriver-1
+[19:10:49]   ok: planted decoy f31cb4-a919c5cd-a9d5-4329-b3e7-d8626b017a77-cinder on cinderci-fa1 (HTTP 200)
+[19:10:53]   FAIL: phase collision raised RuntimeError("command failed (1): /usr/local/bin/openstack volume migrate --host pure-cluster-1@puredriver-2#puredriver-2 a919c5cd-a9d5-4329-b3e7-d8626b017a77\nBadRequestException: 400: Client Error for url: https://192.168.1.109/volume/v3/volumes/a919c5cd-a9d5-4329-b3e7-d8626b017a77/action, Invalid host: No available service named 'pure-cluster-1@puredriver-2#puredriver-2'\n")
+[19:10:53] FAILED checks:
+[19:10:53]   - migrate: RuntimeError("command failed (1): /usr/local/bin/openstack volume migrate --host pure-cluster-1@puredriver-2#puredriver-2 7d183cc2-9734-445d-ae6d-fd9486441faf\nBadRequestException: 400: Client Error for url: https://192.168.1.109/volume/v3/volumes/7d183cc2-9734-445d-ae6d-fd9486441faf/action, Invalid host: No available service named 'pure-cluster-1@puredriver-2#puredriver-2'\n")
+[19:10:53]   - fallback: RuntimeError("command failed (1): /usr/local/bin/openstack volume migrate --host pure-cluster-1@puredriver-2#puredriver-2 df3ce6f8-c7a4-4095-8071-e4c5100946ee\nBadRequestException: 400: Client Error for url: https://192.168.1.109/volume/v3/volumes/df3ce6f8-c7a4-4095-8071-e4c5100946ee/action, Invalid host: No available service named 'pure-cluster-1@puredriver-2#puredriver-2'\n")
+[19:10:53]   - stale replica: RuntimeError("command failed (1): /usr/local/bin/openstack volume migrate --host pure-cluster-1@puredriver-2#puredriver-2 994ed766-2c66-4261-b149-a12cbc6fe0c5\nBadRequestException: 400: Client Error for url: https://192.168.1.109/volume/v3/volumes/994ed766-2c66-4261-b149-a12cbc6fe0c5/action, Invalid host: No available service named 'pure-cluster-1@puredriver-2#puredriver-2'\n")
+[19:10:53]   - collision: RuntimeError("command failed (1): /usr/local/bin/openstack volume migrate --host pure-cluster-1@puredriver-2#puredriver-2 a919c5cd-a9d5-4329-b3e7-d8626b017a77\nBadRequestException: 400: Client Error for url: https://192.168.1.109/volume/v3/volumes/a919c5cd-a9d5-4329-b3e7-d8626b017a77/action, Invalid host: No available service named 'pure-cluster-1@puredriver-2#puredriver-2'\n")
