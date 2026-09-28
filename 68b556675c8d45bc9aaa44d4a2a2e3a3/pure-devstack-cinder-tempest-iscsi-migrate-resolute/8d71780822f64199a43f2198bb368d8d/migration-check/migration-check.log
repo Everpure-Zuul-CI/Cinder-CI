@@ -1,0 +1,55 @@
+[16:44:23] puredriver-1: cinderci-fa2 (10.241.127.20)
+[16:44:23] puredriver-2: cinderci-fa1 (10.241.127.14)
+[16:44:23] run prefix '45358c-'; assisted peer configured: True
+[16:44:27] migration targets: np0000045870@puredriver-1#puredriver-1 -> np0000045870@puredriver-2#puredriver-2
+[16:44:27] === phase: migrate
+[16:44:33]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=downloading migstat=None host=np0000045870@puredriver-1#puredriver-1
+[16:44:58]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=available migstat=None host=np0000045870@puredriver-1#puredriver-1
+[16:44:58]   ok: 45358c-5a1bed16-4d6d-4023-873e-e882bf4786bd-cinder exists on cinderci-fa2 before migration
+[16:45:01]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=available migstat=None host=np0000045870@puredriver-1#puredriver-1
+[16:45:18]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=available migstat=None host=np0000045870@puredriver-1#puredriver-1
+[16:45:19]   mig-before-45358c-img: df02e72ba5a4221c7718508aac75d127
+[16:45:22]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=available migstat=migrating host=np0000045870@puredriver-1#puredriver-1
+[16:45:28]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=available migstat=success host=np0000045870@puredriver-2#puredriver-2
+[16:45:28]   migrated in 9s
+[16:45:28]   ok: c-vol logged the assisted start and completion
+[16:45:28]   ok: 45358c-5a1bed16-4d6d-4023-873e-e882bf4786bd-cinder exists on cinderci-fa1
+[16:45:28]   ok: 45358c-5a1bed16-4d6d-4023-873e-e882bf4786bd-cinder no longer live on cinderci-fa2
+[16:45:28]   ok: no send snapshot left on cinderci-fa2
+[16:45:28]   ok: no replica snapshot left on cinderci-fa1
+[16:45:45]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=available migstat=success host=np0000045870@puredriver-2#puredriver-2
+[16:45:47]   mig-after-45358c-img: df02e72ba5a4221c7718508aac75d127
+[16:45:47]   ok: volume content unchanged by the migration (df02e72ba5a4221c7718508aac75d127 vs df02e72ba5a4221c7718508aac75d127)
+[16:45:49]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=retyping migstat=migrating host=np0000045870@puredriver-2#puredriver-2
+[16:45:56]   volume 5a1bed16-4d6d-4023-873e-e882bf4786bd: status=available migstat=success host=np0000045870@puredriver-1#puredriver-1
+[16:45:56]   ok: retype with migration-policy on-demand used the assisted path
+[16:45:56]   ok: 45358c-5a1bed16-4d6d-4023-873e-e882bf4786bd-cinder back on cinderci-fa2
+[16:45:56]   ok: 45358c-5a1bed16-4d6d-4023-873e-e882bf4786bd-cinder no longer live on cinderci-fa1
+[16:45:56]   ok: no replica snapshot left on cinderci-fa2
+[16:46:00] === phase: fallback
+[16:46:05]   volume 0d082372-9647-4442-841a-1b8e5e26f66c: status=available migstat=None host=np0000045870@puredriver-1#puredriver-1
+[16:46:08]   volume 0d082372-9647-4442-841a-1b8e5e26f66c: status=retyping migstat=migrating host=np0000045870@puredriver-1#puredriver-1
+[16:46:39]   volume 0d082372-9647-4442-841a-1b8e5e26f66c: status=available migstat=success host=np0000045870@puredriver-2#puredriver-2
+[16:46:39]   FAIL: driver declined the volume-group volume
+[16:46:39]   ok: volume-group volume did not take the assisted path
+[16:46:45] === phase: stale replica
+[16:46:47]   volume 222b2baf-692e-4585-8212-1768afbe5832: status=available migstat=None host=np0000045870@puredriver-1#puredriver-1
+[16:46:47]   ok: planted a send of 45358c-222b2baf-692e-4585-8212-1768afbe5832-cinder to cinderci-fa1 (HTTP 200)
+[16:46:52]   ok: planted send arrived on cinderci-fa1
+[16:46:52]   ok: stale replica cinderci-fa2:45358c-222b2baf-692e-4585-8212-1768afbe5832-cinder.1 present on cinderci-fa1
+[16:46:55]   volume 222b2baf-692e-4585-8212-1768afbe5832: status=retyping migstat=migrating host=np0000045870@puredriver-1#puredriver-1
+[16:47:01]   volume 222b2baf-692e-4585-8212-1768afbe5832: status=available migstat=success host=np0000045870@puredriver-2#puredriver-2
+[16:47:01]   ok: driver pre-flight removed the stale replica
+[16:47:01]   ok: migration then took the assisted path
+[16:47:01]   ok: no replica snapshot left on cinderci-fa1
+[16:47:04] === phase: collision
+[16:47:06]   volume bbe2f7d5-0a20-4ed8-b423-10b338aebe2e: status=available migstat=None host=np0000045870@puredriver-1#puredriver-1
+[16:47:06]   ok: planted decoy 45358c-bbe2f7d5-0a20-4ed8-b423-10b338aebe2e-cinder on cinderci-fa1 (HTTP 200)
+[16:47:09]   volume bbe2f7d5-0a20-4ed8-b423-10b338aebe2e: status=retyping migstat=migrating host=np0000045870@puredriver-1#puredriver-1
+[16:47:41]   volume bbe2f7d5-0a20-4ed8-b423-10b338aebe2e: status=retyping migstat=completing host=np0000045870@puredriver-1#puredriver-1
+[16:47:47]   volume bbe2f7d5-0a20-4ed8-b423-10b338aebe2e: status=available migstat=success host=np0000045870@puredriver-2#puredriver-2
+[16:47:47]   ok: driver refused to overwrite the decoy
+[16:47:47]   ok: collision fell back to the generic path
+[16:47:47]   ok: decoy 45358c-bbe2f7d5-0a20-4ed8-b423-10b338aebe2e-cinder untouched on cinderci-fa1
+[16:47:50] FAILED checks:
+[16:47:50]   - driver declined the volume-group volume
