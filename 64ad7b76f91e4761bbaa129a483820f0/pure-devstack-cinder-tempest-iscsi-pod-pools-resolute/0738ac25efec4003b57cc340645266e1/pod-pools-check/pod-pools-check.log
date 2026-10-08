@@ -1,0 +1,58 @@
+[21:53:47] run prefix 'dce696-'; pod pools ['dce696-pool-a', 'dce696-pool-b']
+[21:53:50] array cinderci-fa2; pools dce696-pool-a, dce696-pool-b (quota 10 GiB); service np0000046871@puredriver-1
+[21:53:50] === phase: stats
+[21:53:51]   ok: scheduler lists one pool for dce696-pool-a (['pure-cluster-1@puredriver-1#dce696-pool-a'])
+[21:53:51]   ok: dce696-pool-a total_capacity_gb is the quota
+[21:53:51]   ok: dce696-pool-a max_over_subscription_ratio is 1.0
+[21:53:51]   ok: dce696-pool-a is thin provisioned
+[21:53:51]   ok: dce696-pool-a has no reserve
+[21:53:51]   ok: scheduler lists one pool for dce696-pool-b (['pure-cluster-1@puredriver-1#dce696-pool-b'])
+[21:53:51]   ok: dce696-pool-b total_capacity_gb is the quota
+[21:53:51]   ok: dce696-pool-b max_over_subscription_ratio is 1.0
+[21:53:51]   ok: dce696-pool-b is thin provisioned
+[21:53:51]   ok: dce696-pool-b has no reserve
+[21:53:51]   ok: the array pool is still reported
+[21:53:51] === phase: fill
+[21:53:55]   volume b54a6307-e2de-424b-a01f-181e1604fc46: status=available migstat=None host=np0000046871@puredriver-1#dce696-pool-a size=4
+[21:53:58]   volume 624b9579-db29-4f5a-baef-883cd5728602: status=available migstat=None host=np0000046871@puredriver-1#dce696-pool-a size=4
+[21:53:59]   volume b54a6307-e2de-424b-a01f-181e1604fc46: status=available migstat=None host=np0000046871@puredriver-1#dce696-pool-a size=4
+[21:53:59]   ok: dce696-pool-a::dce696-b54a6307-e2de-424b-a01f-181e1604fc46-cinder exists on the array
+[21:54:01]   volume 624b9579-db29-4f5a-baef-883cd5728602: status=available migstat=None host=np0000046871@puredriver-1#dce696-pool-a size=4
+[21:54:01]   ok: dce696-pool-a::dce696-624b9579-db29-4f5a-baef-883cd5728602-cinder exists on the array
+[21:54:01]   ok: dce696-pool-a used provisioned is 8 GiB
+[21:54:03]   volume 453b9b5a-85ff-4b83-8222-fd73bf044674: status=error migstat=None host= size=4
+[21:54:03]   ok: the refused volume was never created on the array
+[21:54:03]   ok: dce696-pool-a usage unchanged by the refused create
+[21:54:06] === phase: extend
+[21:54:07]   ok: extend beyond the quota is accepted by the API
+[21:54:18]   volume b54a6307-e2de-424b-a01f-181e1604fc46: status=available migstat=None host=np0000046871@puredriver-1#dce696-pool-a size=4
+[21:54:18]   ok: extend to 7 GiB was refused (size 4)
+[21:54:26]   volume b54a6307-e2de-424b-a01f-181e1604fc46: status=available migstat=None host=np0000046871@puredriver-1#dce696-pool-a size=6
+[21:54:26]   ok: extend to 6 GiB succeeded
+[21:54:26]   ok: dce696-pool-a is now at its quota
+[21:54:26] === phase: placement
+[21:54:30]   volume 1b1b9fe0-e478-4d1d-8e5b-1784239e74e6: status=available migstat=None host=np0000046871@puredriver-1#dce696-pool-b size=2
+[21:54:31]   volume 1b1b9fe0-e478-4d1d-8e5b-1784239e74e6: status=available migstat=None host=np0000046871@puredriver-1#dce696-pool-b size=2
+[21:54:31]   ok: volume for either pool landed in dce696-pool-b (A is full): np0000046871@puredriver-1#dce696-pool-b
+[21:54:31] === phase: retype
+[21:54:35]   volume 624b9579-db29-4f5a-baef-883cd5728602: status=retyping migstat=migrating host=np0000046871@puredriver-1#dce696-pool-a size=4
+[21:55:20]   volume 624b9579-db29-4f5a-baef-883cd5728602: status=available migstat=success host=np0000046871@puredriver-1#dce696-pool-b size=4
+[21:55:20]   FAIL: dce696-pool-b::dce696-624b9579-db29-4f5a-baef-883cd5728602-cinder exists after the retype
+[21:55:20]   ok: dce696-pool-a::dce696-624b9579-db29-4f5a-baef-883cd5728602-cinder is gone from dce696-pool-a
+[21:55:20]   FAIL: retype moved the volume on the array (serial kept)
+[21:55:22]   volume 624b9579-db29-4f5a-baef-883cd5728602: status=retyping migstat=migrating host=np0000046871@puredriver-1#dce696-pool-b size=4
+[21:56:00]   volume 624b9579-db29-4f5a-baef-883cd5728602: status=available migstat=success host=np0000046871@puredriver-1#dce696-pool-a size=4
+[21:56:00]   FAIL: retype back kept the serial too
+[21:56:18]   ok: retype into the full pool was refused; volume still available in dce696-pool-b (available, np0000046871@puredriver-1#dce696-pool-b)
+[21:56:18] === phase: migrate
+[21:56:21]   volume b54a6307-e2de-424b-a01f-181e1604fc46: status=available migstat=error host=np0000046871@puredriver-1#dce696-pool-a size=6
+[21:56:21]   FAIL: phase migrate raised RuntimeError('volume b54a6307-e2de-424b-a01f-181e1604fc46 is available/error')
+[21:56:21] === phase: group
+[21:56:22]   FAIL: phase group raised RuntimeError('command failed (2): /usr/local/bin/openstack volume group type create --property consistent_group_snapshot_enabled=<is> True pp-cg-dce696-type\nusage: openstack volume group type create [-h]\n                                          [-f {json,shell,table,value,yaml}]\n                                          [-c COLUMN] [--noindent]\n                                          [--prefix PREFIX]\n                                          [--max-width <integer>]\n                                          [--fit-width] [--print-empty]\n                                          [--description <description>]\n                                          [--public | --private]\n                                          <name>\nopenstack volume group type create: error: unrecognized arguments: --property pp-cg-dce696-type\n')
+[21:56:22] === cleanup
+[21:56:34] FAILED checks:
+[21:56:34]   - dce696-pool-b::dce696-624b9579-db29-4f5a-baef-883cd5728602-cinder exists after the retype
+[21:56:34]   - retype moved the volume on the array (serial kept)
+[21:56:34]   - retype back kept the serial too
+[21:56:34]   - migrate: RuntimeError('volume b54a6307-e2de-424b-a01f-181e1604fc46 is available/error')
+[21:56:34]   - group: RuntimeError('command failed (2): /usr/local/bin/openstack volume group type create --property consistent_group_snapshot_enabled=<is> True pp-cg-dce696-type\nusage: openstack volume group type create [-h]\n                                          [-f {json,shell,table,value,yaml}]\n                                          [-c COLUMN] [--noindent]\n                                          [--prefix PREFIX]\n                                          [--max-width <integer>]\n                                          [--fit-width] [--print-empty]\n                                          [--description <description>]\n                                          [--public | --private]\n                                          <name>\nopenstack volume group type create: error: unrecognized arguments: --property pp-cg-dce696-type\n')
