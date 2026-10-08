@@ -1,0 +1,49 @@
+[23:24:05] run prefix '08d36d-'; pod pools ['08d36d-pool-a', '08d36d-pool-b']
+[23:24:08] array cinderci-fa2; pools 08d36d-pool-a, 08d36d-pool-b (quota 10 GiB); service np0000046875@puredriver-1
+[23:24:08] === phase: stats
+[23:24:09]   ok: scheduler lists one pool for 08d36d-pool-a (['pure-cluster-1@puredriver-1#08d36d-pool-a'])
+[23:24:09]   ok: 08d36d-pool-a total_capacity_gb is the quota
+[23:24:09]   ok: 08d36d-pool-a max_over_subscription_ratio is 1.0
+[23:24:09]   ok: 08d36d-pool-a is thin provisioned
+[23:24:09]   ok: 08d36d-pool-a has no reserve
+[23:24:09]   ok: scheduler lists one pool for 08d36d-pool-b (['pure-cluster-1@puredriver-1#08d36d-pool-b'])
+[23:24:09]   ok: 08d36d-pool-b total_capacity_gb is the quota
+[23:24:09]   ok: 08d36d-pool-b max_over_subscription_ratio is 1.0
+[23:24:09]   ok: 08d36d-pool-b is thin provisioned
+[23:24:09]   ok: 08d36d-pool-b has no reserve
+[23:24:09]   ok: the array pool is still reported
+[23:24:09] === phase: fill
+[23:24:13]   volume 38c47090-3f2d-4983-897b-b42143108cb9: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-a size=4
+[23:24:16]   volume 69779513-0817-4a28-a6b8-cb220ac740cb: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-a size=4
+[23:24:17]   volume 38c47090-3f2d-4983-897b-b42143108cb9: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-a size=4
+[23:24:17]   ok: 08d36d-pool-a::08d36d-38c47090-3f2d-4983-897b-b42143108cb9-cinder exists on the array
+[23:24:19]   volume 69779513-0817-4a28-a6b8-cb220ac740cb: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-a size=4
+[23:24:19]   ok: 08d36d-pool-a::08d36d-69779513-0817-4a28-a6b8-cb220ac740cb-cinder exists on the array
+[23:24:19]   ok: 08d36d-pool-a used provisioned is 8 GiB
+[23:24:21]   volume 9ecba0a2-a0d6-413f-a1c3-6f52c9ae4121: status=error migstat=None host= size=4
+[23:24:21]   ok: the refused volume was never created on the array
+[23:24:21]   ok: 08d36d-pool-a usage unchanged by the refused create
+[23:24:24] === phase: extend
+[23:24:25]   ok: extend beyond the quota is accepted by the API
+[23:24:36]   volume 38c47090-3f2d-4983-897b-b42143108cb9: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-a size=4
+[23:24:36]   ok: extend to 7 GiB was refused (size 4)
+[23:24:44]   volume 38c47090-3f2d-4983-897b-b42143108cb9: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-a size=6
+[23:24:44]   ok: extend to 6 GiB succeeded
+[23:24:44]   ok: 08d36d-pool-a is now at its quota
+[23:24:44] === phase: placement
+[23:24:48]   volume 8ec24265-23b4-4a04-bea3-24f9b3b0c154: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-b size=2
+[23:24:49]   volume 8ec24265-23b4-4a04-bea3-24f9b3b0c154: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-b size=2
+[23:24:49]   ok: volume for either pool landed in 08d36d-pool-b (A is full): np0000046875@puredriver-1#08d36d-pool-b
+[23:24:49] === phase: retype
+[23:24:53]   volume 69779513-0817-4a28-a6b8-cb220ac740cb: status=available migstat=None host=np0000046875@puredriver-1#08d36d-pool-b size=4
+[23:39:55]   FAIL: phase retype raised RuntimeError("volume 69779513-0817-4a28-a6b8-cb220ac740cb not available on 08d36d-pool-b within 900s (last ('available', None, 'np0000046875@puredriver-1#08d36d-pool-b', 4))")
+[23:39:55] === phase: migrate
+[23:39:58]   volume 38c47090-3f2d-4983-897b-b42143108cb9: status=available migstat=error host=np0000046875@puredriver-1#08d36d-pool-a size=6
+[23:39:58]   FAIL: phase migrate raised RuntimeError('volume 38c47090-3f2d-4983-897b-b42143108cb9 is available/error')
+[23:39:58] === phase: group
+[23:40:00]   FAIL: phase group raised RuntimeError('command failed (2): /usr/local/bin/openstack volume group type create --property consistent_group_snapshot_enabled=<is> True pp-cg-08d36d-type\nusage: openstack volume group type create [-h]\n                                          [-f {json,shell,table,value,yaml}]\n                                          [-c COLUMN] [--noindent]\n                                          [--prefix PREFIX]\n                                          [--max-width <integer>]\n                                          [--fit-width] [--print-empty]\n                                          [--description <description>]\n                                          [--public | --private]\n                                          <name>\nopenstack volume group type create: error: unrecognized arguments: --property pp-cg-08d36d-type\n')
+[23:40:00] === cleanup
+[23:40:14] FAILED checks:
+[23:40:14]   - retype: RuntimeError("volume 69779513-0817-4a28-a6b8-cb220ac740cb not available on 08d36d-pool-b within 900s (last ('available', None, 'np0000046875@puredriver-1#08d36d-pool-b', 4))")
+[23:40:14]   - migrate: RuntimeError('volume 38c47090-3f2d-4983-897b-b42143108cb9 is available/error')
+[23:40:14]   - group: RuntimeError('command failed (2): /usr/local/bin/openstack volume group type create --property consistent_group_snapshot_enabled=<is> True pp-cg-08d36d-type\nusage: openstack volume group type create [-h]\n                                          [-f {json,shell,table,value,yaml}]\n                                          [-c COLUMN] [--noindent]\n                                          [--prefix PREFIX]\n                                          [--max-width <integer>]\n                                          [--fit-width] [--print-empty]\n                                          [--description <description>]\n                                          [--public | --private]\n                                          <name>\nopenstack volume group type create: error: unrecognized arguments: --property pp-cg-08d36d-type\n')
