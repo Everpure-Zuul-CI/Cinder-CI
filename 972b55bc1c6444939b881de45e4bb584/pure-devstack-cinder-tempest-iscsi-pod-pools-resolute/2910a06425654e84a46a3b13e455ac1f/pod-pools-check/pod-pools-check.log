@@ -1,0 +1,49 @@
+[22:32:23] run prefix '279333-'; pod pools ['279333-pool-a', '279333-pool-b']
+[22:32:26] array cinderci-fa2; pools 279333-pool-a, 279333-pool-b (quota 10 GiB); service np0000046873@puredriver-1
+[22:32:26] === phase: stats
+[22:32:28]   ok: scheduler lists one pool for 279333-pool-a (['pure-cluster-1@puredriver-1#279333-pool-a'])
+[22:32:28]   ok: 279333-pool-a total_capacity_gb is the quota
+[22:32:28]   ok: 279333-pool-a max_over_subscription_ratio is 1.0
+[22:32:28]   ok: 279333-pool-a is thin provisioned
+[22:32:28]   ok: 279333-pool-a has no reserve
+[22:32:28]   ok: scheduler lists one pool for 279333-pool-b (['pure-cluster-1@puredriver-1#279333-pool-b'])
+[22:32:28]   ok: 279333-pool-b total_capacity_gb is the quota
+[22:32:28]   ok: 279333-pool-b max_over_subscription_ratio is 1.0
+[22:32:28]   ok: 279333-pool-b is thin provisioned
+[22:32:28]   ok: 279333-pool-b has no reserve
+[22:32:28]   ok: the array pool is still reported
+[22:32:28] === phase: fill
+[22:32:32]   volume a39d02b1-8c1e-45b0-8ea0-ea4f2dcf6169: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-a size=4
+[22:32:34]   volume c3b92cb8-1331-4f24-bdea-935b5a25565b: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-a size=4
+[22:32:35]   volume a39d02b1-8c1e-45b0-8ea0-ea4f2dcf6169: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-a size=4
+[22:32:36]   ok: 279333-pool-a::279333-a39d02b1-8c1e-45b0-8ea0-ea4f2dcf6169-cinder exists on the array
+[22:32:37]   volume c3b92cb8-1331-4f24-bdea-935b5a25565b: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-a size=4
+[22:32:37]   ok: 279333-pool-a::279333-c3b92cb8-1331-4f24-bdea-935b5a25565b-cinder exists on the array
+[22:32:37]   ok: 279333-pool-a used provisioned is 8 GiB
+[22:32:39]   volume f069c99f-c41f-4904-a954-0122cfdc7be4: status=error migstat=None host= size=4
+[22:32:40]   ok: the refused volume was never created on the array
+[22:32:40]   ok: 279333-pool-a usage unchanged by the refused create
+[22:32:42] === phase: extend
+[22:32:43]   ok: extend beyond the quota is accepted by the API
+[22:32:55]   volume a39d02b1-8c1e-45b0-8ea0-ea4f2dcf6169: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-a size=4
+[22:32:55]   ok: extend to 7 GiB was refused (size 4)
+[22:33:02]   volume a39d02b1-8c1e-45b0-8ea0-ea4f2dcf6169: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-a size=6
+[22:33:02]   ok: extend to 6 GiB succeeded
+[22:33:02]   ok: 279333-pool-a is now at its quota
+[22:33:02] === phase: placement
+[22:33:06]   volume 51198e8b-5064-44b6-9447-f5cc684c643e: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-b size=2
+[22:33:07]   volume 51198e8b-5064-44b6-9447-f5cc684c643e: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-b size=2
+[22:33:07]   ok: volume for either pool landed in 279333-pool-b (A is full): np0000046873@puredriver-1#279333-pool-b
+[22:33:07] === phase: retype
+[22:33:11]   volume c3b92cb8-1331-4f24-bdea-935b5a25565b: status=available migstat=None host=np0000046873@puredriver-1#279333-pool-b size=4
+[22:48:11]   FAIL: phase retype raised RuntimeError("volume c3b92cb8-1331-4f24-bdea-935b5a25565b not available on 279333-pool-b within 900s (last ('available', None, 'np0000046873@puredriver-1#279333-pool-b', 4))")
+[22:48:11] === phase: migrate
+[22:48:13]   volume a39d02b1-8c1e-45b0-8ea0-ea4f2dcf6169: status=available migstat=error host=np0000046873@puredriver-1#279333-pool-a size=6
+[22:48:13]   FAIL: phase migrate raised RuntimeError('volume a39d02b1-8c1e-45b0-8ea0-ea4f2dcf6169 is available/error')
+[22:48:13] === phase: group
+[22:48:15]   FAIL: phase group raised RuntimeError('command failed (2): /usr/local/bin/openstack volume group type create --property consistent_group_snapshot_enabled=<is> True pp-cg-279333-type\nusage: openstack volume group type create [-h]\n                                          [-f {json,shell,table,value,yaml}]\n                                          [-c COLUMN] [--noindent]\n                                          [--prefix PREFIX]\n                                          [--max-width <integer>]\n                                          [--fit-width] [--print-empty]\n                                          [--description <description>]\n                                          [--public | --private]\n                                          <name>\nopenstack volume group type create: error: unrecognized arguments: --property pp-cg-279333-type\n')
+[22:48:15] === cleanup
+[22:48:32] FAILED checks:
+[22:48:32]   - retype: RuntimeError("volume c3b92cb8-1331-4f24-bdea-935b5a25565b not available on 279333-pool-b within 900s (last ('available', None, 'np0000046873@puredriver-1#279333-pool-b', 4))")
+[22:48:32]   - migrate: RuntimeError('volume a39d02b1-8c1e-45b0-8ea0-ea4f2dcf6169 is available/error')
+[22:48:32]   - group: RuntimeError('command failed (2): /usr/local/bin/openstack volume group type create --property consistent_group_snapshot_enabled=<is> True pp-cg-279333-type\nusage: openstack volume group type create [-h]\n                                          [-f {json,shell,table,value,yaml}]\n                                          [-c COLUMN] [--noindent]\n                                          [--prefix PREFIX]\n                                          [--max-width <integer>]\n                                          [--fit-width] [--print-empty]\n                                          [--description <description>]\n                                          [--public | --private]\n                                          <name>\nopenstack volume group type create: error: unrecognized arguments: --property pp-cg-279333-type\n')
