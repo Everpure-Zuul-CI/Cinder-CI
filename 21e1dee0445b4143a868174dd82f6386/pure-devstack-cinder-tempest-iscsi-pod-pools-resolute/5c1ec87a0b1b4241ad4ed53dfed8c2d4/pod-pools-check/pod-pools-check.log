@@ -1,0 +1,49 @@
+[00:15:06] run prefix 'dab848-'; pod pools ['dab848-pool-a', 'dab848-pool-b']
+[00:15:10] array cinderci-fa2; pools dab848-pool-a, dab848-pool-b (quota 10 GiB); service np0000046881@puredriver-1
+[00:15:10] === phase: stats
+[00:15:11]   ok: scheduler lists one pool for dab848-pool-a (['pure-cluster-1@puredriver-1#dab848-pool-a'])
+[00:15:11]   ok: dab848-pool-a total_capacity_gb is the quota
+[00:15:11]   ok: dab848-pool-a max_over_subscription_ratio is 1.0
+[00:15:11]   ok: dab848-pool-a is thin provisioned
+[00:15:11]   ok: dab848-pool-a has no reserve
+[00:15:11]   ok: scheduler lists one pool for dab848-pool-b (['pure-cluster-1@puredriver-1#dab848-pool-b'])
+[00:15:11]   ok: dab848-pool-b total_capacity_gb is the quota
+[00:15:11]   ok: dab848-pool-b max_over_subscription_ratio is 1.0
+[00:15:11]   ok: dab848-pool-b is thin provisioned
+[00:15:11]   ok: dab848-pool-b has no reserve
+[00:15:11]   ok: the array pool is still reported
+[00:15:11] === phase: fill
+[00:15:15]   volume 85424dd8-7022-4e9a-afaa-c7be4a49f9b8: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-a size=4
+[00:15:17]   volume dc0c4a6d-66ad-498c-9f4e-6012703aa2e9: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-a size=4
+[00:15:19]   volume 85424dd8-7022-4e9a-afaa-c7be4a49f9b8: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-a size=4
+[00:15:19]   ok: dab848-pool-a::dab848-85424dd8-7022-4e9a-afaa-c7be4a49f9b8-cinder exists on the array
+[00:15:20]   volume dc0c4a6d-66ad-498c-9f4e-6012703aa2e9: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-a size=4
+[00:15:20]   ok: dab848-pool-a::dab848-dc0c4a6d-66ad-498c-9f4e-6012703aa2e9-cinder exists on the array
+[00:15:20]   ok: dab848-pool-a used provisioned is 8 GiB
+[00:15:23]   volume e5d5f3e2-49c7-434d-9e8d-039a051bb20a: status=error migstat=None host= size=4
+[00:15:23]   ok: the refused volume was never created on the array
+[00:15:23]   ok: dab848-pool-a usage unchanged by the refused create
+[00:15:25] === phase: extend
+[00:15:27]   ok: extend beyond the quota is accepted by the API
+[00:15:38]   volume 85424dd8-7022-4e9a-afaa-c7be4a49f9b8: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-a size=4
+[00:15:38]   ok: extend to 7 GiB was refused (size 4)
+[00:15:46]   volume 85424dd8-7022-4e9a-afaa-c7be4a49f9b8: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-a size=6
+[00:15:46]   ok: extend to 6 GiB succeeded
+[00:15:46]   ok: dab848-pool-a is now at its quota
+[00:15:46] === phase: placement
+[00:15:50]   volume d62badfa-8bf8-4b10-82b0-186f1bef7e04: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-b size=2
+[00:15:51]   volume d62badfa-8bf8-4b10-82b0-186f1bef7e04: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-b size=2
+[00:15:51]   ok: volume for either pool landed in dab848-pool-b (A is full): np0000046881@puredriver-1#dab848-pool-b
+[00:15:51] === phase: retype
+[00:15:55]   volume dc0c4a6d-66ad-498c-9f4e-6012703aa2e9: status=available migstat=None host=np0000046881@puredriver-1#dab848-pool-b size=4
+[00:30:58]   FAIL: phase retype raised RuntimeError("volume dc0c4a6d-66ad-498c-9f4e-6012703aa2e9 not available on dab848-pool-b within 900s (last ('available', None, 'np0000046881@puredriver-1#dab848-pool-b', 4))")
+[00:30:58] === phase: migrate
+[00:31:00]   volume 85424dd8-7022-4e9a-afaa-c7be4a49f9b8: status=available migstat=error host=np0000046881@puredriver-1#dab848-pool-a size=6
+[00:31:00]   FAIL: phase migrate raised RuntimeError('volume 85424dd8-7022-4e9a-afaa-c7be4a49f9b8 is available/error')
+[00:31:00] === phase: group
+[00:31:02]   FAIL: phase group raised RuntimeError('command failed (2): /usr/local/bin/openstack volume group type create --property consistent_group_snapshot_enabled=<is> True pp-cg-dab848-type\nusage: openstack volume group type create [-h]\n                                          [-f {json,shell,table,value,yaml}]\n                                          [-c COLUMN] [--noindent]\n                                          [--prefix PREFIX]\n                                          [--max-width <integer>]\n                                          [--fit-width] [--print-empty]\n                                          [--description <description>]\n                                          [--public | --private]\n                                          <name>\nopenstack volume group type create: error: unrecognized arguments: --property pp-cg-dab848-type\n')
+[00:31:02] === cleanup
+[00:31:14] FAILED checks:
+[00:31:14]   - retype: RuntimeError("volume dc0c4a6d-66ad-498c-9f4e-6012703aa2e9 not available on dab848-pool-b within 900s (last ('available', None, 'np0000046881@puredriver-1#dab848-pool-b', 4))")
+[00:31:14]   - migrate: RuntimeError('volume 85424dd8-7022-4e9a-afaa-c7be4a49f9b8 is available/error')
+[00:31:14]   - group: RuntimeError('command failed (2): /usr/local/bin/openstack volume group type create --property consistent_group_snapshot_enabled=<is> True pp-cg-dab848-type\nusage: openstack volume group type create [-h]\n                                          [-f {json,shell,table,value,yaml}]\n                                          [-c COLUMN] [--noindent]\n                                          [--prefix PREFIX]\n                                          [--max-width <integer>]\n                                          [--fit-width] [--print-empty]\n                                          [--description <description>]\n                                          [--public | --private]\n                                          <name>\nopenstack volume group type create: error: unrecognized arguments: --property pp-cg-dab848-type\n')
