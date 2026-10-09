@@ -1,0 +1,35 @@
+{
+  "pods": [
+    "bad936-pool-a",
+    "bad936-pool-b"
+  ],
+  "quota_gb": 10,
+  "results": {
+    "pool_bad936-pool-a": {
+      "total_capacity_gb": 10.0,
+      "free_capacity_gb": 10.0,
+      "provisioned_capacity_gb": 0.0,
+      "max_over_subscription_ratio": 1.0,
+      "thin_provisioning_support": true,
+      "reserved_percentage": 0,
+      "replication_type": [],
+      "pure_pod_quota_gb": 10.0
+    },
+    "pool_bad936-pool-b": {
+      "total_capacity_gb": 10.0,
+      "free_capacity_gb": 10.0,
+      "provisioned_capacity_gb": 0.0,
+      "max_over_subscription_ratio": 1.0,
+      "thin_provisioning_support": true,
+      "reserved_percentage": 0,
+      "replication_type": [],
+      "pure_pod_quota_gb": 10.0
+    }
+  },
+  "failures": [
+    "retype: RuntimeError(\"volume 0d584bcc-dc8d-42c0-982d-3971f8a3a96c not available on bad936-pool-b within 900s (last ('available', None, 'np0000047017@puredriver-1#bad936-pool-b', 4))\")",
+    "migrate of a volume pinned to bad936-pool-a by its type was refused by the scheduler (available/success, np0000047017@puredriver-1#bad936-pool-b)",
+    "migrate: RuntimeError(\"volume 4e466092-c230-4d2c-8fdc-0757deae9ddd not available on bad936-pool-b within 900s (last ('available', 'success', 'np0000047017@puredriver-1#puredriver-1', 6))\")",
+    "group: RuntimeError('command failed (2): /usr/local/bin/openstack volume group create --group-type pp-cg-bad936-type --volume-type pp-a-bad936-type pp-group-bad936- -f json\\nusage: openstack volume group create [-h] [-f {json,shell,table,value,yaml}]\\n                                     [-c COLUMN] [--noindent]\\n                                     [--prefix PREFIX] [--max-width <integer>]\\n                                     [--fit-width] [--print-empty]\\n                                     [--volume-group-type <volume_group_type> |\\n                                     --source-group <source-group> |\\n                                     --group-snapshot <group-snapshot>]\\n                                     [--volume-type <volume_type>]\\n                                     [--name <name>]\\n                                     [--description <description>]\\n                                     [--availability-zone <availability-zone>]\\nopenstack volume group create: error: argument <volume_type>: not allowed with argument --volume-type\\n')"
+  ]
+}

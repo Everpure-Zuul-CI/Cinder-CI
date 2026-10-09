@@ -1,0 +1,54 @@
+[20:07:04] run prefix 'bad936-'; pod pools ['bad936-pool-a', 'bad936-pool-b']
+[20:07:04] driver features: {'array_moves': True, 'pod_groups': True}
+[20:07:07] array cinderci-fa2; pools bad936-pool-a, bad936-pool-b (quota 10 GiB); service np0000047017@puredriver-1
+[20:07:07] === phase: stats
+[20:07:09]   ok: scheduler lists one pool for bad936-pool-a (['pure-cluster-1@puredriver-1#bad936-pool-a'])
+[20:07:09]   ok: bad936-pool-a total_capacity_gb is the quota
+[20:07:09]   ok: bad936-pool-a max_over_subscription_ratio is 1.0
+[20:07:09]   ok: bad936-pool-a is thin provisioned
+[20:07:09]   ok: bad936-pool-a has no reserve
+[20:07:09]   ok: scheduler lists one pool for bad936-pool-b (['pure-cluster-1@puredriver-1#bad936-pool-b'])
+[20:07:09]   ok: bad936-pool-b total_capacity_gb is the quota
+[20:07:09]   ok: bad936-pool-b max_over_subscription_ratio is 1.0
+[20:07:09]   ok: bad936-pool-b is thin provisioned
+[20:07:09]   ok: bad936-pool-b has no reserve
+[20:07:09]   ok: the array pool is still reported
+[20:07:09] === phase: fill
+[20:07:13]   volume 4e466092-c230-4d2c-8fdc-0757deae9ddd: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-a size=4
+[20:07:16]   volume 0d584bcc-dc8d-42c0-982d-3971f8a3a96c: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-a size=4
+[20:07:17]   volume 4e466092-c230-4d2c-8fdc-0757deae9ddd: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-a size=4
+[20:07:18]   ok: bad936-pool-a::bad936-4e466092-c230-4d2c-8fdc-0757deae9ddd-cinder exists on the array
+[20:07:20]   volume 0d584bcc-dc8d-42c0-982d-3971f8a3a96c: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-a size=4
+[20:07:21]   ok: bad936-pool-a::bad936-0d584bcc-dc8d-42c0-982d-3971f8a3a96c-cinder exists on the array
+[20:07:21]   ok: bad936-pool-a used provisioned is 8 GiB
+[20:07:24]   volume e104750a-185a-42b2-a9ed-4b64b8f88e64: status=error migstat=None host= size=4
+[20:07:25]   ok: the refused volume was never created on the array
+[20:07:25]   ok: bad936-pool-a usage unchanged by the refused create
+[20:07:28] === phase: extend
+[20:07:30]   ok: extend beyond the quota is accepted by the API
+[20:07:41]   volume 4e466092-c230-4d2c-8fdc-0757deae9ddd: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-a size=4
+[20:07:41]   ok: extend to 7 GiB was refused (size 4)
+[20:07:49]   volume 4e466092-c230-4d2c-8fdc-0757deae9ddd: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-a size=6
+[20:07:49]   ok: extend to 6 GiB succeeded
+[20:07:49]   ok: bad936-pool-a is now at its quota
+[20:07:49] === phase: placement
+[20:07:53]   volume e792aee1-5933-4746-9848-79b22c8e5e03: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-b size=2
+[20:07:54]   volume e792aee1-5933-4746-9848-79b22c8e5e03: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-b size=2
+[20:07:54]   ok: volume for either pool landed in bad936-pool-b (A is full): np0000047017@puredriver-1#bad936-pool-b
+[20:07:54] === phase: retype
+[20:08:00]   volume 0d584bcc-dc8d-42c0-982d-3971f8a3a96c: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-b size=4
+[20:22:59]   FAIL: phase retype raised RuntimeError("volume 0d584bcc-dc8d-42c0-982d-3971f8a3a96c not available on bad936-pool-b within 900s (last ('available', None, 'np0000047017@puredriver-1#bad936-pool-b', 4))")
+[20:22:59] === phase: migrate
+[20:23:17]   FAIL: migrate of a volume pinned to bad936-pool-a by its type was refused by the scheduler (available/success, np0000047017@puredriver-1#bad936-pool-b)
+[20:23:21]   volume 4e466092-c230-4d2c-8fdc-0757deae9ddd: status=available migstat=None host=np0000047017@puredriver-1#bad936-pool-a size=6
+[20:23:22]   ok: bad936-pool-a::bad936-4e466092-c230-4d2c-8fdc-0757deae9ddd-cinder is unchanged by the same-pool retype
+[20:23:25]   volume 4e466092-c230-4d2c-8fdc-0757deae9ddd: status=available migstat=success host=np0000047017@puredriver-1#puredriver-1 size=6
+[20:38:28]   FAIL: phase migrate raised RuntimeError("volume 4e466092-c230-4d2c-8fdc-0757deae9ddd not available on bad936-pool-b within 900s (last ('available', 'success', 'np0000047017@puredriver-1#puredriver-1', 6))")
+[20:38:28] === phase: group
+[20:38:32]   FAIL: phase group raised RuntimeError('command failed (2): /usr/local/bin/openstack volume group create --group-type pp-cg-bad936-type --volume-type pp-a-bad936-type pp-group-bad936- -f json\nusage: openstack volume group create [-h] [-f {json,shell,table,value,yaml}]\n                                     [-c COLUMN] [--noindent]\n                                     [--prefix PREFIX] [--max-width <integer>]\n                                     [--fit-width] [--print-empty]\n                                     [--volume-group-type <volume_group_type> |\n                                     --source-group <source-group> |\n                                     --group-snapshot <group-snapshot>]\n                                     [--volume-type <volume_type>]\n                                     [--name <name>]\n                                     [--description <description>]\n                                     [--availability-zone <availability-zone>]\nopenstack volume group create: error: argument <volume_type>: not allowed with argument --volume-type\n')
+[20:38:32] === cleanup
+[20:38:47] FAILED checks:
+[20:38:47]   - retype: RuntimeError("volume 0d584bcc-dc8d-42c0-982d-3971f8a3a96c not available on bad936-pool-b within 900s (last ('available', None, 'np0000047017@puredriver-1#bad936-pool-b', 4))")
+[20:38:47]   - migrate of a volume pinned to bad936-pool-a by its type was refused by the scheduler (available/success, np0000047017@puredriver-1#bad936-pool-b)
+[20:38:47]   - migrate: RuntimeError("volume 4e466092-c230-4d2c-8fdc-0757deae9ddd not available on bad936-pool-b within 900s (last ('available', 'success', 'np0000047017@puredriver-1#puredriver-1', 6))")
+[20:38:47]   - group: RuntimeError('command failed (2): /usr/local/bin/openstack volume group create --group-type pp-cg-bad936-type --volume-type pp-a-bad936-type pp-group-bad936- -f json\nusage: openstack volume group create [-h] [-f {json,shell,table,value,yaml}]\n                                     [-c COLUMN] [--noindent]\n                                     [--prefix PREFIX] [--max-width <integer>]\n                                     [--fit-width] [--print-empty]\n                                     [--volume-group-type <volume_group_type> |\n                                     --source-group <source-group> |\n                                     --group-snapshot <group-snapshot>]\n                                     [--volume-type <volume_type>]\n                                     [--name <name>]\n                                     [--description <description>]\n                                     [--availability-zone <availability-zone>]\nopenstack volume group create: error: argument <volume_type>: not allowed with argument --volume-type\n')
