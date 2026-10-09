@@ -1,0 +1,67 @@
+[22:41:01] run prefix 'be9135-'; pod pools ['be9135-pool-a', 'be9135-pool-b']
+[22:41:01] driver features: {'array_moves': True, 'pod_groups': True}
+[22:41:04] array cinderci-fa2; pools be9135-pool-a, be9135-pool-b (quota 10 GiB); service np0000047034@puredriver-1
+[22:41:04] === phase: stats
+[22:41:05]   ok: scheduler lists one pool for be9135-pool-a (['np0000047034@puredriver-1#be9135-pool-a'])
+[22:41:05]   ok: be9135-pool-a total_capacity_gb is the quota
+[22:41:05]   ok: be9135-pool-a max_over_subscription_ratio is 1.0
+[22:41:05]   ok: be9135-pool-a is thin provisioned
+[22:41:05]   ok: be9135-pool-a has no reserve
+[22:41:05]   ok: scheduler lists one pool for be9135-pool-b (['np0000047034@puredriver-1#be9135-pool-b'])
+[22:41:05]   ok: be9135-pool-b total_capacity_gb is the quota
+[22:41:05]   ok: be9135-pool-b max_over_subscription_ratio is 1.0
+[22:41:05]   ok: be9135-pool-b is thin provisioned
+[22:41:05]   ok: be9135-pool-b has no reserve
+[22:41:05]   ok: the array pool is still reported
+[22:41:05] === phase: fill
+[22:41:09]   volume fbe0063b-049c-450f-b662-f7941bf2fef7: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-a size=4
+[22:41:12]   volume 5609927f-d375-4361-80fc-b4cf525de592: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-a size=4
+[22:41:13]   volume fbe0063b-049c-450f-b662-f7941bf2fef7: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-a size=4
+[22:41:15]   ok: be9135-pool-a::be9135-fbe0063b-049c-450f-b662-f7941bf2fef7-cinder exists on the array
+[22:41:17]   volume 5609927f-d375-4361-80fc-b4cf525de592: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-a size=4
+[22:41:18]   ok: be9135-pool-a::be9135-5609927f-d375-4361-80fc-b4cf525de592-cinder exists on the array
+[22:41:18]   ok: be9135-pool-a used provisioned is 8 GiB
+[22:41:21]   volume 2fbe58ca-6af7-41a0-b5cf-9fba4ad1de59: status=error migstat=None host= size=4
+[22:41:22]   ok: the refused volume was never created on the array
+[22:41:22]   ok: be9135-pool-a usage unchanged by the refused create
+[22:41:25] === phase: extend
+[22:41:26]   ok: extend beyond the quota is accepted by the API
+[22:41:37]   volume fbe0063b-049c-450f-b662-f7941bf2fef7: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-a size=4
+[22:41:37]   ok: extend to 7 GiB was refused (size 4)
+[22:41:45]   volume fbe0063b-049c-450f-b662-f7941bf2fef7: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-a size=6
+[22:41:45]   ok: extend to 6 GiB succeeded
+[22:41:45]   ok: be9135-pool-a is now at its quota
+[22:41:45] === phase: placement
+[22:41:49]   volume c0a71aa2-9b4c-4f55-8334-8b6d75ae172a: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-b size=2
+[22:41:50]   volume c0a71aa2-9b4c-4f55-8334-8b6d75ae172a: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-b size=2
+[22:41:50]   ok: volume for either pool landed in be9135-pool-b (A is full): np0000047034@puredriver-1#be9135-pool-b
+[22:41:50] === phase: retype
+[22:41:55]   volume 5609927f-d375-4361-80fc-b4cf525de592: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-b size=4
+[22:41:57]   ok: be9135-pool-b::be9135-5609927f-d375-4361-80fc-b4cf525de592-cinder exists after the retype
+[22:41:57]   ok: be9135-pool-a::be9135-5609927f-d375-4361-80fc-b4cf525de592-cinder is gone from be9135-pool-a
+[22:41:57]   ok: retype moved the volume on the array (serial kept)
+[22:41:59]   volume 5609927f-d375-4361-80fc-b4cf525de592: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-a size=4
+[22:42:01]   ok: be9135-pool-a::be9135-5609927f-d375-4361-80fc-b4cf525de592-cinder exists after the retype back
+[22:42:01]   ok: retype back moved the volume on the array (serial kept)
+[22:42:18]   ok: retype into the full pool was refused; volume still available in be9135-pool-b (available, np0000047034@puredriver-1#be9135-pool-b)
+[22:42:18] === phase: migrate
+[22:42:36]   ok: migrate of a volume pinned to be9135-pool-a by its type was refused by the scheduler (available/error, np0000047034@puredriver-1#be9135-pool-a)
+[22:42:40]   volume fbe0063b-049c-450f-b662-f7941bf2fef7: status=available migstat=None host=np0000047034@puredriver-1#be9135-pool-a size=6
+[22:42:41]   ok: be9135-pool-a::be9135-fbe0063b-049c-450f-b662-f7941bf2fef7-cinder is unchanged by the same-pool retype
+[22:42:44]   volume fbe0063b-049c-450f-b662-f7941bf2fef7: status=available migstat=success host=np0000047034@puredriver-1#be9135-pool-b size=6
+[22:42:45]   ok: be9135-pool-b::be9135-fbe0063b-049c-450f-b662-f7941bf2fef7-cinder exists after the migration
+[22:42:45]   ok: migration between pools moved the volume on the array (serial kept)
+[22:42:48]   volume 853aa3bf-be1b-4ac2-b2f4-8c7b214b1ea6: status=available migstat=None host=np0000047034@puredriver-1#puredriver-1 size=1
+[22:42:52]   volume 853aa3bf-be1b-4ac2-b2f4-8c7b214b1ea6: status=available migstat=migrating host=np0000047034@puredriver-1#puredriver-1 size=1
+[22:43:23]   volume 853aa3bf-be1b-4ac2-b2f4-8c7b214b1ea6: status=available migstat=success host=np0000047034@puredriver-1#be9135-pool-b size=1
+[22:43:24]   ok: be9135-pool-b::be9135-c91829ea-9eca-43a9-a944-0882c38a1e8b-cinder exists after migrating into the pod
+[22:43:25]   FAIL: array pool -> pod pool moved the volume on the array (serial kept)
+[22:43:27]   volume 853aa3bf-be1b-4ac2-b2f4-8c7b214b1ea6: status=available migstat=success host=np0000047034@puredriver-1#puredriver-1 size=1
+[22:43:28]   ok: be9135-c91829ea-9eca-43a9-a944-0882c38a1e8b-cinder is back at the array root
+[22:43:28]   ok: pod pool -> array pool moved the volume on the array (serial kept)
+[22:43:31] === phase: group
+[22:43:35]   FAIL: phase group raised KeyError('id')
+[22:43:35] === cleanup
+[22:43:49] FAILED checks:
+[22:43:49]   - array pool -> pod pool moved the volume on the array (serial kept)
+[22:43:49]   - group: KeyError('id')
