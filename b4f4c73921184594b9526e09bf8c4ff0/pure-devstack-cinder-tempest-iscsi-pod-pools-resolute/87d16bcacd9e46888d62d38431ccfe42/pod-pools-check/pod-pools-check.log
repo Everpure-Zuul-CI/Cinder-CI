@@ -1,0 +1,67 @@
+[05:52:11] run prefix 'f70c2c-'; pod pools ['f70c2c-pool-a', 'f70c2c-pool-b']
+[05:52:11] driver features: {'array_moves': True, 'pod_groups': True}
+[05:52:14] array cinderci-fa2; pools f70c2c-pool-a, f70c2c-pool-b (quota 10 GiB); service np0000047091@puredriver-1
+[05:52:14] === phase: stats
+[05:52:15]   ok: scheduler lists one pool for f70c2c-pool-a (['np0000047091@puredriver-1#f70c2c-pool-a'])
+[05:52:15]   ok: f70c2c-pool-a total_capacity_gb is the quota
+[05:52:15]   ok: f70c2c-pool-a max_over_subscription_ratio is 1.0
+[05:52:15]   ok: f70c2c-pool-a is thin provisioned
+[05:52:15]   ok: f70c2c-pool-a has no reserve
+[05:52:15]   ok: scheduler lists one pool for f70c2c-pool-b (['np0000047091@puredriver-1#f70c2c-pool-b'])
+[05:52:15]   ok: f70c2c-pool-b total_capacity_gb is the quota
+[05:52:15]   ok: f70c2c-pool-b max_over_subscription_ratio is 1.0
+[05:52:15]   ok: f70c2c-pool-b is thin provisioned
+[05:52:15]   ok: f70c2c-pool-b has no reserve
+[05:52:15]   ok: the array pool is still reported
+[05:52:15] === phase: fill
+[05:52:19]   volume 66a8f49b-7330-42ab-a27c-5ec5f12eab3d: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-a size=4
+[05:52:22]   volume 2f85f79b-9f6b-43b9-906a-57299b54f0c0: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-a size=4
+[05:52:23]   volume 66a8f49b-7330-42ab-a27c-5ec5f12eab3d: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-a size=4
+[05:52:24]   ok: f70c2c-pool-a::f70c2c-66a8f49b-7330-42ab-a27c-5ec5f12eab3d-cinder exists on the array
+[05:52:26]   volume 2f85f79b-9f6b-43b9-906a-57299b54f0c0: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-a size=4
+[05:52:27]   ok: f70c2c-pool-a::f70c2c-2f85f79b-9f6b-43b9-906a-57299b54f0c0-cinder exists on the array
+[05:52:27]   ok: f70c2c-pool-a used provisioned is 8 GiB
+[05:52:30]   volume 08262696-6b7e-4906-b680-01dbdb6f2f59: status=error migstat=None host= size=4
+[05:52:31]   ok: the refused volume was never created on the array
+[05:52:31]   ok: f70c2c-pool-a usage unchanged by the refused create
+[05:52:33] === phase: extend
+[05:52:35]   ok: extend beyond the quota is accepted by the API
+[05:52:46]   volume 66a8f49b-7330-42ab-a27c-5ec5f12eab3d: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-a size=4
+[05:52:46]   ok: extend to 7 GiB was refused (size 4)
+[05:52:54]   volume 66a8f49b-7330-42ab-a27c-5ec5f12eab3d: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-a size=6
+[05:52:54]   ok: extend to 6 GiB succeeded
+[05:52:54]   ok: f70c2c-pool-a is now at its quota
+[05:52:54] === phase: placement
+[05:52:58]   volume 2dc49dec-848f-43a0-877c-25c581a44641: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-b size=2
+[05:52:59]   volume 2dc49dec-848f-43a0-877c-25c581a44641: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-b size=2
+[05:52:59]   ok: volume for either pool landed in f70c2c-pool-b (A is full): np0000047091@puredriver-1#f70c2c-pool-b
+[05:52:59] === phase: retype
+[05:53:04]   volume 2f85f79b-9f6b-43b9-906a-57299b54f0c0: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-b size=4
+[05:53:05]   ok: f70c2c-pool-b::f70c2c-2f85f79b-9f6b-43b9-906a-57299b54f0c0-cinder exists after the retype
+[05:53:05]   ok: f70c2c-pool-a::f70c2c-2f85f79b-9f6b-43b9-906a-57299b54f0c0-cinder is gone from f70c2c-pool-a
+[05:53:05]   ok: retype moved the volume on the array (serial kept)
+[05:53:08]   volume 2f85f79b-9f6b-43b9-906a-57299b54f0c0: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-a size=4
+[05:53:09]   ok: f70c2c-pool-a::f70c2c-2f85f79b-9f6b-43b9-906a-57299b54f0c0-cinder exists after the retype back
+[05:53:09]   ok: retype back moved the volume on the array (serial kept)
+[05:53:27]   ok: retype into the full pool was refused; volume still available in f70c2c-pool-b (available, np0000047091@puredriver-1#f70c2c-pool-b)
+[05:53:27] === phase: migrate
+[05:53:44]   ok: migrate of a volume pinned to f70c2c-pool-a by its type was refused by the scheduler (available/error, np0000047091@puredriver-1#f70c2c-pool-a)
+[05:53:48]   volume 66a8f49b-7330-42ab-a27c-5ec5f12eab3d: status=available migstat=None host=np0000047091@puredriver-1#f70c2c-pool-a size=6
+[05:53:50]   ok: f70c2c-pool-a::f70c2c-66a8f49b-7330-42ab-a27c-5ec5f12eab3d-cinder is unchanged by the same-pool retype
+[05:53:52]   volume 66a8f49b-7330-42ab-a27c-5ec5f12eab3d: status=available migstat=success host=np0000047091@puredriver-1#f70c2c-pool-b size=6
+[05:53:53]   ok: f70c2c-pool-b::f70c2c-66a8f49b-7330-42ab-a27c-5ec5f12eab3d-cinder exists after the migration
+[05:53:54]   ok: migration between pools moved the volume on the array (serial kept)
+[05:53:56]   volume a1543703-6a7a-4d95-9db4-66df5671e09e: status=available migstat=None host=np0000047091@puredriver-1#puredriver-1 size=1
+[05:54:00]   volume a1543703-6a7a-4d95-9db4-66df5671e09e: status=available migstat=success host=np0000047091@puredriver-1#f70c2c-pool-b size=1
+[05:54:01]   ok: f70c2c-pool-b::f70c2c-a1543703-6a7a-4d95-9db4-66df5671e09e-cinder exists after migrating into the pod
+[05:54:01]   ok: array pool -> pod pool moved the volume on the array (serial kept)
+[05:54:04]   volume a1543703-6a7a-4d95-9db4-66df5671e09e: status=available migstat=success host=np0000047091@puredriver-1#puredriver-1 size=1
+[05:54:05]   ok: f70c2c-a1543703-6a7a-4d95-9db4-66df5671e09e-cinder is back at the array root
+[05:54:05]   ok: pod pool -> array pool moved the volume on the array (serial kept)
+[05:54:08] === phase: group
+[05:54:13]   ok: group created (available)
+[05:54:13]   ok: protection group f70c2c-pool-a::consisgroup-0aef8c03-57c7-4f09-a820-fee5ba9a0283-cinder exists in the pod
+[05:54:14]   FAIL: phase group raised RuntimeError('command failed (2): /usr/local/bin/openstack volume create --size 1 --type pp-a-f70c2c-type --group 0aef8c03-57c7-4f09-a820-fee5ba9a0283 pp-member-f70c2c- -f json\nusage: openstack volume create [-h] [-f {json,shell,table,value,yaml}]\n                               [-c COLUMN] [--noindent] [--prefix PREFIX]\n                               [--max-width <integer>] [--fit-width]\n                               [--print-empty] [--size <size>]\n                               [--type <volume-type>] [--image <image> |\n                               --snapshot <snapshot> | --source <volume> |\n                               --backup <backup> |\n                               --remote-source <key=value>]\n                               [--description <description>]\n                               [--availability-zone <availability-zone>]\n                               [--consistency-group consistency-group>]\n                               [--property <key=value>] [--hint <key=value>]\n                               [--bootable | --non-bootable] [--read-only |\n                               --read-write] [--host <host>]\n                               [--cluster <cluster>]\n                               [<name>]\nopenstack volume create: error: unrecognized arguments: --group pp-member-f70c2c-\n')
+[05:54:14] === cleanup
+[05:54:40] FAILED checks:
+[05:54:40]   - group: RuntimeError('command failed (2): /usr/local/bin/openstack volume create --size 1 --type pp-a-f70c2c-type --group 0aef8c03-57c7-4f09-a820-fee5ba9a0283 pp-member-f70c2c- -f json\nusage: openstack volume create [-h] [-f {json,shell,table,value,yaml}]\n                               [-c COLUMN] [--noindent] [--prefix PREFIX]\n                               [--max-width <integer>] [--fit-width]\n                               [--print-empty] [--size <size>]\n                               [--type <volume-type>] [--image <image> |\n                               --snapshot <snapshot> | --source <volume> |\n                               --backup <backup> |\n                               --remote-source <key=value>]\n                               [--description <description>]\n                               [--availability-zone <availability-zone>]\n                               [--consistency-group consistency-group>]\n                               [--property <key=value>] [--hint <key=value>]\n                               [--bootable | --non-bootable] [--read-only |\n                               --read-write] [--host <host>]\n                               [--cluster <cluster>]\n                               [<name>]\nopenstack volume create: error: unrecognized arguments: --group pp-member-f70c2c-\n')
