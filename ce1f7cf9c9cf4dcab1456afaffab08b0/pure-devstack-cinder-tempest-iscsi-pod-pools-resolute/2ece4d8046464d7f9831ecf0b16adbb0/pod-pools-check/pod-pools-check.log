@@ -1,0 +1,72 @@
+[03:32:26] run prefix '37cfb8-'; pod pools ['37cfb8-pool-a', '37cfb8-pool-b']
+[03:32:26] driver features: {'array_moves': True, 'pod_groups': True}
+[03:32:29] array cinderci-fa2; pools 37cfb8-pool-a, 37cfb8-pool-b (quota 10 GiB); service np0000047173@puredriver-1
+[03:32:29] === phase: stats
+[03:32:30]   ok: scheduler lists one pool for 37cfb8-pool-a (['np0000047173@puredriver-1#37cfb8-pool-a'])
+[03:32:30]   ok: 37cfb8-pool-a total_capacity_gb is the quota
+[03:32:30]   ok: 37cfb8-pool-a max_over_subscription_ratio is 1.0
+[03:32:30]   ok: 37cfb8-pool-a is thin provisioned
+[03:32:30]   ok: 37cfb8-pool-a has no reserve
+[03:32:30]   ok: scheduler lists one pool for 37cfb8-pool-b (['np0000047173@puredriver-1#37cfb8-pool-b'])
+[03:32:30]   ok: 37cfb8-pool-b total_capacity_gb is the quota
+[03:32:30]   ok: 37cfb8-pool-b max_over_subscription_ratio is 1.0
+[03:32:30]   ok: 37cfb8-pool-b is thin provisioned
+[03:32:30]   ok: 37cfb8-pool-b has no reserve
+[03:32:30]   ok: the array pool is still reported
+[03:32:30] === phase: fill
+[03:32:34]   volume 5f313784-8156-47d0-afe5-5929989b7070: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=4
+[03:32:37]   volume 832c80e7-95d4-460b-98a7-cc6cdc963311: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=4
+[03:32:38]   volume 5f313784-8156-47d0-afe5-5929989b7070: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=4
+[03:32:39]   ok: 37cfb8-pool-a::37cfb8-5f313784-8156-47d0-afe5-5929989b7070-cinder exists on the array
+[03:32:41]   volume 832c80e7-95d4-460b-98a7-cc6cdc963311: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=4
+[03:32:42]   ok: 37cfb8-pool-a::37cfb8-832c80e7-95d4-460b-98a7-cc6cdc963311-cinder exists on the array
+[03:32:42]   ok: 37cfb8-pool-a used provisioned is 8 GiB
+[03:32:45]   volume 34052695-62a7-4db1-8c8f-f44936362e07: status=error migstat=None host= size=4
+[03:32:46]   ok: the refused volume was never created on the array
+[03:32:46]   ok: 37cfb8-pool-a usage unchanged by the refused create
+[03:32:48] === phase: extend
+[03:32:50]   ok: extend beyond the quota is accepted by the API
+[03:33:01]   volume 5f313784-8156-47d0-afe5-5929989b7070: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=4
+[03:33:01]   ok: extend to 7 GiB was refused (size 4)
+[03:33:09]   volume 5f313784-8156-47d0-afe5-5929989b7070: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=6
+[03:33:09]   ok: extend to 6 GiB succeeded
+[03:33:09]   ok: 37cfb8-pool-a is now at its quota
+[03:33:09] === phase: placement
+[03:33:12]   volume a0a8789d-aed5-4c4f-a5f0-22f0716023dd: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-b size=2
+[03:33:14]   volume a0a8789d-aed5-4c4f-a5f0-22f0716023dd: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-b size=2
+[03:33:14]   ok: volume for either pool landed in 37cfb8-pool-b (A is full): np0000047173@puredriver-1#37cfb8-pool-b
+[03:33:14] === phase: retype
+[03:33:19]   volume 832c80e7-95d4-460b-98a7-cc6cdc963311: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-b size=4
+[03:33:20]   ok: 37cfb8-pool-b::37cfb8-832c80e7-95d4-460b-98a7-cc6cdc963311-cinder exists after the retype
+[03:33:20]   ok: 37cfb8-pool-a::37cfb8-832c80e7-95d4-460b-98a7-cc6cdc963311-cinder is gone from 37cfb8-pool-a
+[03:33:20]   ok: retype moved the volume on the array (serial kept)
+[03:33:23]   volume 832c80e7-95d4-460b-98a7-cc6cdc963311: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=4
+[03:33:24]   ok: 37cfb8-pool-a::37cfb8-832c80e7-95d4-460b-98a7-cc6cdc963311-cinder exists after the retype back
+[03:33:24]   ok: retype back moved the volume on the array (serial kept)
+[03:33:42]   ok: retype into the full pool was refused; volume still available in 37cfb8-pool-b (available, np0000047173@puredriver-1#37cfb8-pool-b)
+[03:33:42] === phase: migrate
+[03:34:00]   ok: migrate of a volume pinned to 37cfb8-pool-a by its type was refused by the scheduler (available/error, np0000047173@puredriver-1#37cfb8-pool-a)
+[03:34:04]   volume 5f313784-8156-47d0-afe5-5929989b7070: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=6
+[03:34:05]   ok: 37cfb8-pool-a::37cfb8-5f313784-8156-47d0-afe5-5929989b7070-cinder is unchanged by the same-pool retype
+[03:34:07]   volume 5f313784-8156-47d0-afe5-5929989b7070: status=available migstat=success host=np0000047173@puredriver-1#37cfb8-pool-b size=6
+[03:34:09]   ok: 37cfb8-pool-b::37cfb8-5f313784-8156-47d0-afe5-5929989b7070-cinder exists after the migration
+[03:34:09]   ok: migration between pools moved the volume on the array (serial kept)
+[03:34:11]   volume f5f90a97-c6b3-42cb-a695-7d550cf108c3: status=available migstat=None host=np0000047173@puredriver-1#puredriver-1 size=1
+[03:34:15]   volume f5f90a97-c6b3-42cb-a695-7d550cf108c3: status=available migstat=success host=np0000047173@puredriver-1#37cfb8-pool-b size=1
+[03:34:17]   ok: 37cfb8-pool-b::37cfb8-f5f90a97-c6b3-42cb-a695-7d550cf108c3-cinder exists after migrating into the pod
+[03:34:17]   ok: array pool -> pod pool moved the volume on the array (serial kept)
+[03:34:19]   volume f5f90a97-c6b3-42cb-a695-7d550cf108c3: status=available migstat=success host=np0000047173@puredriver-1#puredriver-1 size=1
+[03:34:20]   ok: 37cfb8-f5f90a97-c6b3-42cb-a695-7d550cf108c3-cinder is back at the array root
+[03:34:20]   ok: pod pool -> array pool moved the volume on the array (serial kept)
+[03:34:23] === phase: group
+[03:34:28]   ok: group created (available)
+[03:34:28]   ok: protection group 37cfb8-pool-a::consisgroup-53094cb2-4793-4310-852b-b2482a841905-cinder exists in the pod
+[03:34:30]   volume aba589a6-a25d-4a53-9106-6083ea81b340: status=available migstat=None host=np0000047173@puredriver-1#37cfb8-pool-a size=1
+[03:34:31]   ok: 37cfb8-pool-a::37cfb8-aba589a6-a25d-4a53-9106-6083ea81b340-cinder is a member of 37cfb8-pool-a::consisgroup-53094cb2-4793-4310-852b-b2482a841905-cinder
+[03:34:34]   ok: group snapshot created (available)
+[03:34:34]   ok: protection group snapshot 37cfb8-pool-a::consisgroup-53094cb2-4793-4310-852b-b2482a841905-cinder.cgsnapshot-a0a029e3-9749-41f6-b8ef-6c82866b2d51-cinder exists
+[03:34:37]   ok: group snapshot deleted
+[03:34:38]   ok: member aba589a6-a25d-4a53-9106-6083ea81b340 removed from the group
+[03:34:38]   ok: 37cfb8-pool-a::37cfb8-aba589a6-a25d-4a53-9106-6083ea81b340-cinder left 37cfb8-pool-a::consisgroup-53094cb2-4793-4310-852b-b2482a841905-cinder on the array
+[03:34:38] === cleanup
+[03:34:58] all pod pool checks passed: {"pool_37cfb8-pool-a": {"total_capacity_gb": 10.0, "free_capacity_gb": 10.0, "provisioned_capacity_gb": 0.0, "max_over_subscription_ratio": 1.0, "thin_provisioning_support": true, "reserved_percentage": 0, "replication_type": [], "pure_pod_quota_gb": 10.0}, "pool_37cfb8-pool-b": {"total_capacity_gb": 10.0, "free_capacity_gb": 10.0, "provisioned_capacity_gb": 0.0, "max_over_subscription_ratio": 1.0, "thin_provisioning_support": true, "reserved_percentage": 0, "replication_type": [], "pure_pod_quota_gb": 10.0}, "migrate_a_to_b_seconds": 2.6}
