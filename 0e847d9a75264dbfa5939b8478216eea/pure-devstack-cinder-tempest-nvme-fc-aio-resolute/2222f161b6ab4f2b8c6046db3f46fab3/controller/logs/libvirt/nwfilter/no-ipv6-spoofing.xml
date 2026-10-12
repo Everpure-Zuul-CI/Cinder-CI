@@ -1,0 +1,17 @@
+<!--
+WARNING: THIS IS AN AUTO-GENERATED FILE. CHANGES TO IT ARE LIKELY TO BE
+OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
+  virsh nwfilter-edit no-ipv6-spoofing
+or other application using the libvirt API.
+-->
+
+<filter name='no-ipv6-spoofing' chain='ipv6-ip' priority='-610'>
+  <uuid>dae3d6c8-7a84-4a7c-a5a5-654fd08d38a5</uuid>
+  <rule action='return' direction='out' priority='100'>
+    <ipv6 srcipaddr='fe80::' srcipmask='10' protocol='udp'/>
+  </rule>
+  <rule action='return' direction='out' priority='500'>
+    <ipv6 srcipaddr='$IPV6'/>
+  </rule>
+  <rule action='drop' direction='out' priority='1000'/>
+</filter>
