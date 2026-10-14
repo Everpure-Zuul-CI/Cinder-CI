@@ -1,0 +1,19 @@
+### migrate a->b
+2026-10-14T18:16:35+00:00 np0000047645 cinder-volume[82635]: INFO cinder.volume.drivers.pure [None req-95587c05-6ef9-43b5-99b7-935744ee53e2 admin None] Starting assisted migration of volume d258cb-c9e61f60-ac21-4ad1-bb2c-3321423007af-cinder from cinderci-fa2 to cinderci-fa1.
+2026-10-14T18:16:41+00:00 np0000047645 cinder-volume[82635]: INFO cinder.volume.drivers.pure [None req-95587c05-6ef9-43b5-99b7-935744ee53e2 admin None] Completed assisted migration of volume d258cb-c9e61f60-ac21-4ad1-bb2c-3321423007af-cinder to cinderci-fa1 in 5 seconds.
+
+### retype b->a
+2026-10-14T18:17:03+00:00 np0000047645 cinder-volume[82644]: INFO cinder.volume.drivers.pure [None req-64aace9b-d2cf-406c-82d0-a7eeeb33ff0f admin None] Starting assisted migration of volume d258cb-c9e61f60-ac21-4ad1-bb2c-3321423007af-cinder from cinderci-fa1 to cinderci-fa2.
+2026-10-14T18:17:08+00:00 np0000047645 cinder-volume[82644]: INFO cinder.volume.drivers.pure [None req-64aace9b-d2cf-406c-82d0-a7eeeb33ff0f admin None] Completed assisted migration of volume d258cb-c9e61f60-ac21-4ad1-bb2c-3321423007af-cinder to cinderci-fa2 in 6 seconds.
+
+### fallback vgroup
+
+
+### stale replica
+2026-10-14T18:18:10+00:00 np0000047645 cinder-volume[82635]: WARNING cinder.volume.drivers.pure [None req-7a82bb8c-460e-40ef-b1bc-20dc8876b9a9 admin None] Removing replica snapshot cinderci-fa2:d258cb-47a60354-9b41-4b9f-a3f6-e0851d79f0df-cinder.1 on cinderci-fa1 left by an earlier migration attempt.
+2026-10-14T18:18:10+00:00 np0000047645 cinder-volume[82635]: INFO cinder.volume.drivers.pure [None req-7a82bb8c-460e-40ef-b1bc-20dc8876b9a9 admin None] Starting assisted migration of volume d258cb-47a60354-9b41-4b9f-a3f6-e0851d79f0df-cinder from cinderci-fa2 to cinderci-fa1.
+2026-10-14T18:18:15+00:00 np0000047645 cinder-volume[82635]: INFO cinder.volume.drivers.pure [None req-7a82bb8c-460e-40ef-b1bc-20dc8876b9a9 admin None] Completed assisted migration of volume d258cb-47a60354-9b41-4b9f-a3f6-e0851d79f0df-cinder to cinderci-fa1 in 5 seconds.
+
+### collision
+2026-10-14T18:18:24+00:00 np0000047645 cinder-volume[82635]: WARNING cinder.volume.drivers.pure [None req-e7126a0a-955d-4d96-bbc2-c476ef7a7754 admin None] Assisted migration of volume d258cb-c8c0ef6d-011b-4f32-8eb7-e89f3985399a-cinder to cinderci-fa1 failed, falling back to generic migration: Pure Storage Cinder driver failure: Volume d258cb-c8c0ef6d-011b-4f32-8eb7-e89f3985399a-cinder already exists on cinderci-fa1 and was not left by an earlier migration attempt; refusing to overwrite it.: cinder.volume.drivers.pure.PureDriverException: Pure Storage Cinder driver failure: Volume d258cb-c8c0ef6d-011b-4f32-8eb7-e89f3985399a-cinder already exists on cinderci-fa1 and was not left by an earlier migration attempt; refusing to overwrite it.
+
