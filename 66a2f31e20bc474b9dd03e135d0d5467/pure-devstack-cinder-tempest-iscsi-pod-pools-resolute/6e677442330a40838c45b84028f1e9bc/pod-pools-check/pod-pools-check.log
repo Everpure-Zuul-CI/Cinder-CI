@@ -1,0 +1,72 @@
+[21:59:04] run prefix 'ac1025-'; pod pools ['ac1025-pool-a', 'ac1025-pool-b']
+[21:59:04] driver features: {'array_moves': True, 'pod_groups': True}
+[21:59:07] array cinderci-fa2; pools ac1025-pool-a, ac1025-pool-b (quota 10 GiB); service np0000047909@puredriver-1
+[21:59:07] === phase: stats
+[21:59:09]   ok: scheduler lists one pool for ac1025-pool-a (['np0000047909@puredriver-1#ac1025-pool-a'])
+[21:59:09]   ok: ac1025-pool-a total_capacity_gb is the quota
+[21:59:09]   ok: ac1025-pool-a max_over_subscription_ratio is 1.0
+[21:59:09]   ok: ac1025-pool-a is thin provisioned
+[21:59:09]   ok: ac1025-pool-a has no reserve
+[21:59:09]   ok: scheduler lists one pool for ac1025-pool-b (['np0000047909@puredriver-1#ac1025-pool-b'])
+[21:59:09]   ok: ac1025-pool-b total_capacity_gb is the quota
+[21:59:09]   ok: ac1025-pool-b max_over_subscription_ratio is 1.0
+[21:59:09]   ok: ac1025-pool-b is thin provisioned
+[21:59:09]   ok: ac1025-pool-b has no reserve
+[21:59:09]   ok: the array pool is still reported
+[21:59:09] === phase: fill
+[21:59:13]   volume 8d5c9d6d-f365-4e52-9f2f-300b5e50c14b: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=4
+[21:59:16]   volume bcdf9b8f-7122-4cce-94b6-cbda424ae759: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=4
+[21:59:17]   volume 8d5c9d6d-f365-4e52-9f2f-300b5e50c14b: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=4
+[21:59:18]   ok: ac1025-pool-a::ac1025-8d5c9d6d-f365-4e52-9f2f-300b5e50c14b-cinder exists on the array
+[21:59:20]   volume bcdf9b8f-7122-4cce-94b6-cbda424ae759: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=4
+[21:59:21]   ok: ac1025-pool-a::ac1025-bcdf9b8f-7122-4cce-94b6-cbda424ae759-cinder exists on the array
+[21:59:21]   ok: ac1025-pool-a used provisioned is 8 GiB
+[21:59:24]   volume 3329c7e8-226c-47ee-80cf-c3e775945abd: status=error migstat=None host= size=4
+[21:59:25]   ok: the refused volume was never created on the array
+[21:59:25]   ok: ac1025-pool-a usage unchanged by the refused create
+[21:59:28] === phase: extend
+[21:59:29]   ok: extend beyond the quota is accepted by the API
+[21:59:41]   volume 8d5c9d6d-f365-4e52-9f2f-300b5e50c14b: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=4
+[21:59:41]   ok: extend to 7 GiB was refused (size 4)
+[21:59:49]   volume 8d5c9d6d-f365-4e52-9f2f-300b5e50c14b: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=6
+[21:59:49]   ok: extend to 6 GiB succeeded
+[21:59:49]   ok: ac1025-pool-a is now at its quota
+[21:59:49] === phase: placement
+[21:59:53]   volume cec430fa-3169-4c2c-9263-98bf3b103e72: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-b size=2
+[21:59:54]   volume cec430fa-3169-4c2c-9263-98bf3b103e72: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-b size=2
+[21:59:54]   ok: volume for either pool landed in ac1025-pool-b (A is full): np0000047909@puredriver-1#ac1025-pool-b
+[21:59:54] === phase: retype
+[21:59:59]   volume bcdf9b8f-7122-4cce-94b6-cbda424ae759: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-b size=4
+[22:00:01]   ok: ac1025-pool-b::ac1025-bcdf9b8f-7122-4cce-94b6-cbda424ae759-cinder exists after the retype
+[22:00:01]   ok: ac1025-pool-a::ac1025-bcdf9b8f-7122-4cce-94b6-cbda424ae759-cinder is gone from ac1025-pool-a
+[22:00:01]   ok: retype moved the volume on the array (serial kept)
+[22:00:04]   volume bcdf9b8f-7122-4cce-94b6-cbda424ae759: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=4
+[22:00:05]   ok: ac1025-pool-a::ac1025-bcdf9b8f-7122-4cce-94b6-cbda424ae759-cinder exists after the retype back
+[22:00:05]   ok: retype back moved the volume on the array (serial kept)
+[22:00:23]   ok: retype into the full pool was refused; volume still available in ac1025-pool-b (available, np0000047909@puredriver-1#ac1025-pool-b)
+[22:00:23] === phase: migrate
+[22:00:41]   ok: migrate of a volume pinned to ac1025-pool-a by its type was refused by the scheduler (available/error, np0000047909@puredriver-1#ac1025-pool-a)
+[22:00:45]   volume 8d5c9d6d-f365-4e52-9f2f-300b5e50c14b: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=6
+[22:00:46]   ok: ac1025-pool-a::ac1025-8d5c9d6d-f365-4e52-9f2f-300b5e50c14b-cinder is unchanged by the same-pool retype
+[22:00:49]   volume 8d5c9d6d-f365-4e52-9f2f-300b5e50c14b: status=available migstat=success host=np0000047909@puredriver-1#ac1025-pool-b size=6
+[22:00:50]   ok: ac1025-pool-b::ac1025-8d5c9d6d-f365-4e52-9f2f-300b5e50c14b-cinder exists after the migration
+[22:00:50]   ok: migration between pools moved the volume on the array (serial kept)
+[22:00:53]   volume 490dcf10-b59f-41ad-8faa-6e9d8c737534: status=available migstat=None host=np0000047909@puredriver-1#puredriver-1 size=1
+[22:00:57]   volume 490dcf10-b59f-41ad-8faa-6e9d8c737534: status=available migstat=success host=np0000047909@puredriver-1#ac1025-pool-b size=1
+[22:00:58]   ok: ac1025-pool-b::ac1025-490dcf10-b59f-41ad-8faa-6e9d8c737534-cinder exists after migrating into the pod
+[22:00:58]   ok: array pool -> pod pool moved the volume on the array (serial kept)
+[22:01:01]   volume 490dcf10-b59f-41ad-8faa-6e9d8c737534: status=available migstat=success host=np0000047909@puredriver-1#puredriver-1 size=1
+[22:01:02]   ok: ac1025-490dcf10-b59f-41ad-8faa-6e9d8c737534-cinder is back at the array root
+[22:01:02]   ok: pod pool -> array pool moved the volume on the array (serial kept)
+[22:01:05] === phase: group
+[22:01:10]   ok: group created (available)
+[22:01:10]   ok: protection group ac1025-pool-a::consisgroup-369d7b2b-289c-4484-8e2f-13d80f11c45d-cinder exists in the pod
+[22:01:12]   volume 470ce86a-3a4f-44e5-95ea-796aebfa7913: status=available migstat=None host=np0000047909@puredriver-1#ac1025-pool-a size=1
+[22:01:14]   ok: ac1025-pool-a::ac1025-470ce86a-3a4f-44e5-95ea-796aebfa7913-cinder is a member of ac1025-pool-a::consisgroup-369d7b2b-289c-4484-8e2f-13d80f11c45d-cinder
+[22:01:16]   ok: group snapshot created (available)
+[22:01:16]   ok: protection group snapshot ac1025-pool-a::consisgroup-369d7b2b-289c-4484-8e2f-13d80f11c45d-cinder.cgsnapshot-f53d1523-ab36-4edc-b129-54ab82792f4c-cinder exists
+[22:01:19]   ok: group snapshot deleted
+[22:01:21]   ok: member 470ce86a-3a4f-44e5-95ea-796aebfa7913 removed from the group
+[22:01:21]   ok: ac1025-pool-a::ac1025-470ce86a-3a4f-44e5-95ea-796aebfa7913-cinder left ac1025-pool-a::consisgroup-369d7b2b-289c-4484-8e2f-13d80f11c45d-cinder on the array
+[22:01:21] === cleanup
+[22:01:41] all pod pool checks passed: {"pool_ac1025-pool-a": {"total_capacity_gb": 10.0, "free_capacity_gb": 10.0, "provisioned_capacity_gb": 0.0, "max_over_subscription_ratio": 1.0, "thin_provisioning_support": true, "reserved_percentage": 0, "replication_type": [], "pure_pod_quota_gb": 10.0}, "pool_ac1025-pool-b": {"total_capacity_gb": 10.0, "free_capacity_gb": 10.0, "provisioned_capacity_gb": 0.0, "max_over_subscription_ratio": 1.0, "thin_provisioning_support": true, "reserved_percentage": 0, "replication_type": [], "pure_pod_quota_gb": 10.0}, "migrate_a_to_b_seconds": 2.9}
