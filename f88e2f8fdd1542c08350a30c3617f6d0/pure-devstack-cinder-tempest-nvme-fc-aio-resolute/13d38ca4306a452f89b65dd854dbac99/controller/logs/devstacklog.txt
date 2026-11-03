@@ -1,0 +1,305 @@
+2026-11-03 15:09:03.338 | + ./stack.sh:main:491                      :   exec
+2026-11-03 15:09:03.338 | ++ ./stack.sh:main:491                      :   /usr/bin/python3.14 /opt/stack/devstack/tools/outfilter.py -o /opt/stack/logs/devstacklog.txt.2026-11-03-150903.summary.2026-11-03-150903
+2026-11-03 15:09:03.338 | + ./stack.sh:main:499                      :   echo_summary 'stack.sh log /opt/stack/logs/devstacklog.txt.2026-11-03-150903'
+2026-11-03 15:09:03.338 | + ./stack.sh:echo_summary:444              :   [[ -t 3 ]]
+2026-11-03 15:09:03.338 | + ./stack.sh:echo_summary:450              :   echo -e stack.sh log /opt/stack/logs/devstacklog.txt.2026-11-03-150903
+2026-11-03 15:09:03.338 | + ./stack.sh:main:501                      :   ln -sf /opt/stack/logs/devstacklog.txt.2026-11-03-150903 /opt/stack/logs/devstacklog.txt
+2026-11-03 15:09:03.338 | + ./stack.sh:main:502                      :   ln -sf /opt/stack/logs/devstacklog.txt.2026-11-03-150903.summary.2026-11-03-150903 /opt/stack/logs/devstacklog.txt.summary
+2026-11-03 15:09:03.338 | + ./stack.sh:main:517                      :   check_path_perm_sanity /opt/stack
+2026-11-03 15:09:03.338 | + functions:check_path_perm_sanity:615     :   local real_path
+2026-11-03 15:09:03.338 | ++ functions:check_path_perm_sanity:616     :   readlink -f /opt/stack
+2026-11-03 15:09:03.338 | + functions:check_path_perm_sanity:616     :   real_path=/opt/stack
+2026-11-03 15:09:03.338 | + functions:check_path_perm_sanity:617     :   local rebuilt_path=
+2026-11-03 15:09:03.338 | ++ functions:check_path_perm_sanity:618     :   echo /opt/stack
+2026-11-03 15:09:03.338 | ++ functions:check_path_perm_sanity:618     :   tr / ' '
+2026-11-03 15:09:03.338 | + functions:check_path_perm_sanity:618     :   for i in $(echo ${real_path} | tr "/" " ")
+2026-11-03 15:09:03.338 | + functions:check_path_perm_sanity:619     :   rebuilt_path=/opt
+2026-11-03 15:09:03.338 | ++ functions:check_path_perm_sanity:621     :   stat -c %a /opt
+2026-11-03 15:09:03.338 | + functions:check_path_perm_sanity:621     :   [[ 755 = 700 ]]
+2026-11-03 15:09:03.338 | + functions:check_path_perm_sanity:618     :   for i in $(echo ${real_path} | tr "/" " ")
+2026-11-03 15:09:03.338 | + functions:check_path_perm_sanity:619     :   rebuilt_path=/opt/stack
+2026-11-03 15:09:03.339 | ++ functions:check_path_perm_sanity:621     :   stat -c %a /opt/stack
+2026-11-03 15:09:03.342 | + functions:check_path_perm_sanity:621     :   [[ 755 = 700 ]]
+2026-11-03 15:09:03.343 | + ./stack.sh:main:523                      :   trap exit_trap EXIT
+2026-11-03 15:09:03.345 | + ./stack.sh:main:564                      :   trap err_trap ERR
+2026-11-03 15:09:03.346 | + ./stack.sh:main:577                      :   set -o errexit
+2026-11-03 15:09:03.347 | + ./stack.sh:main:580                      :   uname -a
+2026-11-03 15:09:03.350 | Linux np0000049875 7.0.0-42-generic #42-Ubuntu SMP PREEMPT_DYNAMIC Thu Oct 15 08:06:44 UTC 2026 x86_64 GNU/Linux
+2026-11-03 15:09:03.351 | + ./stack.sh:main:583                      :   SSL_BUNDLE_FILE=/opt/stack/data/ca-bundle.pem
+2026-11-03 15:09:03.352 | + ./stack.sh:main:584                      :   rm -f /opt/stack/data/ca-bundle.pem
+2026-11-03 15:09:03.355 | + ./stack.sh:main:587                      :   source /opt/stack/devstack/lib/database
+2026-11-03 15:09:03.379 | + ./stack.sh:main:588                      :   source /opt/stack/devstack/lib/rpc_backend
+2026-11-03 15:09:03.389 | + ./stack.sh:main:591                      :   source /opt/stack/devstack/lib/host
+2026-11-03 15:09:03.391 | +++ lib/host:source:12                       :   trueorfalse True ENABLE_KSM
+2026-11-03 15:09:03.399 | ++ lib/host:source:12                       :   ENABLE_KSM=True
+2026-11-03 15:09:03.400 | +++ lib/host:source:13                       :   trueorfalse True ENABLE_KSMTUNED
+2026-11-03 15:09:03.408 | ++ lib/host:source:13                       :   ENABLE_KSMTUNED=True
+2026-11-03 15:09:03.410 | +++ lib/host:source:56                       :   trueorfalse False ENABLE_ZSWAP
+2026-11-03 15:09:03.417 | ++ lib/host:source:56                       :   ENABLE_ZSWAP=True
+2026-11-03 15:09:03.418 | ++ lib/host:source:59                       :   ZSWAP_COMPRESSOR=lz4
+2026-11-03 15:09:03.419 | ++ lib/host:source:60                       :   ZSWAP_ZPOOL=zsmalloc
+2026-11-03 15:09:03.421 | +++ lib/host:source:82                       :   trueorfalse False ENABLE_SYSCTL_MEM_TUNING
+2026-11-03 15:09:03.429 | ++ lib/host:source:82                       :   ENABLE_SYSCTL_MEM_TUNING=True
+2026-11-03 15:09:03.430 | +++ lib/host:source:104                      :   trueorfalse False ENABLE_SYSCTL_NET_TUNING
+2026-11-03 15:09:03.437 | ++ lib/host:source:104                      :   ENABLE_SYSCTL_NET_TUNING=True
+2026-11-03 15:09:03.438 | + ./stack.sh:main:594                      :   tune_host
+2026-11-03 15:09:03.439 | + lib/host:tune_host:125                   :   configure_host_mem
+2026-11-03 15:09:03.440 | + lib/host:configure_host_mem:99           :   configure_zswap
+2026-11-03 15:09:03.442 | + lib/host:configure_zswap:69              :   [[ True == True ]]
+2026-11-03 15:09:03.443 | + lib/host:configure_zswap:72              :   is_ubuntu
+2026-11-03 15:09:03.443 | + functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-03 15:09:03.444 | + functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-03 15:09:03.445 | + lib/host:configure_zswap:73              :   set_zswap_parameter compressor lz4
+2026-11-03 15:09:03.447 | + lib/host:set_zswap_parameter:62          :   local name=compressor
+2026-11-03 15:09:03.448 | + lib/host:set_zswap_parameter:63          :   local value=lz4
+2026-11-03 15:09:03.449 | + lib/host:set_zswap_parameter:65          :   set_sysfs_parameter zswap lz4 /sys/module/zswap/parameters/compressor
+2026-11-03 15:09:03.450 | + lib/host:set_sysfs_parameter:15          :   local name=zswap
+2026-11-03 15:09:03.451 | + lib/host:set_sysfs_parameter:16          :   local value=lz4
+2026-11-03 15:09:03.452 | + lib/host:set_sysfs_parameter:17          :   local param_file=/sys/module/zswap/parameters/compressor
+2026-11-03 15:09:03.452 | + lib/host:set_sysfs_parameter:19          :   [[ ! -e /sys/module/zswap/parameters/compressor ]]
+2026-11-03 15:09:03.454 | + lib/host:set_sysfs_parameter:24          :   echo lz4
+2026-11-03 15:09:03.454 | + lib/host:set_sysfs_parameter:24          :   sudo tee /sys/module/zswap/parameters/compressor
+2026-11-03 15:09:03.460 | lz4
+2026-11-03 15:09:03.462 | + lib/host:configure_zswap:74              :   set_zswap_parameter zpool zsmalloc
+2026-11-03 15:09:03.463 | + lib/host:set_zswap_parameter:62          :   local name=zpool
+2026-11-03 15:09:03.465 | + lib/host:set_zswap_parameter:63          :   local value=zsmalloc
+2026-11-03 15:09:03.466 | + lib/host:set_zswap_parameter:65          :   set_sysfs_parameter zswap zsmalloc /sys/module/zswap/parameters/zpool
+2026-11-03 15:09:03.467 | + lib/host:set_sysfs_parameter:15          :   local name=zswap
+2026-11-03 15:09:03.468 | + lib/host:set_sysfs_parameter:16          :   local value=zsmalloc
+2026-11-03 15:09:03.469 | + lib/host:set_sysfs_parameter:17          :   local param_file=/sys/module/zswap/parameters/zpool
+2026-11-03 15:09:03.470 | + lib/host:set_sysfs_parameter:19          :   [[ ! -e /sys/module/zswap/parameters/zpool ]]
+2026-11-03 15:09:03.471 | + lib/host:set_sysfs_parameter:20          :   echo 'WARNING: zswap parameter /sys/module/zswap/parameters/zpool is not present, skipping'
+2026-11-03 15:09:03.472 | WARNING: zswap parameter /sys/module/zswap/parameters/zpool is not present, skipping
+2026-11-03 15:09:03.472 | + lib/host:set_sysfs_parameter:21          :   return 0
+2026-11-03 15:09:03.474 | + lib/host:configure_zswap:76              :   set_zswap_parameter enabled 1
+2026-11-03 15:09:03.475 | + lib/host:set_zswap_parameter:62          :   local name=enabled
+2026-11-03 15:09:03.476 | + lib/host:set_zswap_parameter:63          :   local value=1
+2026-11-03 15:09:03.477 | + lib/host:set_zswap_parameter:65          :   set_sysfs_parameter zswap 1 /sys/module/zswap/parameters/enabled
+2026-11-03 15:09:03.478 | + lib/host:set_sysfs_parameter:15          :   local name=zswap
+2026-11-03 15:09:03.479 | + lib/host:set_sysfs_parameter:16          :   local value=1
+2026-11-03 15:09:03.480 | + lib/host:set_sysfs_parameter:17          :   local param_file=/sys/module/zswap/parameters/enabled
+2026-11-03 15:09:03.481 | + lib/host:set_sysfs_parameter:19          :   [[ ! -e /sys/module/zswap/parameters/enabled ]]
+2026-11-03 15:09:03.482 | + lib/host:set_sysfs_parameter:24          :   echo 1
+2026-11-03 15:09:03.482 | + lib/host:set_sysfs_parameter:24          :   sudo tee /sys/module/zswap/parameters/enabled
+2026-11-03 15:09:03.488 | 1
+2026-11-03 15:09:03.496 | + lib/host:configure_zswap:78              :   sudo grep -R . /sys/module/zswap/parameters
+2026-11-03 15:09:03.502 | /sys/module/zswap/parameters/enabled:Y
+2026-11-03 15:09:03.502 | /sys/module/zswap/parameters/shrinker_enabled:Y
+2026-11-03 15:09:03.502 | /sys/module/zswap/parameters/max_pool_percent:20
+2026-11-03 15:09:03.502 | /sys/module/zswap/parameters/compressor:lz4
+2026-11-03 15:09:03.502 | /sys/module/zswap/parameters/accept_threshold_percent:90
+2026-11-03 15:09:03.503 | + lib/host:configure_host_mem:100          :   configure_ksm
+2026-11-03 15:09:03.504 | + lib/host:configure_ksm:39                :   [[ True == True ]]
+2026-11-03 15:09:03.505 | + lib/host:configure_ksm:40                :   install_package ksmtuned
+2026-11-03 15:09:03.506 | + functions-common:install_package:1438    :   update_package_repo
+2026-11-03 15:09:03.507 | + functions-common:update_package_repo:1412 :   NO_UPDATE_REPOS=False
+2026-11-03 15:09:03.508 | + functions-common:update_package_repo:1413 :   REPOS_UPDATED=False
+2026-11-03 15:09:03.509 | + functions-common:update_package_repo:1414 :   RETRY_UPDATE=False
+2026-11-03 15:09:03.510 | + functions-common:update_package_repo:1416 :   [[ False = True ]]
+2026-11-03 15:09:03.511 | + functions-common:update_package_repo:1420 :   is_ubuntu
+2026-11-03 15:09:03.512 | + functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-03 15:09:03.513 | + functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-03 15:09:03.514 | + functions-common:update_package_repo:1421 :   apt_get_update
+2026-11-03 15:09:03.515 | + functions-common:apt_get_update:1166     :   [[ False == True ]]
+2026-11-03 15:09:03.516 | + functions-common:apt_get_update:1171     :   [[ False = True ]]
+2026-11-03 15:09:03.517 | + functions-common:apt_get_update:1173     :   local sudo=sudo
+2026-11-03 15:09:03.518 | ++ functions-common:apt_get_update:1174     :   id -u
+2026-11-03 15:09:03.521 | + functions-common:apt_get_update:1174     :   [[ 1001 = 0 ]]
+2026-11-03 15:09:03.522 | + functions-common:apt_get_update:1177     :   time_start apt-get-update
+2026-11-03 15:09:03.523 | + functions-common:time_start:2406         :   local name=apt-get-update
+2026-11-03 15:09:03.524 | + functions-common:time_start:2407         :   local start_time=
+2026-11-03 15:09:03.525 | + functions-common:time_start:2408         :   [[ -n '' ]]
+2026-11-03 15:09:03.526 | ++ functions-common:time_start:2411         :   date +%s%3N
+2026-11-03 15:09:03.530 | + functions-common:time_start:2411         :   _TIME_START[$name]=1793718543528
+2026-11-03 15:09:03.531 | + functions-common:apt_get_update:1179     :   local 'proxies=http_proxy= https_proxy= no_proxy= '
+2026-11-03 15:09:03.532 | + functions-common:apt_get_update:1180     :   local 'update_cmd=sudo http_proxy= https_proxy= no_proxy=  apt-get update'
+2026-11-03 15:09:03.533 | + functions-common:apt_get_update:1181     :   timeout 300 sh -c 'while ! sudo http_proxy= https_proxy= no_proxy=  apt-get update; do sleep 30; done'
+2026-11-03 15:10:09.093 | Ign:1 http://mirrors.kernel.org/ubuntu resolute InRelease
+2026-11-03 15:10:09.093 | Ign:2 http://mirrors.kernel.org/ubuntu resolute-updates InRelease
+2026-11-03 15:10:09.093 | Ign:3 http://mirrors.kernel.org/ubuntu resolute-security InRelease
+2026-11-03 15:10:09.093 | Ign:4 http://mirrors.kernel.org/ubuntu resolute-backports InRelease
+2026-11-03 15:10:10.093 | Ign:4 http://mirrors.kernel.org/ubuntu resolute-backports InRelease
+2026-11-03 15:10:10.093 | Ign:3 http://mirrors.kernel.org/ubuntu resolute-security InRelease
+2026-11-03 15:10:10.094 | Ign:2 http://mirrors.kernel.org/ubuntu resolute-updates InRelease
+2026-11-03 15:10:10.094 | Ign:1 http://mirrors.kernel.org/ubuntu resolute InRelease
+2026-11-03 15:10:12.094 | Ign:1 http://mirrors.kernel.org/ubuntu resolute InRelease
+2026-11-03 15:10:12.094 | Ign:2 http://mirrors.kernel.org/ubuntu resolute-updates InRelease
+2026-11-03 15:10:12.094 | Ign:3 http://mirrors.kernel.org/ubuntu resolute-security InRelease
+2026-11-03 15:10:12.094 | Ign:4 http://mirrors.kernel.org/ubuntu resolute-backports InRelease
+2026-11-03 15:10:16.095 | Err:4 http://mirrors.kernel.org/ubuntu resolute-backports InRelease
+2026-11-03 15:10:16.095 |   Unable to connect to mirrors.kernel.org:http: [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.095 | Err:3 http://mirrors.kernel.org/ubuntu resolute-security InRelease
+2026-11-03 15:10:16.095 |   Unable to connect to mirrors.kernel.org:http: [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.095 | Err:2 http://mirrors.kernel.org/ubuntu resolute-updates InRelease
+2026-11-03 15:10:16.095 |   Unable to connect to mirrors.kernel.org:http: [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.095 | Err:1 http://mirrors.kernel.org/ubuntu resolute InRelease
+2026-11-03 15:10:16.095 |   Could not connect to mirrors.kernel.org:80 (142.0.200.124), connection timed out [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.095 |   Unable to connect to mirrors.kernel.org:http: [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.677 | Reading package lists...
+2026-11-03 15:10:16.687 | W: Failed to fetch http://mirrors.kernel.org/ubuntu/dists/resolute/InRelease  Unable to connect to mirrors.kernel.org:http: [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.687 | W: Failed to fetch http://mirrors.kernel.org/ubuntu/dists/resolute-updates/InRelease  Unable to connect to mirrors.kernel.org:http: [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.687 | W: Failed to fetch http://mirrors.kernel.org/ubuntu/dists/resolute-security/InRelease  Unable to connect to mirrors.kernel.org:http: [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.687 | W: Failed to fetch http://mirrors.kernel.org/ubuntu/dists/resolute-backports/InRelease  Unable to connect to mirrors.kernel.org:http: [IP: 142.0.200.124 80]
+2026-11-03 15:10:16.687 | W: Some index files failed to download. They have been ignored, or old ones used instead.
+2026-11-03 15:10:16.690 | + functions-common:apt_get_update:1185     :   REPOS_UPDATED=True
+2026-11-03 15:10:16.691 | + functions-common:apt_get_update:1187     :   time_stop apt-get-update
+2026-11-03 15:10:16.692 | + functions-common:time_stop:2420          :   local name
+2026-11-03 15:10:16.694 | + functions-common:time_stop:2421          :   local end_time
+2026-11-03 15:10:16.695 | + functions-common:time_stop:2422          :   local elapsed_time
+2026-11-03 15:10:16.696 | + functions-common:time_stop:2423          :   local total
+2026-11-03 15:10:16.697 | + functions-common:time_stop:2424          :   local start_time
+2026-11-03 15:10:16.698 | + functions-common:time_stop:2426          :   name=apt-get-update
+2026-11-03 15:10:16.699 | + functions-common:time_stop:2427          :   start_time=1793718543528
+2026-11-03 15:10:16.700 | + functions-common:time_stop:2429          :   [[ -z 1793718543528 ]]
+2026-11-03 15:10:16.702 | ++ functions-common:time_stop:2432          :   date +%s%3N
+2026-11-03 15:10:16.708 | + functions-common:time_stop:2432          :   end_time=1793718616705
+2026-11-03 15:10:16.709 | + functions-common:time_stop:2433          :   elapsed_time=73177
+2026-11-03 15:10:16.710 | + functions-common:time_stop:2434          :   total=0
+2026-11-03 15:10:16.710 | + functions-common:time_stop:2436          :   _TIME_START[$name]=
+2026-11-03 15:10:16.711 | + functions-common:time_stop:2437          :   _TIME_TOTAL[$name]=73177
+2026-11-03 15:10:16.712 | + functions-common:install_package:1439    :   real_install_package ksmtuned
+2026-11-03 15:10:16.713 | + functions-common:real_install_package:1426 :   is_ubuntu
+2026-11-03 15:10:16.715 | + functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-03 15:10:16.716 | + functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-03 15:10:16.717 | + functions-common:real_install_package:1427 :   apt_get install ksmtuned
+2026-11-03 15:10:16.729 | + functions-common:apt_get:1207            :   sudo DEBIAN_FRONTEND=noninteractive http_proxy= https_proxy= no_proxy= apt-get --option Dpkg::Options::=--force-confold --assume-yes install ksmtuned
+2026-11-03 15:10:16.755 | Reading package lists...
+2026-11-03 15:10:16.878 | Building dependency tree...
+2026-11-03 15:10:16.878 | Reading state information...
+2026-11-03 15:10:16.939 | Solving dependencies...
+2026-11-03 15:10:17.033 | The following NEW packages will be installed:
+2026-11-03 15:10:17.034 |   ksmtuned
+2026-11-03 15:10:47.387 | 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+2026-11-03 15:10:47.387 | Need to get 7,638 B of archives.
+2026-11-03 15:10:47.387 | After this operation, 44.0 kB of additional disk space will be used.
+2026-11-03 15:10:47.387 | Ign:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1
+2026-11-03 15:10:48.388 | Ign:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1
+2026-11-03 15:10:50.389 | Ign:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1
+2026-11-03 15:10:54.390 | Err:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1
+2026-11-03 15:10:54.390 |   Could not connect to mirrors.kernel.org:80 (142.0.200.124), connection timed out
+2026-11-03 15:10:54.390 |   Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:10:54.393 | E: Failed to fetch http://mirrors.kernel.org/ubuntu/pool/universe/k/ksmtuned/ksmtuned_4.20150326%2bnn-1_amd64.deb  Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:10:54.393 | E: Unable to fetch some archives, maybe run apt update or try with --fix-missing?
+2026-11-03 15:10:54.396 | + functions-common:apt_get:1211            :   result=100
+2026-11-03 15:10:54.397 | + functions-common:apt_get:1214            :   time_stop apt-get
+2026-11-03 15:10:54.399 | + functions-common:time_stop:2420          :   local name
+2026-11-03 15:10:54.400 | + functions-common:time_stop:2421          :   local end_time
+2026-11-03 15:10:54.402 | + functions-common:time_stop:2422          :   local elapsed_time
+2026-11-03 15:10:54.403 | + functions-common:time_stop:2423          :   local total
+2026-11-03 15:10:54.404 | + functions-common:time_stop:2424          :   local start_time
+2026-11-03 15:10:54.405 | + functions-common:time_stop:2426          :   name=apt-get
+2026-11-03 15:10:54.406 | + functions-common:time_stop:2427          :   start_time=1793718616727
+2026-11-03 15:10:54.408 | + functions-common:time_stop:2429          :   [[ -z 1793718616727 ]]
+2026-11-03 15:10:54.409 | ++ functions-common:time_stop:2432          :   date +%s%3N
+2026-11-03 15:10:54.414 | + functions-common:time_stop:2432          :   end_time=1793718654412
+2026-11-03 15:10:54.415 | + functions-common:time_stop:2433          :   elapsed_time=37685
+2026-11-03 15:10:54.416 | + functions-common:time_stop:2434          :   total=406
+2026-11-03 15:10:54.418 | + functions-common:time_stop:2436          :   _TIME_START[$name]=
+2026-11-03 15:10:54.419 | + functions-common:time_stop:2437          :   _TIME_TOTAL[$name]=38091
+2026-11-03 15:10:54.420 | + functions-common:apt_get:1215            :   return 100
+2026-11-03 15:10:54.421 | + functions-common:install_package:1440    :   RETRY_UPDATE=True
+2026-11-03 15:10:54.423 | + functions-common:install_package:1440    :   update_package_repo
+2026-11-03 15:10:54.424 | + functions-common:update_package_repo:1412 :   NO_UPDATE_REPOS=False
+2026-11-03 15:10:54.425 | + functions-common:update_package_repo:1413 :   REPOS_UPDATED=True
+2026-11-03 15:10:54.426 | + functions-common:update_package_repo:1414 :   RETRY_UPDATE=True
+2026-11-03 15:10:54.428 | + functions-common:update_package_repo:1416 :   [[ False = True ]]
+2026-11-03 15:10:54.429 | + functions-common:update_package_repo:1420 :   is_ubuntu
+2026-11-03 15:10:54.430 | + functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-03 15:10:54.431 | + functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-03 15:10:54.433 | + functions-common:update_package_repo:1421 :   apt_get_update
+2026-11-03 15:10:54.434 | + functions-common:apt_get_update:1166     :   [[ True == True ]]
+2026-11-03 15:10:54.435 | + functions-common:apt_get_update:1166     :   [[ True != True ]]
+2026-11-03 15:10:54.437 | + functions-common:apt_get_update:1171     :   [[ False = True ]]
+2026-11-03 15:10:54.438 | + functions-common:apt_get_update:1173     :   local sudo=sudo
+2026-11-03 15:10:54.439 | ++ functions-common:apt_get_update:1174     :   id -u
+2026-11-03 15:10:54.443 | + functions-common:apt_get_update:1174     :   [[ 1001 = 0 ]]
+2026-11-03 15:10:54.444 | + functions-common:apt_get_update:1177     :   time_start apt-get-update
+2026-11-03 15:10:54.445 | + functions-common:time_start:2406         :   local name=apt-get-update
+2026-11-03 15:10:54.447 | + functions-common:time_start:2407         :   local start_time=
+2026-11-03 15:10:54.448 | + functions-common:time_start:2408         :   [[ -n '' ]]
+2026-11-03 15:10:54.450 | ++ functions-common:time_start:2411         :   date +%s%3N
+2026-11-03 15:10:54.454 | + functions-common:time_start:2411         :   _TIME_START[$name]=1793718654452
+2026-11-03 15:10:54.455 | + functions-common:apt_get_update:1179     :   local 'proxies=http_proxy= https_proxy= no_proxy= '
+2026-11-03 15:10:54.456 | + functions-common:apt_get_update:1180     :   local 'update_cmd=sudo http_proxy= https_proxy= no_proxy=  apt-get update'
+2026-11-03 15:10:54.458 | + functions-common:apt_get_update:1181     :   timeout 300 sh -c 'while ! sudo http_proxy= https_proxy= no_proxy=  apt-get update; do sleep 30; done'
+2026-11-03 15:11:24.828 | Ign:1 http://mirrors.kernel.org/ubuntu resolute InRelease
+2026-11-03 15:11:24.828 | Ign:2 http://mirrors.kernel.org/ubuntu resolute-updates InRelease
+2026-11-03 15:11:24.828 | Ign:3 http://mirrors.kernel.org/ubuntu resolute-security InRelease
+2026-11-03 15:11:24.828 | Ign:4 http://mirrors.kernel.org/ubuntu resolute-backports InRelease
+2026-11-03 15:11:25.829 | Ign:4 http://mirrors.kernel.org/ubuntu resolute-backports InRelease
+2026-11-03 15:11:25.829 | Ign:3 http://mirrors.kernel.org/ubuntu resolute-security InRelease
+2026-11-03 15:11:25.829 | Ign:2 http://mirrors.kernel.org/ubuntu resolute-updates InRelease
+2026-11-03 15:11:25.829 | Ign:1 http://mirrors.kernel.org/ubuntu resolute InRelease
+2026-11-03 15:11:27.830 | Ign:1 http://mirrors.kernel.org/ubuntu resolute InRelease
+2026-11-03 15:11:27.830 | Ign:2 http://mirrors.kernel.org/ubuntu resolute-updates InRelease
+2026-11-03 15:11:27.830 | Ign:3 http://mirrors.kernel.org/ubuntu resolute-security InRelease
+2026-11-03 15:11:27.830 | Ign:4 http://mirrors.kernel.org/ubuntu resolute-backports InRelease
+2026-11-03 15:11:31.831 | Err:4 http://mirrors.kernel.org/ubuntu resolute-backports InRelease
+2026-11-03 15:11:31.831 |   Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:11:31.831 | Err:3 http://mirrors.kernel.org/ubuntu resolute-security InRelease
+2026-11-03 15:11:31.831 |   Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:11:31.831 | Err:2 http://mirrors.kernel.org/ubuntu resolute-updates InRelease
+2026-11-03 15:11:31.831 |   Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:11:31.832 | Err:1 http://mirrors.kernel.org/ubuntu resolute InRelease
+2026-11-03 15:11:31.832 |   Could not connect to mirrors.kernel.org:80 (142.0.200.124), connection timed out
+2026-11-03 15:11:31.832 |   Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:11:32.349 | Reading package lists...
+2026-11-03 15:11:32.359 | W: Failed to fetch http://mirrors.kernel.org/ubuntu/dists/resolute/InRelease  Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:11:32.359 | W: Failed to fetch http://mirrors.kernel.org/ubuntu/dists/resolute-updates/InRelease  Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:11:32.360 | W: Failed to fetch http://mirrors.kernel.org/ubuntu/dists/resolute-security/InRelease  Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:11:32.360 | W: Failed to fetch http://mirrors.kernel.org/ubuntu/dists/resolute-backports/InRelease  Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:11:32.360 | W: Some index files failed to download. They have been ignored, or old ones used instead.
+2026-11-03 15:11:32.362 | + functions-common:apt_get_update:1185     :   REPOS_UPDATED=True
+2026-11-03 15:11:32.363 | + functions-common:apt_get_update:1187     :   time_stop apt-get-update
+2026-11-03 15:11:32.364 | + functions-common:time_stop:2420          :   local name
+2026-11-03 15:11:32.366 | + functions-common:time_stop:2421          :   local end_time
+2026-11-03 15:11:32.367 | + functions-common:time_stop:2422          :   local elapsed_time
+2026-11-03 15:11:32.368 | + functions-common:time_stop:2423          :   local total
+2026-11-03 15:11:32.369 | + functions-common:time_stop:2424          :   local start_time
+2026-11-03 15:11:32.370 | + functions-common:time_stop:2426          :   name=apt-get-update
+2026-11-03 15:11:32.371 | + functions-common:time_stop:2427          :   start_time=1793718654452
+2026-11-03 15:11:32.372 | + functions-common:time_stop:2429          :   [[ -z 1793718654452 ]]
+2026-11-03 15:11:32.373 | ++ functions-common:time_stop:2432          :   date +%s%3N
+2026-11-03 15:11:32.377 | + functions-common:time_stop:2432          :   end_time=1793718692375
+2026-11-03 15:11:32.378 | + functions-common:time_stop:2433          :   elapsed_time=37923
+2026-11-03 15:11:32.379 | + functions-common:time_stop:2434          :   total=73177
+2026-11-03 15:11:32.380 | + functions-common:time_stop:2436          :   _TIME_START[$name]=
+2026-11-03 15:11:32.381 | + functions-common:time_stop:2437          :   _TIME_TOTAL[$name]=111100
+2026-11-03 15:11:32.382 | + functions-common:install_package:1440    :   real_install_package ksmtuned
+2026-11-03 15:11:32.383 | + functions-common:real_install_package:1426 :   is_ubuntu
+2026-11-03 15:11:32.384 | + functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-03 15:11:32.385 | + functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-03 15:11:32.386 | + functions-common:real_install_package:1427 :   apt_get install ksmtuned
+2026-11-03 15:11:32.398 | + functions-common:apt_get:1207            :   sudo DEBIAN_FRONTEND=noninteractive http_proxy= https_proxy= no_proxy= apt-get --option Dpkg::Options::=--force-confold --assume-yes install ksmtuned
+2026-11-03 15:11:32.423 | Reading package lists...
+2026-11-03 15:11:32.546 | Building dependency tree...
+2026-11-03 15:11:32.547 | Reading state information...
+2026-11-03 15:11:32.608 | Solving dependencies...
+2026-11-03 15:11:32.705 | The following NEW packages will be installed:
+2026-11-03 15:11:32.706 |   ksmtuned
+2026-11-03 15:12:03.047 | 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+2026-11-03 15:12:03.047 | Need to get 7,638 B of archives.
+2026-11-03 15:12:03.047 | After this operation, 44.0 kB of additional disk space will be used.
+2026-11-03 15:12:03.047 | Ign:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1
+2026-11-03 15:12:04.048 | Ign:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1
+2026-11-03 15:12:06.049 | Ign:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1
+2026-11-03 15:12:10.049 | Err:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1
+2026-11-03 15:12:10.049 |   Could not connect to mirrors.kernel.org:80 (142.0.200.124), connection timed out
+2026-11-03 15:12:10.049 |   Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:12:10.052 | E: Failed to fetch http://mirrors.kernel.org/ubuntu/pool/universe/k/ksmtuned/ksmtuned_4.20150326%2bnn-1_amd64.deb  Unable to connect to mirrors.kernel.org:http:
+2026-11-03 15:12:10.052 | E: Unable to fetch some archives, maybe run apt update or try with --fix-missing?
+2026-11-03 15:12:10.055 | + functions-common:apt_get:1               :   exit_trap
+2026-11-03 15:12:10.056 | + ./stack.sh:exit_trap:525                 :   local r=100
+2026-11-03 15:12:10.058 | ++ ./stack.sh:exit_trap:526                 :   jobs -p
+2026-11-03 15:12:10.059 | + ./stack.sh:exit_trap:526                 :   jobs=
+2026-11-03 15:12:10.060 | + ./stack.sh:exit_trap:529                 :   [[ -n '' ]]
+2026-11-03 15:12:10.061 | + ./stack.sh:exit_trap:535                 :   '[' -f '' ']'
+2026-11-03 15:12:10.062 | + ./stack.sh:exit_trap:540                 :   kill_spinner
+2026-11-03 15:12:10.063 | + ./stack.sh:kill_spinner:435              :   '[' '!' -z '' ']'
+2026-11-03 15:12:10.064 | + ./stack.sh:exit_trap:542                 :   [[ 100 -ne 0 ]]
+2026-11-03 15:12:10.065 | + ./stack.sh:exit_trap:543                 :   echo 'Error on exit'
+2026-11-03 15:12:10.065 | Error on exit
+2026-11-03 15:12:10.066 | + ./stack.sh:exit_trap:545                 :   type -p generate-subunit
+2026-11-03 15:12:10.067 | + ./stack.sh:exit_trap:548                 :   [[ -z /opt/stack/logs ]]
+2026-11-03 15:12:10.068 | + ./stack.sh:exit_trap:551                 :   /usr/bin/python3.14 /opt/stack/devstack/tools/worlddump.py -d /opt/stack/logs
+2026-11-03 15:12:10.277 | + ./stack.sh:exit_trap:560                 :   exit 100
