@@ -1,0 +1,3265 @@
+● np0000049858
+    State: degraded
+    Units: 310 loaded (incl. loaded aliases)
+     Jobs: 0 queued
+   Failed: 5 units
+    Since: Tue 2026-11-03 14:16:24 UTC; 8min ago
+  systemd: 259.9-0ubuntu0.1
+  Tainted: unmerged-bin
+   CGroup: /
+           ├─init.scope
+           │ └─1 /sbin/init nofb
+           ├─system.slice
+           │ ├─atd.service
+           │ │ └─909 /usr/sbin/atd -f
+           │ ├─cron.service
+           │ │ └─899 /usr/sbin/cron -f -P
+           │ ├─dbus.service
+           │ │ └─508 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+           │ ├─haveged.service
+           │ │ └─445 /usr/sbin/haveged --Foreground --verbose=1
+           │ ├─iscsid.service
+           │ │ ├─878 /usr/sbin/iscsid
+           │ │ └─879 /usr/sbin/iscsid
+           │ ├─multipathd.service
+           │ │ └─370 /usr/sbin/multipathd -d -s
+           │ ├─packagekit.service
+           │ │ └─1920 /usr/libexec/packagekitd
+           │ ├─polkit.service
+           │ │ └─1925 /usr/lib/polkit-1/polkitd --no-debug --log-level=notice
+           │ ├─pure-boot.service
+           │ │ └─866 dhclient
+           │ ├─rsyslog.service
+           │ │ └─553 /usr/sbin/rsyslogd -n -iNONE
+           │ ├─ssh.service
+           │ │ └─993 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+           │ ├─system-getty.slice
+           │ │ └─getty@tty1.service
+           │ │   └─912 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d - linux
+           │ ├─system-glean.slice
+           │ │ └─glean@enp3s0.service
+           │ │   └─665 dhclient -1 -4 -v -i -pf /run/dhclient.enp3s0.pid -lf /var/lib/dhcp/dhclient.enp3s0.leases -I -df /var/lib/dhcp/dhclient6.enp3s0.leases enp3s0
+           │ ├─system-serial\x2dgetty.slice
+           │ │ └─serial-getty@ttyS0.service
+           │ │   └─913 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d --keep-baud 115200,57600,38400,9600 - vt220
+           │ ├─systemd-journald.service
+           │ │ └─329 /usr/lib/systemd/systemd-journald
+           │ ├─systemd-logind.service
+           │ │ └─527 /usr/lib/systemd/systemd-logind
+           │ ├─systemd-networkd.service
+           │ │ └─740 /usr/lib/systemd/systemd-networkd
+           │ ├─systemd-resolved.service
+           │ │ └─386 /usr/lib/systemd/systemd-resolved
+           │ ├─systemd-timesyncd.service
+           │ │ └─387 /usr/lib/systemd/systemd-timesyncd
+           │ └─systemd-udevd.service
+           │   └─udev
+           │     └─398 /usr/lib/systemd/systemd-udevd
+           └─user.slice
+             └─user-1000.slice
+               ├─session-1.scope
+               │ └─1170 /usr/bin/python3
+               ├─session-9.scope
+               │ ├─2088 "sshd-session: zuul [priv]"
+               │ ├─2099 "sshd-session: zuul@notty"
+               │ ├─2523 /bin/sh -c "sudo -H -S -n  -u root /bin/sh -c 'echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3' && sleep 0"
+               │ ├─2524 sudo -H -S -n -u root /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+               │ ├─2526 /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+               │ ├─2527 /usr/bin/python3
+               │ ├─2528 /bin/bash -c "sudo iptables-save > /home/zuul/iptables.txt\n\n# NOTE(sfernand): Run 'df' with a 60s timeout to prevent hangs from\n# stale NFS mounts.\ntimeout -s 9 60s df -h > /home/zuul/df.txt || true\n# If 'df' times out, the mount output helps debug which NFS share\n# is unresponsive.\nmount > /home/zuul/mount.txt\n\nfor py_ver in 2 3; do\n    if [[ \`which python\${py_ver}\` ]]; then\n        python\${py_ver} -m pip freeze > /home/zuul/pip\${py_ver}-freeze.txt\n    fi\ndone\n\nif [ \`command -v dpkg\` ]; then\n    dpkg -l> /home/zuul/dpkg-l.txt\nfi\nif [ \`command -v rpm\` ]; then\n    rpm -qa | sort > /home/zuul/rpm-qa.txt\nfi\n\n# Services status\nsudo systemctl status --all > services.txt 2>/dev/null\n\n# NOTE(kchamart) The 'audit.log' can be useful in cases when QEMU\n# failed to start due to denials from SELinux — useful for CentOS\n# and Fedora machines.  For Ubuntu (which runs AppArmor), DevStack\n# already captures the contents of /var/log/kern.log (via\n# \`journalctl -t kernel\` redirected into syslog.txt.gz), which\n# contains AppArmor-related messages.\nif [ -f /var/log/audit/audit.log ] ; then\n    sudo cp /var/log/audit/audit.log /home/zuul/audit.log &&\n    chmod +r /home/zuul/audit.log;\nfi\n\n# gzip and save any coredumps in /var/core\nif [ -d /var/core ]; then\n    sudo gzip -r /var/core\n    sudo cp -r /var/core /home/zuul/\nfi\n\nsudo ss -lntup | grep ':53' > /home/zuul/listen53.txt\n\n# NOTE(andreaf) Service logs are already in logs/ thanks for the\n# export-devstack-journal log. Apache logs are under apache/ thans to the\n# apache-logs-conf role.\ngrep -i deprecat /home/zuul/logs/*.txt /home/zuul/apache/*.log | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}\\.[0-9]{1,3}/ /g' | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}/ /g' | \\\n    sed -r 's/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}/ /g' |\n    sed -r 's/\\[.*\\]/ /g' | \\\n    sed -r 's/\\s[0-9]+\\s/ /g' | \\\n    awk '{if (\$0 in seen) {seen[\$0]++} else {out[++n]=\$0;seen[\$0]=1}} END { for (i=1; i<=n; i++) print seen[out[i]]\" :: \" out[i] }' > /home/zuul/deprecations.log\n"
+               │ ├─2542 sudo systemctl status --all
+               │ └─2544 systemctl status --all
+               └─user@1000.service
+                 └─init.scope
+                   ├─1022 /usr/lib/systemd/systemd --user
+                   └─1024 "(sd-pam)"
+
+● proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point
+     Loaded: loaded (/usr/lib/systemd/system/proc-sys-fs-binfmt_misc.automount; static)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 8ad49d2a058e4694b9a0ac6926fcb431
+   Triggers: ● proc-sys-fs-binfmt_misc.mount
+      Where: /proc/sys/fs/binfmt_misc
+       Docs: https://docs.kernel.org/admin-guide/binfmt-misc.html
+             https://systemd.io/API_FILE_SYSTEMS
+
+Nov 03 14:16:25 ubuntu systemd[1]: proc-sys-fs-binfmt_misc.automount: Got automount request for /proc/sys/fs/binfmt_misc, triggered by 409 (systemd-binfmt)
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● dev-cdrom.device - QEMU_DVD-ROM config-2
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: a647ccd999cc4b2aa2489aa827028bf9
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+● dev-disk-by\x2ddiskseq-11.device - QEMU_DVD-ROM config-2
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 21e5c15bea874cbe9f809ccb249ad367
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+● dev-disk-by\x2ddiskseq-9.device - /dev/disk/by-diskseq/9
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: e699a1db5c0d45b6b94d8f4211eca867
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda
+
+● dev-disk-by\x2ddiskseq-9\x2dpart1.device - /dev/disk/by-diskseq/9-part1
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 92169c1c101b4d01b7f3bb09af35e5d1
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2did-ata\x2dQEMU_DVD\x2dROM_QM00001.device - QEMU_DVD-ROM config-2
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: ca936a9d23dc4b9d959181fc78b9ca47
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+● dev-disk-by\x2did-virtio\x2da6fe8951\x2da8d5\x2d4c2d\x2d8.device - /dev/disk/by-id/virtio-a6fe8951-a8d5-4c2d-8
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 4fc2387d7e884d9ba175cace3f7afff4
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda
+
+● dev-disk-by\x2did-virtio\x2da6fe8951\x2da8d5\x2d4c2d\x2d8\x2dpart1.device - /dev/disk/by-id/virtio-a6fe8951-a8d5-4c2d-8-part1
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 3019944e600d426fad4610b962ec8249
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2dlabel-cloudimg\x2drootfs.device - /dev/disk/by-label/cloudimg-rootfs
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: ebfda56c7aad48ae8a800c7dc32d8532
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2dlabel-config\x2d2.device - QEMU_DVD-ROM config-2
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 7771eed62a3e4159924e947000a7b46c
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+● dev-disk-by\x2dpartuuid-40261696\x2d01.device - /dev/disk/by-partuuid/40261696-01
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 1773604a49d249e4bf0a7ce0622497b1
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2dpath-pci\x2d0000:00:1f.2\x2data\x2d1.0.device - QEMU_DVD-ROM config-2
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 2a06d28b748e485698ee8d9ec201cc9d
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+● dev-disk-by\x2dpath-pci\x2d0000:00:1f.2\x2data\x2d1.device - QEMU_DVD-ROM config-2
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 18e1767c1603440ba70bb8efb0241c9d
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+● dev-disk-by\x2dpath-pci\x2d0000:04:00.0.device - /dev/disk/by-path/pci-0000:04:00.0
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 16e506c9afb64507bae5a7a153b189fa
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda
+
+● dev-disk-by\x2dpath-pci\x2d0000:04:00.0\x2dpart-by\x2dlabel-cloudimg\x2drootfs.device - /dev/disk/by-path/pci-0000:04:00.0-part/by-label/cloudimg-rootfs
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 91d345920d1e486d947c5240631d4653
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2dpath-pci\x2d0000:04:00.0\x2dpart-by\x2dpartnum-1.device - /dev/disk/by-path/pci-0000:04:00.0-part/by-partnum/1
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: f406031c0be44039b6b181b8c870312e
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2dpath-pci\x2d0000:04:00.0\x2dpart-by\x2dpartuuid-40261696\x2d01.device - /dev/disk/by-path/pci-0000:04:00.0-part/by-partuuid/40261696-01
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 8666ae940b644a779f0495cb6b716f15
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2dpath-pci\x2d0000:04:00.0\x2dpart-by\x2duuid-3efa2a04\x2d928d\x2d40c5\x2d972b\x2d0234a4b2ea80.device - /dev/disk/by-path/pci-0000:04:00.0-part/by-uuid/3efa2a04-928d-40c5-972b-0234a4b2ea80
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: c9c6006ca08f4f58abc09ac0a0c5a5a2
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2dpath-pci\x2d0000:04:00.0\x2dpart1.device - /dev/disk/by-path/pci-0000:04:00.0-part1
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 164fa2c6cce746e0856e9c30d113d971
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2dpath-virtio\x2dpci\x2d0000:04:00.0.device - /dev/disk/by-path/virtio-pci-0000:04:00.0
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 8a2180650ae6449f857fc64485a6b31d
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda
+
+● dev-disk-by\x2dpath-virtio\x2dpci\x2d0000:04:00.0\x2dpart1.device - /dev/disk/by-path/virtio-pci-0000:04:00.0-part1
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 4689ae3ae4854309a3dce33b875b2b06
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-disk-by\x2duuid-2026\x2d11\x2d03\x2d09\x2d16\x2d04\x2d00.device - QEMU_DVD-ROM config-2
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: f81fcfb094214105aa66b89c84f26774
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+● dev-disk-by\x2duuid-3efa2a04\x2d928d\x2d40c5\x2d972b\x2d0234a4b2ea80.device - /dev/disk/by-uuid/3efa2a04-928d-40c5-972b-0234a4b2ea80
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 3734c706688149118020abe1da678d64
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● dev-rfkill.device - /dev/rfkill
+    Follows: unit currently follows state of sys-devices-virtual-misc-rfkill.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 173daa45cd2f4819801c3b46ac445b63
+     Device: /sys/devices/virtual/misc/rfkill
+
+● dev-sr0.device - QEMU_DVD-ROM config-2
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 13e549f22e6d4b90995a0efe0b4811d3
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+○ dev-tpm0.device - /dev/tpm0
+     Loaded: loaded
+     Active: inactive (dead)
+
+○ dev-tpmrm0.device - /dev/tpmrm0
+     Loaded: loaded
+     Active: inactive (dead)
+
+● dev-ttyprintk.device - /dev/ttyprintk
+    Follows: unit currently follows state of sys-devices-virtual-tty-ttyprintk.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: f990f78613054612ad37c3ad316831fd
+     Device: /sys/devices/virtual/tty/ttyprintk
+
+● dev-ttyS0.device - /dev/ttyS0
+    Follows: unit currently follows state of sys-devices-pnp0-00:00-00:00:0-00:00:0.0-tty-ttyS0.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 6ea577ab330d4f2eb4271e97caa783a0
+     Device: /sys/devices/pnp0/00:00/00:00:0/00:00:0.0/tty/ttyS0
+
+Nov 03 14:16:26 ubuntu systemd[1]: Found device dev-ttyS0.device - /dev/ttyS0.
+
+● dev-ttyS1.device - /dev/ttyS1
+    Follows: unit currently follows state of sys-devices-platform-serial8250-serial8250:0-serial8250:0.1-tty-ttyS1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 8b7767ac902144e9a1ebb94b9ff0e2ae
+     Device: /sys/devices/platform/serial8250/serial8250:0/serial8250:0.1/tty/ttyS1
+
+● dev-ttyS2.device - /dev/ttyS2
+    Follows: unit currently follows state of sys-devices-platform-serial8250-serial8250:0-serial8250:0.2-tty-ttyS2.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 68d27909dfb242258e96e95f9bc66a1f
+     Device: /sys/devices/platform/serial8250/serial8250:0/serial8250:0.2/tty/ttyS2
+
+● dev-ttyS3.device - /dev/ttyS3
+    Follows: unit currently follows state of sys-devices-platform-serial8250-serial8250:0-serial8250:0.3-tty-ttyS3.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: de921732444646d99dfcf4127131f26c
+     Device: /sys/devices/platform/serial8250/serial8250:0/serial8250:0.3/tty/ttyS3
+
+● dev-vda.device - /dev/vda
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 5d5c73f7b20a44e98173afff21f29cd3
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda
+
+● dev-vda1.device - /dev/vda1
+    Follows: unit currently follows state of sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 1ba3ee41eafe4a83a5c06fb70eda4d1b
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● sys-devices-pci0000:00-0000:00:02.1-0000:03:00.0-virtio1-net-enp3s0.device - Virtio 1.0 network device (QEMU)
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 6b2852d8d27249a291f04dda6c5b19ef
+     Device: /sys/devices/pci0000:00/0000:00:02.1/0000:03:00.0/virtio1/net/enp3s0
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda-vda1.device - /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: c897e362871e4700b7d06bccc5381c90
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda/vda1
+
+● sys-devices-pci0000:00-0000:00:02.2-0000:04:00.0-virtio2-block-vda.device - /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 950f3780be2047ef94735025f2acfb1b
+     Device: /sys/devices/pci0000:00/0000:00:02.2/0000:04:00.0/virtio2/block/vda
+
+● sys-devices-pci0000:00-0000:00:1f.2-ata1-host0-target0:0:0-0:0:0:0-block-sr0.device - QEMU_DVD-ROM config-2
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: abe5e9149d164e1a8d5d54fbe37039d6
+     Device: /sys/devices/pci0000:00/0000:00:1f.2/ata1/host0/target0:0:0/0:0:0:0/block/sr0
+
+● sys-devices-platform-serial8250-serial8250:0-serial8250:0.1-tty-ttyS1.device - /sys/devices/platform/serial8250/serial8250:0/serial8250:0.1/tty/ttyS1
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: abb2324370ff4f38b735ec4b82ae4537
+     Device: /sys/devices/platform/serial8250/serial8250:0/serial8250:0.1/tty/ttyS1
+
+● sys-devices-platform-serial8250-serial8250:0-serial8250:0.2-tty-ttyS2.device - /sys/devices/platform/serial8250/serial8250:0/serial8250:0.2/tty/ttyS2
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 963274dbad5a4feeb7d91afb918dc721
+     Device: /sys/devices/platform/serial8250/serial8250:0/serial8250:0.2/tty/ttyS2
+
+● sys-devices-platform-serial8250-serial8250:0-serial8250:0.3-tty-ttyS3.device - /sys/devices/platform/serial8250/serial8250:0/serial8250:0.3/tty/ttyS3
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 9d45024f1a4d4ec1beb11c706654e84e
+     Device: /sys/devices/platform/serial8250/serial8250:0/serial8250:0.3/tty/ttyS3
+
+● sys-devices-pnp0-00:00-00:00:0-00:00:0.0-tty-ttyS0.device - /sys/devices/pnp0/00:00/00:00:0/00:00:0.0/tty/ttyS0
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 7353e7fcd26c465e9801e8ac6d6f0cc5
+     Device: /sys/devices/pnp0/00:00/00:00:0/00:00:0.0/tty/ttyS0
+
+● sys-devices-virtual-misc-rfkill.device - /sys/devices/virtual/misc/rfkill
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: b92f7880fee84d0ba08e7654851e6596
+     Device: /sys/devices/virtual/misc/rfkill
+
+● sys-devices-virtual-net-lo.device - /sys/devices/virtual/net/lo
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 7084fa80dfb04412b57e38a329ad1f32
+     Device: /sys/devices/virtual/net/lo
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● sys-devices-virtual-tty-ttyprintk.device - /sys/devices/virtual/tty/ttyprintk
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 6f5fa5a05e1045bf8414663eebba41b9
+     Device: /sys/devices/virtual/tty/ttyprintk
+
+● sys-module-configfs.device - /sys/module/configfs
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 2afe4892a8bd4c618958bdde838a5315
+     Device: /sys/module/configfs
+
+● sys-module-fuse.device - /sys/module/fuse
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: c395f257eb5241f18cd16362c40ffb7d
+     Device: /sys/module/fuse
+
+● sys-subsystem-net-devices-enp3s0.device - Virtio 1.0 network device (QEMU)
+     Loaded: loaded
+     Active: active (plugged) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: adb91b4f0abb4f668b5993ad9f3a3a23
+     Device: /sys/devices/pci0000:00/0000:00:02.1/0000:03:00.0/virtio1/net/enp3s0
+
+● -.mount - Root Mount
+     Loaded: loaded (/etc/fstab; generated)
+     Active: active (mounted) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+      Where: /
+       What: /dev/vda1
+       Docs: man:fstab(5)
+             man:systemd-fstab-generator(8)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● dev-hugepages.mount - Huge Pages File System
+     Loaded: loaded (/usr/lib/systemd/system/dev-hugepages.mount; static)
+     Active: active (mounted) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: c2afe3e0df0641aa8e34a519e883ad42
+      Where: /dev/hugepages
+       What: hugetlbfs
+       Docs: https://docs.kernel.org/admin-guide/mm/hugetlbpage.html
+             https://systemd.io/API_FILE_SYSTEMS
+      Tasks: 0 (limit: 7971)
+     Memory: 492K (peak: 2.3M)
+        CPU: 7ms
+     CGroup: /dev-hugepages.mount
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● dev-mqueue.mount - POSIX Message Queue File System
+     Loaded: loaded (/usr/lib/systemd/system/dev-mqueue.mount; static)
+     Active: active (mounted) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 2cbbf288448e4678a6aa7c1139e25bf0
+      Where: /dev/mqueue
+       What: mqueue
+       Docs: man:mq_overview(7)
+             https://systemd.io/API_FILE_SYSTEMS
+      Tasks: 0 (limit: 7971)
+     Memory: 492K (peak: 2.5M)
+        CPU: 6ms
+     CGroup: /dev-mqueue.mount
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● mnt-config.mount - /mnt/config
+     Loaded: loaded (/proc/self/mountinfo)
+     Active: active (mounted) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 8054c2f431804b049aaf922110212710
+      Where: /mnt/config
+       What: /dev/sr0
+
+● proc-sys-fs-binfmt_misc.mount - Arbitrary Executable File Formats File System
+     Loaded: loaded (/usr/lib/systemd/system/proc-sys-fs-binfmt_misc.mount; disabled; preset: disabled)
+     Active: active (mounted) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: a02f4c54a44842b3858e97b060b915c2
+TriggeredBy: ● proc-sys-fs-binfmt_misc.automount
+      Where: /proc/sys/fs/binfmt_misc
+       What: binfmt_misc
+       Docs: https://docs.kernel.org/admin-guide/binfmt-misc.html
+             https://systemd.io/API_FILE_SYSTEMS
+      Tasks: 0 (limit: 7971)
+     Memory: 8K (peak: 1.7M)
+        CPU: 4ms
+     CGroup: /proc-sys-fs-binfmt_misc.mount
+
+Nov 03 14:16:26 ubuntu systemd[1]: Mounting proc-sys-fs-binfmt_misc.mount - Arbitrary Executable File Formats File System...
+Nov 03 14:16:26 ubuntu systemd[1]: Mounted proc-sys-fs-binfmt_misc.mount - Arbitrary Executable File Formats File System.
+
+● run-user-1000.mount - /run/user/1000
+     Loaded: loaded (/proc/self/mountinfo)
+     Active: active (mounted) since Tue 2026-11-03 14:21:46 UTC; 3min 11s ago
+ Invocation: 713e14742c9f451891eaf20f4cec09b1
+      Where: /run/user/1000
+       What: tmpfs
+
+● sys-fs-fuse-connections.mount - FUSE Control File System
+     Loaded: loaded (/usr/lib/systemd/system/sys-fs-fuse-connections.mount; static)
+     Active: active (mounted) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 2747db651b664738a47e8dc63167a2bf
+      Where: /sys/fs/fuse/connections
+       What: fusectl
+       Docs: https://docs.kernel.org/filesystems/fuse.html
+             https://systemd.io/API_FILE_SYSTEMS
+      Tasks: 0 (limit: 7971)
+     Memory: 4K (peak: 1.7M)
+        CPU: 5ms
+     CGroup: /sys-fs-fuse-connections.mount
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● sys-kernel-config.mount - Kernel Configuration File System
+     Loaded: loaded (/usr/lib/systemd/system/sys-kernel-config.mount; static)
+     Active: active (mounted) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 9a93224c78514f3a8230f4f550dd82aa
+      Where: /sys/kernel/config
+       What: configfs
+       Docs: https://docs.kernel.org/filesystems/configfs.html
+             https://systemd.io/API_FILE_SYSTEMS
+      Tasks: 0 (limit: 7971)
+     Memory: 4K (peak: 1.7M)
+        CPU: 4ms
+     CGroup: /sys-kernel-config.mount
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● sys-kernel-debug.mount - Kernel Debug File System
+     Loaded: loaded (/usr/lib/systemd/system/sys-kernel-debug.mount; static)
+     Active: active (mounted) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 1a355847b4a9441eb640ee113d525482
+      Where: /sys/kernel/debug
+       What: debugfs
+       Docs: https://docs.kernel.org/filesystems/debugfs.html
+             https://systemd.io/API_FILE_SYSTEMS
+      Tasks: 0 (limit: 7971)
+     Memory: 280K (peak: 2.1M)
+        CPU: 6ms
+     CGroup: /sys-kernel-debug.mount
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● sys-kernel-tracing.mount - Kernel Trace File System
+     Loaded: loaded (/usr/lib/systemd/system/sys-kernel-tracing.mount; static)
+     Active: active (mounted) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 70794ed31f0c464d843935d965d4d162
+      Where: /sys/kernel/tracing
+       What: tracefs
+       Docs: https://docs.kernel.org/trace/ftrace.html
+             https://systemd.io/API_FILE_SYSTEMS
+      Tasks: 0 (limit: 7971)
+     Memory: 3.7M (peak: 4M)
+        CPU: 6ms
+     CGroup: /sys-kernel-tracing.mount
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● tmp.mount - Temporary Directory /tmp
+     Loaded: loaded (/usr/lib/systemd/system/tmp.mount; static)
+     Active: active (mounted) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: c97a0a73480d4acbae7e6b7090f786e8
+      Where: /tmp
+       What: tmpfs
+       Docs: https://systemd.io/TEMPORARY_DIRECTORIES
+             man:file-hierarchy(7)
+             https://systemd.io/API_FILE_SYSTEMS
+      Tasks: 0 (limit: 7971)
+     Memory: 32K (peak: 1.9M)
+        CPU: 6ms
+     CGroup: /system.slice/tmp.mount
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● acpid.path - ACPI Events Check
+     Loaded: loaded (/usr/lib/systemd/system/acpid.path; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: feef4d0700b54d309dc63119c089296c
+   Triggers: ● acpid.service
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started acpid.path - ACPI Events Check.
+
+● systemd-ask-password-console.path - Dispatch Password Requests to Console Directory Watch
+     Loaded: loaded (/usr/lib/systemd/system/systemd-ask-password-console.path; static)
+     Active: active (waiting) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 353b27e3e0a640d49c338d9e3ddcc6ca
+   Triggers: ● systemd-ask-password-console.service
+       Docs: man:systemd-ask-password-console.path(8)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-ask-password-wall.path - Forward Password Requests to Wall Directory Watch
+     Loaded: loaded (/usr/lib/systemd/system/systemd-ask-password-wall.path; static)
+     Active: active (waiting) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 396c1ba4aa4d4220bbac18f37ec4cd21
+   Triggers: ● systemd-ask-password-wall.service
+       Docs: man:systemd-ask-password-wall.path(8)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● init.scope - System and Service Manager
+     Loaded: loaded
+  Transient: yes
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+       Docs: man:systemd(1)
+      Tasks: 1 (limit: 7971)
+     Memory: 5.6M (peak: 5.8M)
+        CPU: 1.237s
+     CGroup: /init.scope
+             └─1 /sbin/init nofb
+
+Nov 03 14:24:01 np0000049858 systemd[1]: Starting polkit.service - Authorization Manager...
+Nov 03 14:24:01 np0000049858 systemd[1]: Started polkit.service - Authorization Manager.
+Nov 03 14:24:01 np0000049858 systemd[1]: Started packagekit.service - PackageKit Daemon.
+Nov 03 14:24:40 np0000049858 systemd[1]: session-6.scope: Deactivated successfully.
+Nov 03 14:24:40 np0000049858 systemd[1]: session-6.scope: Consumed 3.473s CPU time over 1min 5.975s wall clock time, 351.2M memory peak.
+Nov 03 14:24:40 np0000049858 systemd[1]: Started session-7.scope - Session 7 of User zuul.
+Nov 03 14:24:42 np0000049858 systemd[1]: session-7.scope: Deactivated successfully.
+Nov 03 14:24:42 np0000049858 systemd[1]: Started session-8.scope - Session 8 of User zuul.
+Nov 03 14:24:45 np0000049858 systemd[1]: session-8.scope: Deactivated successfully.
+Nov 03 14:24:45 np0000049858 systemd[1]: Started session-9.scope - Session 9 of User zuul.
+
+● session-1.scope - Session 1 of User zuul
+     Loaded: loaded (/run/systemd/transient/session-1.scope; transient)
+  Transient: yes
+     Active: active (abandoned) since Tue 2026-11-03 14:21:46 UTC; 3min 10s ago
+ Invocation: 741a6b9cac3e4cc394452a55c130b929
+      Tasks: 9
+     Memory: 29.2M (peak: 68.3M)
+        CPU: 1min 21.568s
+     CGroup: /user.slice/user-1000.slice/session-1.scope
+             └─1170 /usr/bin/python3
+
+Nov 03 14:21:46 np0000049858 systemd[1]: Started session-1.scope - Session 1 of User zuul.
+Nov 03 14:21:46 np0000049858 ansible-setup[1058]: Invoked with gather_subset=['!all'] gather_timeout=10 filter=[] fact_path=/etc/ansible/facts.d
+Nov 03 14:21:47 np0000049858 ansible-ansible.legacy.setup[1094]: Invoked with gather_subset=['all'] gather_timeout=10 filter=[] fact_path=/etc/ansible/facts.d
+Nov 03 14:21:50 np0000049858 ansible-zuul_console[1168]: Invoked with path=/tmp/console-{log_uuid}.log port=19885 state=present
+Nov 03 14:21:51 np0000049858 ansible-setup[1173]: Invoked with gather_subset=['all'] gather_timeout=10 filter=[] fact_path=/etc/ansible/facts.d
+Nov 03 14:21:52 np0000049858 ansible-zuul_debug_info[1247]: Invoked with ipv4_route_required=False ipv6_route_required=False image_manifest_files=['/etc/dib-builddate.txt', '/etc/image-hostname.txt'] image_manifest=None traceroute_host=None
+Nov 03 14:21:53 np0000049858 ansible-zuul_console[1258]: Invoked with path=/tmp/console-{log_uuid}.log port=19885 state=present
+Nov 03 14:22:53 np0000049858 sshd-session[1050]: Received disconnect from 10.241.128.101 port 44822:11: disconnected by user
+Nov 03 14:22:53 np0000049858 sshd-session[1050]: Disconnected from user zuul 10.241.128.101 port 44822
+Nov 03 14:22:53 np0000049858 sshd-session[1017]: pam_unix(sshd:session): session closed for user zuul
+
+● session-9.scope - Session 9 of User zuul
+     Loaded: loaded (/run/systemd/transient/session-9.scope; transient)
+  Transient: yes
+     Active: active (running) since Tue 2026-11-03 14:24:45 UTC; 11s ago
+ Invocation: d503184628fb46ec9b9213806a3b98af
+      Tasks: 10
+     Memory: 22.8M (peak: 25.6M)
+        CPU: 5.064s
+     CGroup: /user.slice/user-1000.slice/session-9.scope
+             ├─2088 "sshd-session: zuul [priv]"
+             ├─2099 "sshd-session: zuul@notty"
+             ├─2523 /bin/sh -c "sudo -H -S -n  -u root /bin/sh -c 'echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3' && sleep 0"
+             ├─2524 sudo -H -S -n -u root /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+             ├─2526 /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+             ├─2527 /usr/bin/python3
+             ├─2528 /bin/bash -c "sudo iptables-save > /home/zuul/iptables.txt\n\n# NOTE(sfernand): Run 'df' with a 60s timeout to prevent hangs from\n# stale NFS mounts.\ntimeout -s 9 60s df -h > /home/zuul/df.txt || true\n# If 'df' times out, the mount output helps debug which NFS share\n# is unresponsive.\nmount > /home/zuul/mount.txt\n\nfor py_ver in 2 3; do\n    if [[ \`which python\${py_ver}\` ]]; then\n        python\${py_ver} -m pip freeze > /home/zuul/pip\${py_ver}-freeze.txt\n    fi\ndone\n\nif [ \`command -v dpkg\` ]; then\n    dpkg -l> /home/zuul/dpkg-l.txt\nfi\nif [ \`command -v rpm\` ]; then\n    rpm -qa | sort > /home/zuul/rpm-qa.txt\nfi\n\n# Services status\nsudo systemctl status --all > services.txt 2>/dev/null\n\n# NOTE(kchamart) The 'audit.log' can be useful in cases when QEMU\n# failed to start due to denials from SELinux — useful for CentOS\n# and Fedora machines.  For Ubuntu (which runs AppArmor), DevStack\n# already captures the contents of /var/log/kern.log (via\n# \`journalctl -t kernel\` redirected into syslog.txt.gz), which\n# contains AppArmor-related messages.\nif [ -f /var/log/audit/audit.log ] ; then\n    sudo cp /var/log/audit/audit.log /home/zuul/audit.log &&\n    chmod +r /home/zuul/audit.log;\nfi\n\n# gzip and save any coredumps in /var/core\nif [ -d /var/core ]; then\n    sudo gzip -r /var/core\n    sudo cp -r /var/core /home/zuul/\nfi\n\nsudo ss -lntup | grep ':53' > /home/zuul/listen53.txt\n\n# NOTE(andreaf) Service logs are already in logs/ thanks for the\n# export-devstack-journal log. Apache logs are under apache/ thans to the\n# apache-logs-conf role.\ngrep -i deprecat /home/zuul/logs/*.txt /home/zuul/apache/*.log | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}\\.[0-9]{1,3}/ /g' | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}/ /g' | \\\n    sed -r 's/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}/ /g' |\n    sed -r 's/\\[.*\\]/ /g' | \\\n    sed -r 's/\\s[0-9]+\\s/ /g' | \\\n    awk '{if (\$0 in seen) {seen[\$0]++} else {out[++n]=\$0;seen[\$0]=1}} END { for (i=1; i<=n; i++) print seen[out[i]]\" :: \" out[i] }' > /home/zuul/deprecations.log\n"
+             ├─2542 sudo systemctl status --all
+             └─2544 systemctl status --all
+
+Nov 03 14:24:56 np0000049858 ansible-stat[2518]: Invoked with path=/etc/openstack follow=False get_md5=False get_checksum=True get_mime=True get_attributes=True checksum_algorithm=sha1
+Nov 03 14:24:56 np0000049858 sudo[2515]: pam_unix(sudo:session): session closed for user root
+Nov 03 14:24:56 np0000049858 sudo[2524]: pam_unix(sudo:session): session opened for user root(uid=0) by zuul(uid=1000)
+Nov 03 14:24:56 np0000049858 sudo[2524]: zuul :  PWD=/home/zuul ; USER=root ; COMMAND=/usr/bin/sh -c echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3
+Nov 03 14:24:56 np0000049858 ansible-ansible.legacy.command[2527]: Invoked with executable=/bin/bash _raw_params=sudo iptables-save > /home/zuul/iptables.txt
+                                                                   
+                                                                   # NOTE(sfernand): Run 'df' with a 60s timeout to prevent hangs from
+                                                                   # stale NFS mounts.
+                                                                   timeout -s 9 60s df -h > /home/zuul/df.txt || true
+                                                                   # If 'df' times out, the mount output helps debug which NFS share
+                                                                   # is unresponsive.
+                                                                   mount > /home/zuul/mount.txt
+                                                                   
+                                                                   for py_ver in 2 3; do
+                                                                       if [[ `which python${py_ver}` ]]; then
+                                                                           python${py_ver} -m pip freeze > /home/zuul/pip${py_ver}-freeze.txt
+                                                                       fi
+                                                                   done
+                                                                   
+                                                                   if [ `command -v dpkg` ]; then
+                                                                       dpkg -l> /home/zuul/dpkg-l.txt
+                                                                   fi
+                                                                   if [ `command -v rpm` ]; then
+                                                                       rpm -qa | sort > /home/zuul/rpm-qa.txt
+                                                                   fi
+                                                                   
+                                                                   # Services status
+                                                                   sudo systemctl status --all > services.txt 2>/dev/null
+                                                                   
+                                                                   # NOTE(kchamart) The 'audit.log' can be useful in cases when QEMU
+                                                                   # failed to start due to denials from SELinux — useful for CentOS
+                                                                   # and Fedora machines.  For Ubuntu (which runs AppArmor), DevStack
+                                                                   # already captures the contents of /var/log/kern.log (via
+                                                                   # `journalctl -t kernel` redirected into syslog.txt.gz), which
+                                                                   # contains AppArmor-related messages.
+                                                                   if [ -f /var/log/audit/audit.log ] ; then
+                                                                       sudo cp /var/log/audit/audit.log /home/zuul/audit.log &&
+                                                                       chmod +r /home/zuul/audit.log;
+                                                                   fi
+                                                                   
+                                                                   # gzip and save any coredumps in /var/core
+                                                                   if [ -d /var/core ]; then
+                                                                       sudo gzip -r /var/core
+                                                                       sudo cp -r /var/core /home/zuul/
+                                                                   fi
+                                                                   
+                                                                   sudo ss -lntup | grep ':53' > /home/zuul/listen53.txt
+                                                                   
+                                                                   # NOTE(andreaf) Service logs are already in logs/ thanks for the
+                                                                   # export-devstack-journal log. Apache logs are under apache/ thans to the
+                                                                   # apache-logs-conf role.
+                                                                   grep -i deprecat /home/zuul/logs/*.txt /home/zuul/apache/*.log | \
+                                                                       sed -r 's/[0-9]{1,2}\:[0-9]{1,2}\:[0-9]{1,2}\.[0-9]{1,3}/ /g' | \
+                                                                       sed -r 's/[0-9]{1,2}\:[0-9]{1,2}\:[0-9]{1,2}/ /g' | \
+                                                                       sed -r 's/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}/ /g' |
+                                                                       sed -r 's/\[.*\]/ /g' | \
+                                                                       sed -r 's/\s[0-9]+\s/ /g' | \
+                                                                       awk '{if ($0 in seen) {seen[$0]++} else {out[++n]=$0;seen[$0]=1}} END { for (i=1; i<=n; i++) print seen[out[i]]" :: " out[i] }' > /home/zuul/deprecations.log
+                                                                    _uses_shell=True zuul_log_id=fa163ee8-4689-495c-7aff-000000000033-1-controller zuul_ansible_split_streams=False warn=False stdin_add_newline=True strip_empty_ends=True argv=None chdir=None creates=None removes=None stdin=None
+Nov 03 14:24:56 np0000049858 sudo[2530]: pam_unix(sudo:session): session opened for user root(uid=0) by zuul(uid=0)
+Nov 03 14:24:56 np0000049858 sudo[2530]: root :  PWD=/home/zuul ; USER=root ; COMMAND=/usr/sbin/iptables-save
+Nov 03 14:24:56 np0000049858 sudo[2530]: pam_unix(sudo:session): session closed for user root
+Nov 03 14:24:56 np0000049858 sudo[2542]: pam_unix(sudo:session): session opened for user root(uid=0) by zuul(uid=0)
+Nov 03 14:24:56 np0000049858 sudo[2542]: root :  PWD=/home/zuul ; USER=root ; COMMAND=/usr/bin/systemctl status --all
+
+○ acpid.service - ACPI event daemon
+     Loaded: loaded (/usr/lib/systemd/system/acpid.service; disabled; preset: enabled)
+     Active: inactive (dead)
+TriggeredBy: ● acpid.socket
+             ● acpid.path
+       Docs: man:acpid(8)
+
+○ apt-daily-upgrade.service - Daily apt upgrade and clean activities
+     Loaded: loaded (/usr/lib/systemd/system/apt-daily-upgrade.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● apt-daily-upgrade.timer
+       Docs: man:apt(8)
+
+○ apt-daily.service - Daily apt download activities
+     Loaded: loaded (/usr/lib/systemd/system/apt-daily.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● apt-daily.timer
+       Docs: man:apt(8)
+
+● atd.service - Deferred execution scheduler
+     Loaded: loaded (/usr/lib/systemd/system/atd.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: 83deadfc417644099e7d88d1d88e0091
+       Docs: man:atd(8)
+    Process: 898 ExecStartPre=find /var/spool/cron/atjobs -type f -name =* -not -newercc /run/systemd -delete (code=exited, status=0/SUCCESS)
+   Main PID: 909 (atd)
+      Tasks: 1 (limit: 7971)
+     Memory: 304K (peak: 2.3M)
+        CPU: 11ms
+     CGroup: /system.slice/atd.service
+             └─909 /usr/sbin/atd -f
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Starting atd.service - Deferred execution scheduler...
+Nov 03 14:18:27 np0000049858 systemd[1]: Started atd.service - Deferred execution scheduler.
+
+● cron.service - Regular background program processing daemon
+     Loaded: loaded (/usr/lib/systemd/system/cron.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: 4bc912517de14bc1b2351c6d59c505fc
+       Docs: man:cron(8)
+   Main PID: 899 (cron)
+      Tasks: 1 (limit: 7971)
+     Memory: 384K (peak: 2M)
+        CPU: 5ms
+     CGroup: /system.slice/cron.service
+             └─899 /usr/sbin/cron -f -P
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Started cron.service - Regular background program processing daemon.
+Nov 03 14:18:27 np0000049858 (cron)[899]: cron.service: Referenced but unset environment variable evaluates to an empty string: EXTRA_OPTS
+Nov 03 14:18:27 np0000049858 cron[899]: (CRON) INFO (pidfile fd = 3)
+Nov 03 14:18:27 np0000049858 cron[899]: (CRON) INFO (Running @reboot jobs)
+
+● dbus.service - D-Bus System Message Bus
+     Loaded: loaded (/usr/lib/systemd/system/dbus.service; static)
+     Active: active (running) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: d3134a0bf4cb448283049f9a8f397532
+TriggeredBy: ● dbus.socket
+       Docs: man:dbus-daemon(1)
+   Main PID: 508 (dbus-daemon)
+      Tasks: 1 (limit: 7971)
+     Memory: 1.3M (peak: 2.2M)
+        CPU: 52ms
+     CGroup: /system.slice/dbus.service
+             └─508 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting dbus.service - D-Bus System Message Bus...
+Nov 03 14:16:26 ubuntu dbus-daemon[508]: [system] AppArmor D-Bus mediation is enabled
+Nov 03 14:16:26 ubuntu systemd[1]: Started dbus.service - D-Bus System Message Bus.
+Nov 03 14:16:26 ubuntu dbus-daemon[508]: [system] Successfully activated service 'org.freedesktop.systemd1'
+Nov 03 14:18:28 np0000049858 dbus-daemon[508]: [system] Activating via systemd: service name='org.freedesktop.hostname1' unit='dbus-org.freedesktop.hostname1.service' requested by ':1.9' (uid=0 pid=947 comm="hostnamectl set-hostname np0000049858" label="unconfined")
+Nov 03 14:18:28 np0000049858 dbus-daemon[508]: [system] Successfully activated service 'org.freedesktop.hostname1'
+Nov 03 14:24:01 np0000049858 dbus-daemon[508]: [system] Activating via systemd: service name='org.freedesktop.PackageKit' unit='packagekit.service' requested by ':1.13' (uid=0 pid=1916 comm="/usr/bin/gdbus call --system --dest org.freedeskto" label="unconfined")
+Nov 03 14:24:01 np0000049858 dbus-daemon[508]: [system] Activating via systemd: service name='org.freedesktop.PolicyKit1' unit='polkit.service' requested by ':1.15' (uid=0 pid=1920 comm="/usr/libexec/packagekitd" label="unconfined")
+Nov 03 14:24:01 np0000049858 dbus-daemon[508]: [system] Successfully activated service 'org.freedesktop.PolicyKit1'
+Nov 03 14:24:01 np0000049858 dbus-daemon[508]: [system] Successfully activated service 'org.freedesktop.PackageKit'
+
+○ dmesg.service - Save initial kernel messages after boot
+     Loaded: loaded (/usr/lib/systemd/system/dmesg.service; enabled; preset: enabled)
+     Active: inactive (dead) since Tue 2026-11-03 14:16:31 UTC; 8min ago
+   Duration: 5.043s
+ Invocation: 46abcad76c2a4762b46c4fde5f7edc9c
+    Process: 509 ExecStartPre=/usr/bin/savelog -m640 -q -p -n -c 5 /var/log/dmesg (code=exited, status=0/SUCCESS)
+    Process: 856 ExecStart=/bin/journalctl --boot 0 --dmesg --output short-monotonic --quiet --no-pager --no-hostname (code=exited, status=0/SUCCESS)
+    Process: 857 ExecStartPost=/bin/chgrp adm /var/log/dmesg (code=exited, status=0/SUCCESS)
+    Process: 858 ExecStartPost=/bin/chmod 0640 /var/log/dmesg (code=exited, status=0/SUCCESS)
+   Main PID: 856 (code=exited, status=0/SUCCESS)
+   Mem peak: 4.9M
+        CPU: 32ms
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started dmesg.service - Save initial kernel messages after boot.
+Nov 03 14:16:31 np0000049858 systemd[1]: dmesg.service: Deactivated successfully.
+
+○ dpkg-db-backup.service - Daily dpkg database backup service
+     Loaded: loaded (/usr/lib/systemd/system/dpkg-db-backup.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● dpkg-db-backup.timer
+       Docs: man:dpkg(1)
+
+○ e2scrub_all.service - Online ext4 Metadata Check for All Filesystems
+     Loaded: loaded (/usr/lib/systemd/system/e2scrub_all.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● e2scrub_all.timer
+       Docs: man:e2scrub_all(8)
+
+○ e2scrub_reap.service - Remove Stale Online ext4 Metadata Check Snapshots
+     Loaded: loaded (/usr/lib/systemd/system/e2scrub_reap.service; enabled; preset: enabled)
+     Active: inactive (dead) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: b1b7acb0cdf1436599b0d55baa4f27e9
+       Docs: man:e2scrub_all(8)
+    Process: 510 ExecStart=/sbin/e2scrub_all -A -r (code=exited, status=0/SUCCESS)
+   Main PID: 510 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.5M
+        CPU: 17ms
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting e2scrub_reap.service - Remove Stale Online ext4 Metadata Check Snapshots...
+Nov 03 14:16:26 ubuntu systemd[1]: e2scrub_reap.service: Deactivated successfully.
+Nov 03 14:16:26 ubuntu systemd[1]: Finished e2scrub_reap.service - Remove Stale Online ext4 Metadata Check Snapshots.
+
+○ emergency.service - Emergency Shell
+     Loaded: loaded (/usr/lib/systemd/system/emergency.service; static)
+     Active: inactive (dead)
+       Docs: man:sulogin(8)
+
+○ fstrim.service - Discard unused blocks on filesystems from /etc/fstab
+     Loaded: loaded (/usr/lib/systemd/system/fstrim.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● fstrim.timer
+       Docs: man:fstrim(8)
+
+○ getty-static.service - getty on tty2-tty6 if dbus and logind are not available
+     Loaded: loaded (/usr/lib/systemd/system/getty-static.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionPathExists=!/usr/bin/dbus-daemon was not met
+       Docs: man:agetty(8)
+             man:systemd-getty-generator(8)
+
+Nov 03 14:16:26 ubuntu systemd[1]: getty-static.service - getty on tty2-tty6 if dbus and logind are not available skipped, unmet condition check ConditionPathExists=!/usr/bin/dbus-daemon
+
+● getty@tty1.service - Getty on tty1
+     Loaded: loaded (/usr/lib/systemd/system/getty@.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: dbfdb90641ba4468ad78d68f022d88dd
+       Docs: man:agetty(8)
+             man:systemd-getty-generator(8)
+             https://0pointer.de/blog/projects/serial-console.html
+   Main PID: 912 (agetty)
+      Tasks: 1 (limit: 7971)
+     Memory: 368K (peak: 2M)
+        CPU: 7ms
+     CGroup: /system.slice/system-getty.slice/getty@tty1.service
+             └─912 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d - linux
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Started getty@tty1.service - Getty on tty1.
+
+● glean-early.service - Early glean execution
+     Loaded: loaded (/usr/lib/systemd/system/glean-early.service; enabled; preset: enabled)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 42dc53333625487fa9aafa92ea13ba0a
+    Process: 511 ExecStart=/usr/glean/lib/python3.14/site-packages/glean/init/glean-early.sh --debug (code=exited, status=0/SUCCESS)
+   Main PID: 511 (code=exited, status=0/SUCCESS)
+   Mem peak: 23.3M
+        CPU: 105ms
+
+Nov 03 14:16:26 ubuntu glean-early.sh[561]: DEBUG:glean:Detected distro : ubuntu
+Nov 03 14:16:26 ubuntu glean-early.sh[561]: DEBUG:glean:Configuring without NetworkManager
+Nov 03 14:16:26 ubuntu glean-early.sh[561]: DEBUG:glean:metadata loaded from: /mnt/config/openstack/latest/meta_data.json
+Nov 03 14:16:26 ubuntu glean-early.sh[561]: DEBUG:glean:Writing output files
+Nov 03 14:16:26 ubuntu glean-early.sh[561]: DEBUG:glean:Writing output file : /root/.ssh/authorized_keys
+Nov 03 14:16:26 ubuntu glean-early.sh[561]: DEBUG:glean: ... done
+Nov 03 14:16:26 ubuntu glean-early.sh[561]: DEBUG:glean:Got hostname from meta_data.json : np0000049858
+Nov 03 14:16:26 np0000049858 glean-early.sh[561]: DEBUG:glean:Found network_info file /mnt/config/openstack/latest/network_data.json
+Nov 03 14:16:26 np0000049858 glean-early.sh[561]: DEBUG:glean:Done!
+Nov 03 14:16:26 np0000049858 systemd[1]: Finished glean-early.service - Early glean execution.
+
+● glean@enp3s0.service - Glean for interface enp3s0
+     Loaded: loaded (/usr/lib/systemd/system/glean@.service; disabled; preset: enabled)
+    Drop-In: /etc/systemd/system/glean@.service.d
+             └─override.conf
+     Active: active (exited) since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: 0ec40f007bcc4a9b90b2383a1d2b93e4
+    Process: 613 ExecStartPre=/usr/glean/lib/python3.14/site-packages/glean/init/python-glean ${ARGS} (code=exited, status=0/SUCCESS)
+    Process: 653 ExecStart=/sbin/ifup enp3s0 (code=exited, status=0/SUCCESS)
+   Main PID: 653 (code=exited, status=0/SUCCESS)
+      Tasks: 1 (limit: 7971)
+     Memory: 2.5M (peak: 13.4M)
+        CPU: 177ms
+     CGroup: /system.slice/system-glean.slice/glean@enp3s0.service
+             └─665 dhclient -1 -4 -v -i -pf /run/dhclient.enp3s0.pid -lf /var/lib/dhcp/dhclient.enp3s0.leases -I -df /var/lib/dhcp/dhclient6.enp3s0.leases enp3s0
+
+Nov 03 14:16:27 np0000049858 dhclient[665]: DHCPACK of 10.241.128.142 from 10.241.128.1 (xid=0xc9e4145f)
+Nov 03 14:16:27 np0000049858 ifup[665]: DHCPACK of 10.241.128.142 from 10.241.128.1 (xid=0xc9e4145f)
+Nov 03 14:16:27 np0000049858 ifup[665]: suspect value in domain_search option - discarded
+Nov 03 14:16:27 np0000049858 dhclient[665]: suspect value in domain_search option - discarded
+Nov 03 14:16:27 np0000049858 ifup[715]: Setting LLMNR support level "yes" for "2", but the global support level is "no".
+Nov 03 14:16:27 np0000049858 dhclient[665]: Error printing text.
+Nov 03 14:16:27 np0000049858 ifup[665]: Error printing text.
+Nov 03 14:16:27 np0000049858 dhclient[665]: bound to 10.241.128.142 -- renewal in 21514 seconds.
+Nov 03 14:16:27 np0000049858 ifup[665]: bound to 10.241.128.142 -- renewal in 21514 seconds.
+Nov 03 14:16:27 np0000049858 systemd[1]: Finished glean@enp3s0.service - Glean for interface enp3s0.
+
+● glean@lo.service - Glean for interface lo
+     Loaded: loaded (/usr/lib/systemd/system/glean@.service; disabled; preset: enabled)
+    Drop-In: /etc/systemd/system/glean@.service.d
+             └─override.conf
+     Active: active (exited) since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: 4384477fcc324ae4ae9d454cff3a308e
+    Process: 614 ExecStartPre=/usr/glean/lib/python3.14/site-packages/glean/init/python-glean ${ARGS} (code=exited, status=0/SUCCESS)
+    Process: 650 ExecStart=/sbin/ifup lo (code=exited, status=0/SUCCESS)
+   Main PID: 650 (code=exited, status=0/SUCCESS)
+   Mem peak: 13.5M
+        CPU: 88ms
+
+Nov 03 14:16:26 np0000049858 systemd[1]: Starting glean@lo.service - Glean for interface lo...
+Nov 03 14:16:27 np0000049858 systemd[1]: Finished glean@lo.service - Glean for interface lo.
+
+● growroot.service - Grow root partition
+     Loaded: loaded (/usr/lib/systemd/system/growroot.service; enabled; preset: enabled)
+     Active: active (exited) since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: 50626664be4b45f9a413c9551bbadacd
+    Process: 512 ExecStart=/usr/local/sbin/growroot (code=exited, status=0/SUCCESS)
+   Main PID: 512 (code=exited, status=0/SUCCESS)
+   Mem peak: 12.9M
+        CPU: 86ms
+
+Nov 03 14:16:26 ubuntu growroot[512]: + set +e
+Nov 03 14:16:26 ubuntu growroot[512]: + growpart /dev/vda 1
+Nov 03 14:16:27 np0000049858 growroot[560]: CHANGED: partition=1 start=2048 old: size=45540992 end=45543039 new: size=209713119 end=209715166
+Nov 03 14:16:27 np0000049858 growroot[512]: + '[' 0 -le 1 ']'
+Nov 03 14:16:27 np0000049858 growroot[512]: + resize2fs /dev/vda1
+Nov 03 14:16:27 np0000049858 growroot[700]: resize2fs 1.47.2 (1-Jan-2025)
+Nov 03 14:16:27 np0000049858 growroot[700]: Filesystem at /dev/vda1 is mounted on /; on-line resizing required
+Nov 03 14:16:27 np0000049858 growroot[700]: old_desc_blocks = 3, new_desc_blocks = 13
+Nov 03 14:16:27 np0000049858 growroot[700]: The filesystem on /dev/vda1 is now 26214139 (4k) blocks long.
+Nov 03 14:16:27 np0000049858 systemd[1]: Finished growroot.service - Grow root partition.
+
+○ grub-initrd-fallback.service - GRUB failed boot detection
+     Loaded: loaded (/usr/lib/systemd/system/grub-initrd-fallback.service; enabled; preset: enabled)
+     Active: inactive (dead) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 96fc34f8a0a047febfd3450e18e67c01
+    Process: 590 ExecStart=/usr/bin/grub-editenv /boot/grub/grubenv unset initrdfail (code=exited, status=0/SUCCESS)
+    Process: 593 ExecStart=/usr/bin/grub-editenv /boot/grub/grubenv unset prev_entry (code=exited, status=0/SUCCESS)
+   Main PID: 593 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.3M
+        CPU: 17ms
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting grub-initrd-fallback.service - GRUB failed boot detection...
+Nov 03 14:16:26 ubuntu systemd[1]: grub-initrd-fallback.service: Deactivated successfully.
+Nov 03 14:16:26 ubuntu systemd[1]: Finished grub-initrd-fallback.service - GRUB failed boot detection.
+
+○ grub2-common.service - Record successful boot for GRUB
+     Loaded: loaded (/usr/lib/systemd/system/grub2-common.service; enabled; preset: enabled)
+     Active: inactive (dead) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 200b63a346644f1eb5b556115059963e
+    Process: 513 ExecStartPre=/bin/sh -c [ -s /boot/grub/grubenv ] || rm -f /boot/grub/grubenv; mkdir -p /boot/grub (code=exited, status=0/SUCCESS)
+    Process: 528 ExecStart=grub-editenv /boot/grub/grubenv unset recordfail (code=exited, status=0/SUCCESS)
+    Process: 570 ExecStartPost=/bin/sh -c if grub-editenv /boot/grub/grubenv list | grep -q initrdless_boot_fallback_triggered=1; then echo "grub: GRUB_FORCE_PARTUUID set, initrdless boot paniced, fallback triggered."; fi (code=exited, status=0/SUCCESS)
+   Main PID: 528 (code=exited, status=0/SUCCESS)
+   Mem peak: 8.7M
+        CPU: 30ms
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting grub2-common.service - Record successful boot for GRUB...
+Nov 03 14:16:26 ubuntu systemd[1]: grub2-common.service: Deactivated successfully.
+Nov 03 14:16:26 ubuntu systemd[1]: Finished grub2-common.service - Record successful boot for GRUB.
+
+● haveged.service - Entropy Daemon based on the HAVEGE algorithm
+     Loaded: loaded (/usr/lib/systemd/system/haveged.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 084c9c6468294cad9482fbee3e6d10ec
+       Docs: man:haveged(8)
+             http://www.issihosts.com/haveged/
+   Main PID: 445 (haveged)
+      Tasks: 1 (limit: 7971)
+     Memory: 3.7M (peak: 4.5M)
+        CPU: 212ms
+     CGroup: /system.slice/haveged.service
+             └─445 /usr/sbin/haveged --Foreground --verbose=1
+
+Nov 03 14:16:25 ubuntu systemd[1]: Started haveged.service - Entropy Daemon based on the HAVEGE algorithm.
+Nov 03 14:16:26 ubuntu (haveged)[445]: haveged.service: Referenced but unset environment variable evaluates to an empty string: DAEMON_ARGS
+Nov 03 14:16:26 ubuntu haveged[445]: haveged: command socket is listening at fd 3
+Nov 03 14:16:26 ubuntu haveged[445]: haveged starting up
+Nov 03 14:16:26 ubuntu haveged[445]: haveged: ver: 1.9.19; arch: x86; vend: GenuineIntel; build: (gcc 15.2.0 ITV); collect: 128K
+Nov 03 14:16:26 ubuntu haveged[445]: haveged: cpu: (L4 VC); data: 32K (L2 L4 V); inst: 32K (L2 L4 V); idx: 23/40; sz: 31414/55293
+Nov 03 14:16:26 ubuntu haveged[445]: haveged: tot tests(BA8): A:1/1 B:1/1 continuous tests(B):  last entropy estimate 7.99648
+Nov 03 14:16:26 ubuntu haveged[445]: haveged: fills: 0, generated: 0
+
+● ifupdown-pre.service - Helper to synchronize boot up for ifupdown
+     Loaded: loaded (/usr/lib/systemd/system/ifupdown-pre.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 5fcb5e0941ff440a9acea9b790fb9750
+    Process: 401 ExecStart=/bin/sh -c if [ "$CONFIGURE_INTERFACES" != "no" ] && [ -n "$(ifquery --read-environment --list --exclude=lo)" ] && [ -x /bin/udevadm ]; then udevadm settle; fi (code=exited, status=0/SUCCESS)
+   Main PID: 401 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.9M
+        CPU: 9ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting ifupdown-pre.service - Helper to synchronize boot up for ifupdown...
+Nov 03 14:16:25 ubuntu systemd[1]: Finished ifupdown-pre.service - Helper to synchronize boot up for ifupdown.
+
+× initialize-urandom.service - Quickly initialize the nonblocking kernel random number generator at boot.
+     Loaded: loaded (/usr/lib/systemd/system/initialize-urandom.service; enabled; preset: enabled)
+     Active: failed (Result: exit-code) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: fc9dc03c930b47c9af03ccc2fa49971e
+    Process: 514 ExecStart=/usr/local/bin/initialize-urandom.py (code=exited, status=127)
+   Main PID: 514 (code=exited, status=127)
+   Mem peak: 2M
+        CPU: 5ms
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting initialize-urandom.service - Quickly initialize the nonblocking kernel random number generator at boot....
+Nov 03 14:16:26 ubuntu initialize-urandom.py[514]: env: 'python': No such file or directory
+Nov 03 14:16:26 ubuntu initialize-urandom.py[514]: env: use -[v]S to pass options in shebang lines
+Nov 03 14:16:26 ubuntu systemd[1]: initialize-urandom.service: Main process exited, code=exited, status=127/n/a
+Nov 03 14:16:26 ubuntu systemd[1]: initialize-urandom.service: Failed with result 'exit-code'.
+Nov 03 14:16:26 ubuntu systemd[1]: Failed to start initialize-urandom.service - Quickly initialize the nonblocking kernel random number generator at boot..
+
+○ initrd-cleanup.service - Cleaning Up and Shutting Down Daemons
+     Loaded: loaded (/usr/lib/systemd/system/initrd-cleanup.service; static)
+     Active: inactive (dead)
+       Docs: man:bootup(7)
+
+○ initrd-parse-etc.service - Mountpoints Configured in the Real Root
+     Loaded: loaded (/usr/lib/systemd/system/initrd-parse-etc.service; static)
+     Active: inactive (dead)
+       Docs: man:bootup(7)
+
+○ initrd-switch-root.service - Switch Root
+     Loaded: loaded (/usr/lib/systemd/system/initrd-switch-root.service; static)
+     Active: inactive (dead)
+       Docs: man:bootup(7)
+
+○ initrd-udevadm-cleanup-db.service - Cleanup udev Database
+     Loaded: loaded (/usr/lib/systemd/system/initrd-udevadm-cleanup-db.service; static)
+     Active: inactive (dead)
+       Docs: man:bootup(7)
+
+● iscsid.service - iSCSI initiator daemon (iscsid)
+     Loaded: loaded (/usr/lib/systemd/system/iscsid.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: 40436fef85034cd785187252d66e7919
+TriggeredBy: ● iscsid.socket
+       Docs: man:iscsid(8)
+    Process: 860 ExecStartPre=/usr/lib/open-iscsi/startup-checks.sh (code=exited, status=0/SUCCESS)
+    Process: 872 ExecStart=/usr/sbin/iscsid (code=exited, status=0/SUCCESS)
+   Main PID: 879 (iscsid)
+      Tasks: 2 (limit: 7971)
+     Memory: 2.5M (peak: 3.3M)
+        CPU: 24ms
+     CGroup: /system.slice/iscsid.service
+             ├─878 /usr/sbin/iscsid
+             └─879 /usr/sbin/iscsid
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Starting iscsid.service - iSCSI initiator daemon (iscsid)...
+Nov 03 14:18:27 np0000049858 iscsid[872]: iSCSI logger with pid=878 started!
+Nov 03 14:18:27 np0000049858 systemd[1]: Started iscsid.service - iSCSI initiator daemon (iscsid).
+Nov 03 14:18:28 np0000049858 iscsid[878]: iSCSI daemon with pid=879 started!
+
+● kmod-static-nodes.service - Create List of Static Device Nodes
+     Loaded: loaded (/usr/lib/systemd/system/kmod-static-nodes.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 087096b5ddb54a76a45212acdb31a42d
+       Docs: man:kmod(8)
+    Process: 330 ExecStart=/usr/bin/kmod static-nodes --format=tmpfiles --output=/run/tmpfiles.d/static-nodes.conf (code=exited, status=0/SUCCESS)
+   Main PID: 330 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 10ms
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● ldconfig.service - Rebuild Dynamic Linker Cache
+     Loaded: loaded (/usr/lib/systemd/system/ldconfig.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: f4ccb06d64eb4d46a1164cc5657a393c
+       Docs: man:ldconfig(8)
+    Process: 446 ExecStart=ldconfig -X (code=exited, status=0/SUCCESS)
+   Main PID: 446 (code=exited, status=0/SUCCESS)
+   Mem peak: 101.9M
+        CPU: 44ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting ldconfig.service - Rebuild Dynamic Linker Cache...
+Nov 03 14:16:26 ubuntu systemd[1]: Finished ldconfig.service - Rebuild Dynamic Linker Cache.
+
+○ modprobe@configfs.service - Load Kernel Module configfs
+     Loaded: loaded (/usr/lib/systemd/system/modprobe@.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:25 UTC; 8min ago
+             └─ ConditionKernelModuleLoaded=!configfs was not met
+       Docs: man:modprobe(8)
+
+○ modprobe@dm_mod.service - Load Kernel Module dm_mod
+     Loaded: loaded (/usr/lib/systemd/system/modprobe@.service; static)
+     Active: inactive (dead)
+       Docs: man:modprobe(8)
+
+○ modprobe@dm_multipath.service - Load Kernel Module dm_multipath
+     Loaded: loaded (/usr/lib/systemd/system/modprobe@.service; static)
+     Active: inactive (dead) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 279f2769e1b04439af8f10a7c823c039
+  Condition: start condition unmet at Tue 2026-11-03 14:18:28 UTC; 6min ago
+             └─ ConditionKernelModuleLoaded=!dm_multipath was not met
+       Docs: man:modprobe(8)
+    Process: 334 ExecStart=modprobe -abq dm_multipath (code=exited, status=0/SUCCESS)
+   Main PID: 334 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.7M
+        CPU: 16ms
+
+Nov 03 14:18:28 np0000049858 systemd[1]: modprobe@dm_multipath.service - Load Kernel Module dm_multipath skipped, unmet condition check ConditionKernelModuleLoaded=!dm_multipath
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+○ modprobe@drm.service - Load Kernel Module drm
+     Loaded: loaded (/usr/lib/systemd/system/modprobe@.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:25 UTC; 8min ago
+             └─ ConditionKernelModuleLoaded=!drm was not met
+       Docs: man:modprobe(8)
+
+○ modprobe@efi_pstore.service - Load Kernel Module efi_pstore
+     Loaded: loaded (/usr/lib/systemd/system/modprobe@.service; static)
+     Active: inactive (dead) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: e28db7cb37fe4cc19908c48507776bd8
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionKernelModuleLoaded=!efi_pstore was not met
+       Docs: man:modprobe(8)
+    Process: 335 ExecStart=modprobe -abq efi_pstore (code=exited, status=0/SUCCESS)
+   Main PID: 335 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 12ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: modprobe@efi_pstore.service - Load Kernel Module efi_pstore skipped, unmet condition check ConditionKernelModuleLoaded=!efi_pstore
+Nov 03 14:16:26 ubuntu systemd[1]: modprobe@efi_pstore.service - Load Kernel Module efi_pstore skipped, unmet condition check ConditionKernelModuleLoaded=!efi_pstore
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+○ modprobe@fuse.service - Load Kernel Module fuse
+     Loaded: loaded (/usr/lib/systemd/system/modprobe@.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:25 UTC; 8min ago
+             └─ ConditionKernelModuleLoaded=!fuse was not met
+       Docs: man:modprobe(8)
+
+○ modprobe@loop.service - Load Kernel Module loop
+     Loaded: loaded (/usr/lib/systemd/system/modprobe@.service; static)
+     Active: inactive (dead)
+       Docs: man:modprobe(8)
+
+○ modprobe@nvme_fabrics.service - Load Kernel Module nvme_fabrics
+     Loaded: loaded (/usr/lib/systemd/system/modprobe@.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:25 UTC; 8min ago
+             └─ ConditionKernelModuleLoaded=!nvme_fabrics was not met
+       Docs: man:modprobe(8)
+
+○ motd-news.service - Message of the Day
+     Loaded: loaded (/usr/lib/systemd/system/motd-news.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● motd-news.timer
+       Docs: man:update-motd(8)
+
+● multipathd-queueing.service - Enable queuing for multipath maps
+     Loaded: loaded (/usr/lib/systemd/system/multipathd-queueing.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: ee9899a63bb545f4b1a0c1333bded598
+    Process: 901 ExecStart=/bin/true (code=exited, status=0/SUCCESS)
+   Main PID: 901 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.7M
+        CPU: 4ms
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Starting multipathd-queueing.service - Enable queuing for multipath maps...
+Nov 03 14:18:27 np0000049858 systemd[1]: Finished multipathd-queueing.service - Enable queuing for multipath maps.
+
+● multipathd.service - Device-Mapper Multipath Device Controller
+     Loaded: loaded (/usr/lib/systemd/system/multipathd.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 5158bba42e5f48f29a91e36d15e86c74
+TriggeredBy: ○ multipathd.socket
+   Main PID: 370 (multipathd)
+     Status: "up"
+      Tasks: 8
+     Memory: 4.6M (peak: 5.2M)
+        CPU: 33ms
+     CGroup: /system.slice/multipathd.service
+             └─370 /usr/sbin/multipathd -d -s
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting multipathd.service - Device-Mapper Multipath Device Controller...
+Nov 03 14:16:25 ubuntu multipathd[370]: multipathd v0.14.3: start up
+Nov 03 14:16:25 ubuntu multipathd[370]: reconfigure: setting up paths and maps
+Nov 03 14:16:25 ubuntu multipathd[370]: _check_bindings_file: failed to read header from /etc/multipath/bindings
+Nov 03 14:16:25 ubuntu multipathd[370]: updated bindings file /etc/multipath/bindings
+Nov 03 14:16:25 ubuntu systemd[1]: Started multipathd.service - Device-Mapper Multipath Device Controller.
+
+● netfilter-persistent.service - netfilter persistent configuration
+     Loaded: loaded (/usr/lib/systemd/system/netfilter-persistent.service; enabled; preset: enabled)
+    Drop-In: /usr/lib/systemd/system/netfilter-persistent.service.d
+             └─iptables.conf
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 48fff43cd0fc410ab5a6858374e4825c
+       Docs: man:netfilter-persistent(8)
+    Process: 408 ExecStart=/usr/sbin/netfilter-persistent start (code=exited, status=0/SUCCESS)
+   Main PID: 408 (code=exited, status=0/SUCCESS)
+   Mem peak: 14.2M
+        CPU: 37ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting netfilter-persistent.service - netfilter persistent configuration...
+Nov 03 14:16:25 ubuntu netfilter-persistent[447]: run-parts: executing /usr/share/netfilter-persistent/plugins.d/15-ip4tables start
+Nov 03 14:16:26 ubuntu netfilter-persistent[447]: run-parts: executing /usr/share/netfilter-persistent/plugins.d/25-ip6tables start
+Nov 03 14:16:26 ubuntu systemd[1]: Finished netfilter-persistent.service - netfilter persistent configuration.
+
+● networking.service - Raise network interfaces
+     Loaded: loaded (/usr/lib/systemd/system/networking.service; enabled; preset: enabled)
+     Active: active (exited) since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: 355f82d82ee54b3fa3006f7494f85e5b
+       Docs: man:interfaces(5)
+    Process: 739 ExecStart=/usr/sbin/ifup -a --read-environment (code=exited, status=0/SUCCESS)
+    Process: 748 ExecStart=/bin/sh -c if [ -f /run/network/restart-hotplug ]; then /usr/sbin/ifup -a --read-environment --allow=hotplug; fi (code=exited, status=0/SUCCESS)
+   Main PID: 748 (code=exited, status=0/SUCCESS)
+   Mem peak: 3.3M
+        CPU: 10ms
+
+Nov 03 14:16:27 np0000049858 systemd[1]: Starting networking.service - Raise network interfaces...
+Nov 03 14:16:27 np0000049858 systemd[1]: Finished networking.service - Raise network interfaces.
+
+○ nvmefc-boot-connections.service - Auto-connect to subsystems on FC-NVME devices found during boot
+     Loaded: loaded (/usr/lib/systemd/system/nvmefc-boot-connections.service; enabled; preset: enabled)
+     Active: inactive (dead) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: e72c294ce50743f186cd0ccef5f4794a
+    Process: 404 ExecStart=/bin/sh -c echo add > /sys/class/fc/fc_udev_device/nvme_discovery (code=exited, status=0/SUCCESS)
+   Main PID: 404 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.2M
+        CPU: 13ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting nvmefc-boot-connections.service - Auto-connect to subsystems on FC-NVME devices found during boot...
+Nov 03 14:16:25 ubuntu systemd[1]: nvmefc-boot-connections.service: Deactivated successfully.
+Nov 03 14:16:25 ubuntu systemd[1]: Finished nvmefc-boot-connections.service - Auto-connect to subsystems on FC-NVME devices found during boot.
+
+○ nvmf-autoconnect.service - Connect NVMe-oF subsystems automatically during boot
+     Loaded: loaded (/usr/lib/systemd/system/nvmf-autoconnect.service; enabled; preset: enabled)
+     Active: inactive (dead) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: 15f0d9a04e1249a6be3453bc9d061184
+    Process: 861 ExecStart=/usr/sbin/nvme connect-all --context=autoconnect (code=exited, status=0/SUCCESS)
+   Main PID: 861 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.8M
+        CPU: 21ms
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Starting nvmf-autoconnect.service - Connect NVMe-oF subsystems automatically during boot...
+Nov 03 14:18:27 np0000049858 systemd[1]: nvmf-autoconnect.service: Deactivated successfully.
+Nov 03 14:18:27 np0000049858 systemd[1]: Finished nvmf-autoconnect.service - Connect NVMe-oF subsystems automatically during boot.
+
+○ open-iscsi.service - Login to default iSCSI targets
+     Loaded: loaded (/usr/lib/systemd/system/open-iscsi.service; enabled; preset: enabled)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:18:27 UTC; 6min ago
+             ├─ ConditionDirectoryNotEmpty=|/var/lib/iscsi/nodes was not met
+             └─ ConditionDirectoryNotEmpty=|/sys/class/iscsi_session was not met
+       Docs: man:iscsiadm(8)
+             man:iscsid(8)
+
+Nov 03 14:18:27 np0000049858 systemd[1]: open-iscsi.service - Login to default iSCSI targets skipped, no trigger condition checks were met.
+
+● packagekit.service - PackageKit Daemon
+     Loaded: loaded (/usr/lib/systemd/system/packagekit.service; static)
+     Active: active (running) since Tue 2026-11-03 14:24:01 UTC; 55s ago
+ Invocation: c1b080ea6d124560b79478ec37619a0a
+   Main PID: 1920 (packagekitd)
+      Tasks: 4 (limit: 7971)
+     Memory: 18.8M (peak: 20.1M)
+        CPU: 27ms
+     CGroup: /system.slice/packagekit.service
+             └─1920 /usr/libexec/packagekitd
+
+Nov 03 14:24:01 np0000049858 systemd[1]: Starting packagekit.service - PackageKit Daemon...
+Nov 03 14:24:01 np0000049858 PackageKit[1920]: daemon start
+Nov 03 14:24:01 np0000049858 systemd[1]: Started packagekit.service - PackageKit Daemon.
+
+● polkit.service - Authorization Manager
+     Loaded: loaded (/usr/lib/systemd/system/polkit.service; static)
+     Active: active (running) since Tue 2026-11-03 14:24:01 UTC; 55s ago
+ Invocation: d44a4e93862f4cfaa444911e940aa659
+       Docs: man:polkit(8)
+   Main PID: 1925 (polkitd)
+     Status: "Processing requests..."
+      Tasks: 4 (limit: 7971)
+     Memory: 2.8M (max: 32M, swap max: 32M, available: 29.1M, peak: 3.4M)
+        CPU: 40ms
+     CGroup: /system.slice/polkit.service
+             └─1925 /usr/lib/polkit-1/polkitd --no-debug --log-level=notice
+
+Nov 03 14:24:01 np0000049858 systemd[1]: Starting polkit.service - Authorization Manager...
+Nov 03 14:24:01 np0000049858 polkitd[1925]: Started polkitd version 127
+Nov 03 14:24:01 np0000049858 systemd[1]: Started polkit.service - Authorization Manager.
+
+● pure-boot.service - Run Pure scripts after network is reachable
+     Loaded: loaded (/etc/systemd/system/pure-boot.service; enabled; preset: enabled)
+     Active: active (exited) since Tue 2026-11-03 14:18:28 UTC; 6min ago
+ Invocation: e6047731573f45619e9380d6f6af14f1
+    Process: 862 ExecStartPre=/bin/bash -c dhclient || true; for i in $(seq 1 30); do getent hosts google.com >/dev/null 2>&1 && break; sleep 1; done; for i in $(seq 1 30); do curl -sf -m2 http://169.254.169.254/openstack/2017-02-22/meta_data.json >/dev/null 2>&1 && break; sleep 1; done; true (code=exited, status=0/SUCCESS)
+    Process: 941 ExecStart=/etc/pure/scripts/on-boot.sh (code=exited, status=0/SUCCESS)
+   Main PID: 941 (code=exited, status=0/SUCCESS)
+      Tasks: 1 (limit: 7971)
+     Memory: 5.1M (peak: 11.2M)
+        CPU: 229ms
+     CGroup: /system.slice/pure-boot.service
+             └─866 dhclient
+
+Nov 03 14:18:28 np0000049858 sudo[979]: pam_unix(sudo:session): session closed for user root
+Nov 03 14:18:28 np0000049858 on-boot.sh[941]: + '[' false = true ']'
+Nov 03 14:18:28 np0000049858 on-boot.sh[941]: + '[' false = true ']'
+Nov 03 14:18:28 np0000049858 on-boot.sh[941]: + '[' false = true ']'
+Nov 03 14:18:28 np0000049858 on-boot.sh[941]: + '[' false = true ']'
+Nov 03 14:18:28 np0000049858 on-boot.sh[941]: + sudo systemctl start multipathd
+Nov 03 14:18:28 np0000049858 sudo[986]: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=0)
+Nov 03 14:18:28 np0000049858 sudo[986]: root :  PWD=/ ; USER=root ; COMMAND=/usr/bin/systemctl start multipathd
+Nov 03 14:18:28 np0000049858 sudo[986]: pam_unix(sudo:session): session closed for user root
+Nov 03 14:18:28 np0000049858 systemd[1]: Finished pure-boot.service - Run Pure scripts after network is reachable.
+
+● rc-local.service - /etc/rc.local Compatibility
+     Loaded: loaded (/usr/lib/systemd/system/rc-local.service; enabled-runtime; preset: enabled)
+    Drop-In: /usr/lib/systemd/system/rc-local.service.d
+             └─debian.conf
+     Active: active (exited) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: 358f7da7072c40d0a92ff795f06f93c4
+       Docs: man:systemd-rc-local-generator(8)
+    Process: 863 ExecStart=/etc/rc.local start (code=exited, status=0/SUCCESS)
+   Mem peak: 1.7M
+        CPU: 8ms
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Starting rc-local.service - /etc/rc.local Compatibility...
+Nov 03 14:18:27 np0000049858 rc.local[863]: + set +e
+Nov 03 14:18:27 np0000049858 rc.local[863]: + sed -i -e 's/^\(DNS[0-9]*=[.0-9]\+\)/#\1/g' '/etc/sysconfig/network-scripts/ifcfg-*'
+Nov 03 14:18:27 np0000049858 rc.local[867]: sed: can't read /etc/sysconfig/network-scripts/ifcfg-*: No such file or directory
+Nov 03 14:18:27 np0000049858 rc.local[863]: + sed -i -e 's/^NETCONFIG_DNS_POLICY=.*/NETCONFIG_DNS_POLICY=""/g' /etc/sysconfig/network/config
+Nov 03 14:18:27 np0000049858 rc.local[870]: sed: can't read /etc/sysconfig/network/config: No such file or directory
+Nov 03 14:18:27 np0000049858 rc.local[863]: + set -e
+Nov 03 14:18:27 np0000049858 rc.local[863]: + echo 'nameserver 8.8.8.8'
+Nov 03 14:18:27 np0000049858 rc.local[863]: + exit 0
+Nov 03 14:18:27 np0000049858 systemd[1]: Started rc-local.service - /etc/rc.local Compatibility.
+
+○ rescue.service - Rescue Shell
+     Loaded: loaded (/usr/lib/systemd/system/rescue.service; static)
+     Active: inactive (dead)
+       Docs: man:sulogin(8)
+
+● rsyslog.service - System Logging Service
+     Loaded: loaded (/usr/lib/systemd/system/rsyslog.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: a2492a76e8f445e686d652d2840c7e66
+TriggeredBy: ● syslog.socket
+       Docs: man:rsyslogd(8)
+             man:rsyslog.conf(5)
+             https://www.rsyslog.com/doc/
+    Process: 515 ExecStartPre=/usr/lib/rsyslog/reload-apparmor-profile (code=exited, status=0/SUCCESS)
+   Main PID: 553 (rsyslogd)
+      Tasks: 4 (limit: 7971)
+     Memory: 3.7M (peak: 4.2M)
+        CPU: 82ms
+     CGroup: /system.slice/rsyslog.service
+             └─553 /usr/sbin/rsyslogd -n -iNONE
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting rsyslog.service - System Logging Service...
+Nov 03 14:16:26 ubuntu rsyslogd[553]: imuxsock: Acquired UNIX socket '/run/systemd/journal/syslog' (fd 3) from systemd.  [v8.2512.0]
+Nov 03 14:16:26 ubuntu rsyslogd[553]: rsyslogd's groupid changed to 104
+Nov 03 14:16:26 ubuntu systemd[1]: Started rsyslog.service - System Logging Service.
+Nov 03 14:16:26 ubuntu rsyslogd[553]: rsyslogd's userid changed to 102
+Nov 03 14:16:26 ubuntu rsyslogd[553]: [origin software="rsyslogd" swVersion="8.2512.0" x-pid="553" x-info="https://www.rsyslog.com"] start
+
+● serial-getty@ttyS0.service - Serial Getty on ttyS0
+     Loaded: loaded (/usr/lib/systemd/system/serial-getty@.service; enabled-runtime; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: f65b3386ff4e4f8eb78abbb97aa0efcc
+       Docs: man:agetty(8)
+             man:systemd-getty-generator(8)
+             https://0pointer.de/blog/projects/serial-console.html
+   Main PID: 913 (agetty)
+      Tasks: 1 (limit: 7971)
+     Memory: 312K (peak: 2M)
+        CPU: 7ms
+     CGroup: /system.slice/system-serial\x2dgetty.slice/serial-getty@ttyS0.service
+             └─913 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d --keep-baud 115200,57600,38400,9600 - vt220
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Started serial-getty@ttyS0.service - Serial Getty on ttyS0.
+
+× ssh-keygen.service - OpenSSH Server Key Generation
+     Loaded: loaded (/usr/lib/systemd/system/ssh-keygen.service; enabled; preset: enabled)
+     Active: failed (Result: exit-code) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 666570659a944debaad2e05bfb12f871
+    Process: 516 ExecStart=/usr/local/sbin/runtime-ssh-host-keys.sh (code=exited, status=255/EXCEPTION)
+   Main PID: 516 (code=exited, status=255/EXCEPTION)
+   Mem peak: 5.7M
+        CPU: 12ms
+
+Nov 03 14:16:26 ubuntu runtime-ssh-host-keys.sh[516]: + for key in dsa ecdsa ed25519 rsa
+Nov 03 14:16:26 ubuntu runtime-ssh-host-keys.sh[516]: + FILE=/etc/ssh/ssh_host_dsa_key
+Nov 03 14:16:26 ubuntu runtime-ssh-host-keys.sh[516]: + '[' -f /etc/ssh/ssh_host_dsa_key ']'
+Nov 03 14:16:26 ubuntu runtime-ssh-host-keys.sh[525]: + /usr/bin/yes n
+Nov 03 14:16:26 ubuntu runtime-ssh-host-keys.sh[526]: + /usr/bin/ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa
+Nov 03 14:16:26 ubuntu runtime-ssh-host-keys.sh[526]: unknown key type dsa
+Nov 03 14:16:26 ubuntu runtime-ssh-host-keys.sh[525]: yes: standard output: Broken pipe
+Nov 03 14:16:26 ubuntu systemd[1]: ssh-keygen.service: Main process exited, code=exited, status=255/EXCEPTION
+Nov 03 14:16:26 ubuntu systemd[1]: ssh-keygen.service: Failed with result 'exit-code'.
+Nov 03 14:16:26 ubuntu systemd[1]: Failed to start ssh-keygen.service - OpenSSH Server Key Generation.
+
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/usr/lib/systemd/system/ssh.service; enabled; preset: enabled)
+    Drop-In: /etc/systemd/system/ssh.service.d
+             └─10-wait-for-pure-boot.conf
+     Active: active (running) since Tue 2026-11-03 14:18:28 UTC; 6min ago
+ Invocation: 26b6a5d2b4b64a5a8388a7b16adf2587
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+    Process: 990 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+   Main PID: 993 (sshd)
+      Tasks: 1 (limit: 7971)
+     Memory: 7M (peak: 16.3M)
+        CPU: 280ms
+     CGroup: /system.slice/ssh.service
+             └─993 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+
+Nov 03 14:23:34 np0000049858 sshd-session[1836]: pam_unix(sshd:session): session opened for user zuul(uid=1000) by zuul(uid=0)
+Nov 03 14:24:40 np0000049858 sshd-session[1953]: Accepted publickey for zuul from 10.241.128.101 port 40094 ssh2: RSA SHA256:ZptyCIeufZ/ecMODHLeyq5Pm0T/zRDbGPjtTSbQYWfM
+Nov 03 14:24:40 np0000049858 sshd-session[1953]: pam_unix(sshd:session): session opened for user zuul(uid=1000) by zuul(uid=0)
+Nov 03 14:24:40 np0000049858 sshd-session[1953]: syslogin_perform_logout: logout() returned an error
+Nov 03 14:24:40 np0000049858 sshd-session[1953]: syslogin_perform_logout: logout() returned an error
+Nov 03 14:24:42 np0000049858 sshd-session[2031]: Accepted publickey for zuul from 10.241.128.101 port 39400 ssh2: RSA SHA256:ZptyCIeufZ/ecMODHLeyq5Pm0T/zRDbGPjtTSbQYWfM
+Nov 03 14:24:42 np0000049858 sshd-session[2031]: pam_unix(sshd:session): session opened for user zuul(uid=1000) by zuul(uid=0)
+Nov 03 14:24:42 np0000049858 sshd-session[2031]: syslogin_perform_logout: logout() returned an error
+Nov 03 14:24:45 np0000049858 sshd-session[2088]: Accepted publickey for zuul from 10.241.128.101 port 39412 ssh2: RSA SHA256:ZptyCIeufZ/ecMODHLeyq5Pm0T/zRDbGPjtTSbQYWfM
+Nov 03 14:24:45 np0000049858 sshd-session[2088]: pam_unix(sshd:session): session opened for user zuul(uid=1000) by zuul(uid=0)
+
+● sshd-keygen.service - Generate sshd host keys on first boot
+     Loaded: loaded (/usr/lib/systemd/system/sshd-keygen.service; enabled; preset: enabled)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: c581a4e8b74344bdb38b5e7e48dea348
+    Process: 522 ExecStart=ssh-keygen -A (code=exited, status=0/SUCCESS)
+   Main PID: 522 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.7M
+        CPU: 217ms
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting sshd-keygen.service - Generate sshd host keys on first boot...
+Nov 03 14:16:26 np0000049858 ssh-keygen[522]: ssh-keygen: generating new host keys: RSA ECDSA ED25519
+Nov 03 14:16:26 np0000049858 systemd[1]: Finished sshd-keygen.service - Generate sshd host keys on first boot.
+
+○ sshd@sshd-keygen.service - OpenBSD Secure Shell server per-connection daemon
+     Loaded: loaded (/usr/lib/systemd/system/sshd@.service; static)
+     Active: inactive (dead)
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+
+○ systemd-ask-password-console.service - Dispatch Password Requests to Console
+     Loaded: loaded (/usr/lib/systemd/system/systemd-ask-password-console.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● systemd-ask-password-console.path
+       Docs: man:systemd-ask-password-console.service(8)
+
+○ systemd-ask-password-wall.service - Forward Password Requests to Wall
+     Loaded: loaded (/usr/lib/systemd/system/systemd-ask-password-wall.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● systemd-ask-password-wall.path
+       Docs: man:systemd-ask-password-wall.service(8)
+
+○ systemd-battery-check.service - Early Battery Level Check
+     Loaded: loaded (/usr/lib/systemd/system/systemd-battery-check.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-battery-check.service(8)
+
+● systemd-binfmt.service - Set Up Additional Binary Formats
+     Loaded: loaded (/usr/lib/systemd/system/systemd-binfmt.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 086fd07f570746188d8e8b582b63e5dd
+       Docs: man:systemd-binfmt.service(8)
+             man:binfmt.d(5)
+             https://docs.kernel.org/admin-guide/binfmt-misc.html
+             https://systemd.io/API_FILE_SYSTEMS
+    Process: 409 ExecStart=/usr/lib/systemd/systemd-binfmt (code=exited, status=0/SUCCESS)
+   Main PID: 409 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.1M
+        CPU: 6ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-binfmt.service - Set Up Additional Binary Formats...
+Nov 03 14:16:26 ubuntu systemd[1]: Finished systemd-binfmt.service - Set Up Additional Binary Formats.
+
+○ systemd-bsod.service - Display Boot-Time Emergency Messages In Full Screen
+     Loaded: loaded (/usr/lib/systemd/system/systemd-bsod.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-bsod.service(8)
+
+○ systemd-confext-initrd.service - Merge System Configuration Images into /etc/
+     Loaded: loaded (/usr/lib/systemd/system/systemd-confext-initrd.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-confext-initrd.service(8)
+
+○ systemd-confext.service - Merge System Configuration Images into /etc/
+     Loaded: loaded (/usr/lib/systemd/system/systemd-confext.service; disabled; preset: enabled)
+     Active: inactive (dead)
+       Docs: man:systemd-confext.service(8)
+
+● systemd-firstboot.service - Initial Setup
+     Loaded: loaded (/usr/lib/systemd/system/systemd-firstboot.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 75e86f7c4f624642a957a939cee2eafc
+       Docs: man:systemd-firstboot(1)
+    Process: 448 ExecStart=systemd-firstboot --prompt-locale --prompt-keymap-auto --prompt-timezone --prompt-root-password --mute-console=yes (code=exited, status=0/SUCCESS)
+   Main PID: 448 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.4M
+        CPU: 8ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-firstboot.service - Initial Setup...
+Nov 03 14:16:26 ubuntu systemd[1]: Finished systemd-firstboot.service - Initial Setup.
+
+● systemd-fsck-root.service - File System Check on Root Device
+     Loaded: loaded (/usr/lib/systemd/system/systemd-fsck-root.service; enabled-runtime; preset: enabled)
+    Drop-In: /usr/lib/systemd/system/systemd-fsck-root.service.d
+             └─10-skip-fsck-initramfs.conf
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 265049abffc8499cb1bcb55576e067d0
+       Docs: man:systemd-fsck-root.service(8)
+    Process: 337 ExecStart=/usr/lib/systemd/systemd-fsck (code=exited, status=0/SUCCESS)
+   Main PID: 337 (code=exited, status=0/SUCCESS)
+   Mem peak: 3.5M
+        CPU: 12ms
+
+Nov 03 14:16:25 ubuntu systemd-fsck[344]: cloudimg-rootfs: clean, 815563/5693280 files, 3888044/5692624 blocks
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+○ systemd-hibernate-clear.service - Clear Stale Hibernate Storage Info
+     Loaded: loaded (/usr/lib/systemd/system/systemd-hibernate-clear.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67 was not met
+       Docs: man:systemd-hibernate-clear.service(8)
+
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-hibernate-clear.service - Clear Stale Hibernate Storage Info skipped, unmet condition check ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-hibernate-clear.service - Clear Stale Hibernate Storage Info skipped, unmet condition check ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67
+
+○ systemd-hibernate-resume.service - Resume from hibernation
+     Loaded: loaded (/usr/lib/systemd/system/systemd-hibernate-resume.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-hibernate-resume.service(8)
+
+○ systemd-hibernate.service - System Hibernate
+     Loaded: loaded (/usr/lib/systemd/system/systemd-hibernate.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-hibernate.service(8)
+
+○ systemd-hostnamed.service - Hostname Service
+     Loaded: loaded (/usr/lib/systemd/system/systemd-hostnamed.service; static)
+     Active: inactive (dead) since Tue 2026-11-03 14:18:59 UTC; 5min ago
+   Duration: 30.459s
+ Invocation: 1c303d472f9d498da1d53680913fe877
+TriggeredBy: ● systemd-hostnamed.socket
+       Docs: man:systemd-hostnamed.service(8)
+             man:hostname(5)
+             man:machine-info(5)
+             man:org.freedesktop.hostname1(5)
+    Process: 948 ExecStart=/usr/lib/systemd/systemd-hostnamed (code=exited, status=0/SUCCESS)
+   Main PID: 948 (code=exited, status=0/SUCCESS)
+     Status: "Shutting down..."
+   Mem peak: 2.4M
+        CPU: 32ms
+
+Nov 03 14:18:28 np0000049858 systemd[1]: Starting systemd-hostnamed.service - Hostname Service...
+Nov 03 14:18:28 np0000049858 systemd[1]: Started systemd-hostnamed.service - Hostname Service.
+Nov 03 14:18:28 np0000049858 systemd-hostnamed[948]: Hostname set to <np0000049858> (static)
+Nov 03 14:18:59 np0000049858 systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+
+○ systemd-hwdb-update.service - Rebuild Hardware Database
+     Loaded: loaded (/usr/lib/systemd/system/systemd-hwdb-update.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             ├─ ConditionPathExists=|!/usr/lib/udev/hwdb.bin was not met
+             ├─ ConditionPathExists=|/etc/udev/hwdb.bin was not met
+             └─ ConditionDirectoryNotEmpty=|/etc/udev/hwdb.d was not met
+       Docs: man:hwdb(7)
+             man:systemd-hwdb(8)
+
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-hwdb-update.service - Rebuild Hardware Database skipped, no trigger condition checks were met.
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-hwdb-update.service - Rebuild Hardware Database skipped, no trigger condition checks were met.
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-hwdb-update.service - Rebuild Hardware Database skipped, no trigger condition checks were met.
+
+○ systemd-hybrid-sleep.service - System Hybrid Suspend+Hibernate
+     Loaded: loaded (/usr/lib/systemd/system/systemd-hybrid-sleep.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-hybrid-sleep.service(8)
+
+● systemd-journal-catalog-update.service - Rebuild Journal Catalog
+     Loaded: loaded (/usr/lib/systemd/system/systemd-journal-catalog-update.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 801a13a022014af1a468e6de76015a65
+       Docs: man:systemd-journald.service(8)
+             man:journald.conf(5)
+    Process: 450 ExecStart=journalctl --update-catalog (code=exited, status=0/SUCCESS)
+   Main PID: 450 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.6M
+        CPU: 12ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-journal-catalog-update.service - Rebuild Journal Catalog...
+Nov 03 14:16:26 ubuntu systemd[1]: Finished systemd-journal-catalog-update.service - Rebuild Journal Catalog.
+
+● systemd-journal-flush.service - Flush Journal to Persistent Storage
+     Loaded: loaded (/usr/lib/systemd/system/systemd-journal-flush.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: ad6f3db6a2544561ba8942a1228bed8e
+       Docs: man:systemd-journald.service(8)
+             man:journald.conf(5)
+    Process: 371 ExecStart=journalctl --flush (code=exited, status=0/SUCCESS)
+   Main PID: 371 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 6ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-journal-flush.service - Flush Journal to Persistent Storage...
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-journal-flush.service - Flush Journal to Persistent Storage.
+
+● systemd-journald.service - Journal Service
+     Loaded: loaded (/usr/lib/systemd/system/systemd-journald.service; static)
+    Drop-In: /usr/lib/systemd/system/systemd-journald.service.d
+             └─nice.conf
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 702817dd5e2c490682726a047fd0da35
+TriggeredBy: ○ systemd-journald-audit.socket
+             ● systemd-journald.socket
+             ● systemd-journald-dev-log.socket
+       Docs: man:systemd-journald.service(8)
+             man:journald.conf(5)
+   Main PID: 329 (systemd-journal)
+     Status: "Processing requests..."
+      Tasks: 1 (limit: 7971)
+   FD Store: 13 (limit: 4224)
+     Memory: 28.2M (peak: 28.5M)
+        CPU: 262ms
+     CGroup: /system.slice/systemd-journald.service
+             └─329 /usr/lib/systemd/systemd-journald
+
+Nov 03 14:16:25 ubuntu systemd-journald[329]: Collecting audit messages is disabled.
+Nov 03 14:16:25 ubuntu systemd-journald[329]: Journal started
+Nov 03 14:16:25 ubuntu systemd-journald[329]: Runtime Journal (/run/log/journal/ee33fd3012fc41dabed78fc8de6aee03) is 8M, max 79.3M, 71.3M free.
+Nov 03 14:16:25 ubuntu systemd-journald[329]: Time spent on flushing to /var/log/journal/ee33fd3012fc41dabed78fc8de6aee03 is 6.640ms for 1097 entries.
+Nov 03 14:16:25 ubuntu systemd-journald[329]: System Journal (/var/log/journal/ee33fd3012fc41dabed78fc8de6aee03) is 8M, max 2G, 2G free.
+Nov 03 14:16:25 ubuntu systemd-journald[329]: Received client request to flush runtime journal.
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-logind.service - User Login Management
+     Loaded: loaded (/usr/lib/systemd/system/systemd-logind.service; static)
+    Drop-In: /usr/lib/systemd/system/systemd-logind.service.d
+             └─dbus.conf
+     Active: active (running) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 4edf9fc55cb34daeb3ab8920ef212262
+TriggeredBy: ● systemd-logind-varlink.socket
+       Docs: man:sd-login(3)
+             man:systemd-logind.service(8)
+             man:logind.conf(5)
+             man:org.freedesktop.login1(5)
+   Main PID: 527 (systemd-logind)
+     Status: "Processing requests..."
+      Tasks: 1 (limit: 7971)
+   FD Store: 2 (limit: 768)
+     Memory: 2.2M (peak: 2.6M)
+        CPU: 48ms
+     CGroup: /system.slice/systemd-logind.service
+             └─527 /usr/lib/systemd/systemd-logind
+
+Nov 03 14:23:34 np0000049858 systemd-logind[527]: New session '6' of user 'zuul' with class 'user' and type 'tty'.
+Nov 03 14:24:40 np0000049858 systemd-logind[527]: Session 6 logged out. Waiting for processes to exit.
+Nov 03 14:24:40 np0000049858 systemd-logind[527]: Removed session 6.
+Nov 03 14:24:40 np0000049858 systemd-logind[527]: New session '7' of user 'zuul' with class 'user' and type 'tty'.
+Nov 03 14:24:42 np0000049858 systemd-logind[527]: Session 7 logged out. Waiting for processes to exit.
+Nov 03 14:24:42 np0000049858 systemd-logind[527]: Removed session 7.
+Nov 03 14:24:42 np0000049858 systemd-logind[527]: New session '8' of user 'zuul' with class 'user' and type 'tty'.
+Nov 03 14:24:45 np0000049858 systemd-logind[527]: Session 8 logged out. Waiting for processes to exit.
+Nov 03 14:24:45 np0000049858 systemd-logind[527]: Removed session 8.
+Nov 03 14:24:45 np0000049858 systemd-logind[527]: New session '9' of user 'zuul' with class 'user' and type 'tty'.
+
+● systemd-machine-id-commit.service - Save Transient machine-id to Disk
+     Loaded: loaded (/usr/lib/systemd/system/systemd-machine-id-commit.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 5bd6b4d03f5e407f9384ad84d7f35c05
+       Docs: man:systemd-machine-id-commit.service(8)
+    Process: 498 ExecStart=systemd-machine-id-setup --commit (code=exited, status=0/SUCCESS)
+   Main PID: 498 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 6ms
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting systemd-machine-id-commit.service - Save Transient machine-id to Disk...
+Nov 03 14:16:26 ubuntu systemd[1]: Finished systemd-machine-id-commit.service - Save Transient machine-id to Disk.
+
+● systemd-modules-load.service - Load Kernel Modules
+     Loaded: loaded (/usr/lib/systemd/system/systemd-modules-load.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: fc91d3e685c04a41897a351ab228d6dc
+       Docs: man:systemd-modules-load.service(8)
+             man:modules-load.d(5)
+    Process: 338 ExecStart=/usr/lib/systemd/systemd-modules-load (code=exited, status=0/SUCCESS)
+   Main PID: 338 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.9M
+        CPU: 29ms
+
+● systemd-networkd-persistent-storage.service - Enable Persistent Storage in systemd-networkd
+     Loaded: loaded (/usr/lib/systemd/system/systemd-networkd-persistent-storage.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: 45c1cf727b724401840d39aaab18cc69
+       Docs: man:networkctl(1)
+    Process: 753 ExecStart=networkctl persistent-storage yes (code=exited, status=0/SUCCESS)
+   Main PID: 753 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.2M
+        CPU: 9ms
+
+Nov 03 14:16:27 np0000049858 systemd[1]: Starting systemd-networkd-persistent-storage.service - Enable Persistent Storage in systemd-networkd...
+Nov 03 14:16:27 np0000049858 systemd[1]: Finished systemd-networkd-persistent-storage.service - Enable Persistent Storage in systemd-networkd.
+
+× systemd-networkd-wait-online.service - Wait for Network to be Online
+     Loaded: loaded (/usr/lib/systemd/system/systemd-networkd-wait-online.service; enabled; preset: enabled)
+     Active: failed (Result: exit-code) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: 7a687a807fa24573a4b918c462b91205
+       Docs: man:systemd-networkd-wait-online.service(8)
+    Process: 754 ExecStart=/usr/lib/systemd/systemd-networkd-wait-online (code=exited, status=1/FAILURE)
+   Main PID: 754 (code=exited, status=1/FAILURE)
+   Mem peak: 2M
+        CPU: 6ms
+
+Nov 03 14:16:27 np0000049858 systemd[1]: Starting systemd-networkd-wait-online.service - Wait for Network to be Online...
+Nov 03 14:18:27 np0000049858 systemd-networkd-wait-online[754]: Timeout occurred while waiting for network connectivity.
+Nov 03 14:18:27 np0000049858 systemd[1]: systemd-networkd-wait-online.service: Main process exited, code=exited, status=1/FAILURE
+Nov 03 14:18:27 np0000049858 systemd[1]: systemd-networkd-wait-online.service: Failed with result 'exit-code'.
+Nov 03 14:18:27 np0000049858 systemd[1]: Failed to start systemd-networkd-wait-online.service - Wait for Network to be Online.
+
+● systemd-networkd.service - Network Management
+     Loaded: loaded (/usr/lib/systemd/system/systemd-networkd.service; disabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: c3191cbba6d4462ea53c13f2a58e8f12
+TriggeredBy: ● systemd-networkd.socket
+             ● systemd-networkd-varlink.socket
+             ● systemd-networkd-resolve-hook.socket
+       Docs: man:systemd-networkd.service(8)
+             man:org.freedesktop.network1(5)
+   Main PID: 740 (systemd-network)
+     Status: "Processing requests..."
+      Tasks: 1 (limit: 7971)
+   FD Store: 0 (limit: 512)
+     Memory: 4M (peak: 8.9M)
+        CPU: 35ms
+     CGroup: /system.slice/systemd-networkd.service
+             └─740 /usr/lib/systemd/systemd-networkd
+
+Nov 03 14:16:27 np0000049858 systemd[1]: Starting systemd-networkd.service - Network Management...
+Nov 03 14:16:27 np0000049858 systemd-networkd[740]: lo: Link UP
+Nov 03 14:16:27 np0000049858 systemd-networkd[740]: lo: Gained carrier
+Nov 03 14:16:27 np0000049858 systemd-networkd[740]: enp3s0: Link UP
+Nov 03 14:16:27 np0000049858 systemd-networkd[740]: enp3s0: Gained carrier
+Nov 03 14:16:27 np0000049858 systemd[1]: Started systemd-networkd.service - Network Management.
+Nov 03 14:16:27 np0000049858 systemd-networkd[740]: enp3s0: Lost carrier
+Nov 03 14:16:27 np0000049858 systemd-networkd[740]: enp3s0: Gained carrier
+Nov 03 14:16:28 np0000049858 systemd-networkd[740]: enp3s0: Gained IPv6LL
+
+○ systemd-pcrmachine.service - TPM PCR Machine ID Measurement
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pcrmachine.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionSecurity=measured-uki was not met
+       Docs: man:systemd-pcrmachine.service(8)
+
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-pcrmachine.service - TPM PCR Machine ID Measurement skipped, unmet condition check ConditionSecurity=measured-uki
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-pcrmachine.service - TPM PCR Machine ID Measurement skipped, unmet condition check ConditionSecurity=measured-uki
+
+○ systemd-pcrnvdone.service - TPM PCR NvPCR Initialization Separator
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pcrnvdone.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionPathExists=/etc/initrd-release was not met
+       Docs: man:systemd-pcrnvdone.service(8)
+
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-pcrnvdone.service - TPM PCR NvPCR Initialization Separator skipped, unmet condition check ConditionPathExists=/etc/initrd-release
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-pcrnvdone.service - TPM PCR NvPCR Initialization Separator skipped, unmet condition check ConditionPathExists=/etc/initrd-release
+
+○ systemd-pcrphase-initrd.service - TPM PCR Barrier (initrd)
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pcrphase-initrd.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-pcrphase-initrd.service(8)
+
+○ systemd-pcrphase-sysinit.service - TPM PCR Barrier (Initialization)
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pcrphase-sysinit.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionSecurity=measured-uki was not met
+       Docs: man:systemd-pcrphase-sysinit.service(8)
+
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-pcrphase-sysinit.service - TPM PCR Barrier (Initialization) skipped, unmet condition check ConditionSecurity=measured-uki
+
+○ systemd-pcrphase.service - TPM PCR Barrier (User)
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pcrphase.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:18:27 UTC; 6min ago
+             └─ ConditionSecurity=measured-uki was not met
+       Docs: man:systemd-pcrphase.service(8)
+
+Nov 03 14:18:27 np0000049858 systemd[1]: systemd-pcrphase.service - TPM PCR Barrier (User) skipped, unmet condition check ConditionSecurity=measured-uki
+
+○ systemd-pcrproduct.service - TPM NvPCR Product ID Measurement
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pcrproduct.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionSecurity=measured-uki was not met
+       Docs: man:systemd-pcrproduct.service(8)
+
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-pcrproduct.service - TPM NvPCR Product ID Measurement skipped, unmet condition check ConditionSecurity=measured-uki
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-pcrproduct.service - TPM NvPCR Product ID Measurement skipped, unmet condition check ConditionSecurity=measured-uki
+
+○ systemd-pstore.service - Platform Persistent Storage Archival
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pstore.service; enabled; preset: enabled)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionDirectoryNotEmpty=/sys/fs/pstore was not met
+       Docs: man:systemd-pstore(8)
+
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-pstore.service - Platform Persistent Storage Archival skipped, unmet condition check ConditionDirectoryNotEmpty=/sys/fs/pstore
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-pstore.service - Platform Persistent Storage Archival skipped, unmet condition check ConditionDirectoryNotEmpty=/sys/fs/pstore
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-pstore.service - Platform Persistent Storage Archival skipped, unmet condition check ConditionDirectoryNotEmpty=/sys/fs/pstore
+
+○ systemd-quotacheck-root.service - Root File System Quota Check
+     Loaded: loaded (/usr/lib/systemd/system/systemd-quotacheck-root.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-quotacheck@.service(8)
+
+● systemd-random-seed.service - Load/Save OS Random Seed
+     Loaded: loaded (/usr/lib/systemd/system/systemd-random-seed.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: d8d058bbec8c4c589027fdb27df1be68
+       Docs: man:systemd-random-seed.service(8)
+             man:random(4)
+    Process: 372 ExecStart=/usr/lib/systemd/systemd-random-seed load (code=exited, status=0/SUCCESS)
+   Main PID: 372 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.7M
+        CPU: 6ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-random-seed.service - Load/Save OS Random Seed...
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-random-seed.service - Load/Save OS Random Seed.
+
+● systemd-remount-fs.service - Remount Root and Kernel File Systems
+     Loaded: loaded (/usr/lib/systemd/system/systemd-remount-fs.service; enabled-runtime; preset: enabled)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: adcfef74336a431c8e99d11b232c917a
+       Docs: man:systemd-remount-fs.service(8)
+             https://systemd.io/API_FILE_SYSTEMS
+    Process: 347 ExecStart=/usr/lib/systemd/systemd-remount-fs (code=exited, status=0/SUCCESS)
+   Main PID: 347 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.9M
+        CPU: 9ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-remount-fs.service - Remount Root and Kernel File Systems.
+
+● systemd-resolved.service - Network Name Resolution
+     Loaded: loaded (/usr/lib/systemd/system/systemd-resolved.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: af111385a5c348df8be61e3402549644
+TriggeredBy: ● systemd-resolved-monitor.socket
+             ● systemd-resolved-varlink.socket
+       Docs: man:systemd-resolved.service(8)
+             man:org.freedesktop.resolve1(5)
+             https://systemd.io/WRITING_NETWORK_CONFIGURATION_MANAGERS
+             https://systemd.io/WRITING_RESOLVER_CLIENTS
+   Main PID: 386 (systemd-resolve)
+     Status: "Processing requests..."
+      Tasks: 1 (limit: 7971)
+     Memory: 6.5M (peak: 7.2M)
+        CPU: 61ms
+     CGroup: /system.slice/systemd-resolved.service
+             └─386 /usr/lib/systemd/systemd-resolved
+
+Nov 03 14:16:25 ubuntu systemd-resolved[386]: Positive Trust Anchors:
+Nov 03 14:16:25 ubuntu systemd-resolved[386]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
+Nov 03 14:16:25 ubuntu systemd-resolved[386]: . IN DS 38696 8 2 683d2d0acb8c9b712a1948b27f741219298d0a450d612c483af444a4c0fb2b16
+Nov 03 14:16:25 ubuntu systemd-resolved[386]: Negative trust anchors: home.arpa 10.in-addr.arpa 16.172.in-addr.arpa 17.172.in-addr.arpa 18.172.in-addr.arpa 19.172.in-addr.arpa 20.172.in-addr.arpa 21.172.in-addr.arpa 22.172.in-addr.arpa 23.172.in-addr.arpa 24.172.in-addr.arpa 25.172.in-addr.arpa 26.172.in-addr.arpa 27.172.in-addr.arpa 28.172.in-addr.arpa 29.172.in-addr.arpa 30.172.in-addr.arpa 31.172.in-addr.arpa 170.0.0.192.in-addr.arpa 171.0.0.192.in-addr.arpa 168.192.in-addr.arpa d.f.ip6.arpa ipv4only.arpa resolver.arpa corp home internal intranet lan local private test
+Nov 03 14:16:25 ubuntu systemd-resolved[386]: Using system hostname 'ubuntu'.
+Nov 03 14:16:25 ubuntu systemd[1]: Started systemd-resolved.service - Network Name Resolution.
+Nov 03 14:16:26 np0000049858 systemd-resolved[386]: System hostname changed to 'np0000049858'.
+Nov 03 14:16:27 np0000049858 systemd-resolved[386]: enp3s0: Bus client set MulticastDNS setting: no
+Nov 03 14:16:27 np0000049858 systemd-resolved[386]: enp3s0: Bus client set DNS server list to: 127.0.0.1
+Nov 03 14:18:30 np0000049858 systemd-resolved[386]: Clock change detected. Flushing caches.
+
+○ systemd-rfkill.service - Load/Save RF Kill Switch Status
+     Loaded: loaded (/usr/lib/systemd/system/systemd-rfkill.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● systemd-rfkill.socket
+       Docs: man:systemd-rfkill.service(8)
+
+○ systemd-soft-reboot.service - Reboot System Userspace
+     Loaded: loaded (/usr/lib/systemd/system/systemd-soft-reboot.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-soft-reboot.service(8)
+
+○ systemd-suspend-then-hibernate.service - System Suspend then Hibernate
+     Loaded: loaded (/usr/lib/systemd/system/systemd-suspend-then-hibernate.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-suspend-then-hibernate.service(8)
+
+○ systemd-suspend.service - System Suspend
+     Loaded: loaded (/usr/lib/systemd/system/systemd-suspend.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-suspend.service(8)
+
+● systemd-sysctl.service - Apply Kernel Variables
+     Loaded: loaded (/usr/lib/systemd/system/systemd-sysctl.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: e5e2bea2bf584c15ac24532a82016440
+       Docs: man:systemd-sysctl.service(8)
+             man:sysctl.d(5)
+    Process: 348 ExecStart=/usr/lib/systemd/systemd-sysctl (code=exited, status=0/SUCCESS)
+   Main PID: 348 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.7M
+        CPU: 6ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-sysctl.service - Apply Kernel Variables.
+
+○ systemd-sysext-initrd.service - Merge System Extension Images into /usr/ and /opt/
+     Loaded: loaded (/usr/lib/systemd/system/systemd-sysext-initrd.service; static)
+     Active: inactive (dead)
+       Docs: man:systemd-sysext-initrd.service(8)
+
+○ systemd-sysext.service - Merge System Extension Images into /usr/ and /opt/
+     Loaded: loaded (/usr/lib/systemd/system/systemd-sysext.service; disabled; preset: enabled)
+     Active: inactive (dead)
+       Docs: man:systemd-sysext.service(8)
+
+● systemd-sysusers.service - Create System Users
+     Loaded: loaded (/usr/lib/systemd/system/systemd-sysusers.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: cf7fb3f7c83e43f681e473acdb233cac
+       Docs: man:sysusers.d(5)
+             man:systemd-sysusers.service(8)
+    Process: 374 ExecStart=systemd-sysusers (code=exited, status=0/SUCCESS)
+   Main PID: 374 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.1M
+        CPU: 7ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-sysusers.service - Create System Users...
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-sysusers.service - Create System Users.
+
+● systemd-timesyncd.service - Network Time Synchronization
+     Loaded: loaded (/usr/lib/systemd/system/systemd-timesyncd.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: a284d452c19940649741c85a2178f377
+       Docs: man:systemd-timesyncd.service(8)
+   Main PID: 387 (systemd-timesyn)
+     Status: "Contacted time server 185.125.190.56:123 (ntp.ubuntu.com)."
+      Tasks: 2 (limit: 7971)
+     Memory: 1.6M (peak: 2.8M)
+        CPU: 36ms
+     CGroup: /system.slice/systemd-timesyncd.service
+             └─387 /usr/lib/systemd/systemd-timesyncd
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-timesyncd.service - Network Time Synchronization...
+Nov 03 14:16:25 ubuntu systemd[1]: Started systemd-timesyncd.service - Network Time Synchronization.
+Nov 03 14:16:25 ubuntu systemd-timesyncd[387]: Network configuration changed, trying to establish connection.
+Nov 03 14:16:25 ubuntu systemd-timesyncd[387]: Network configuration changed, trying to establish connection.
+Nov 03 14:16:27 np0000049858 systemd-timesyncd[387]: Network configuration changed, trying to establish connection.
+Nov 03 14:16:27 np0000049858 systemd-timesyncd[387]: Network configuration changed, trying to establish connection.
+Nov 03 14:16:28 np0000049858 systemd-timesyncd[387]: Network configuration changed, trying to establish connection.
+Nov 03 14:18:30 np0000049858 systemd-timesyncd[387]: Contacted time server 185.125.190.56:123 (ntp.ubuntu.com).
+Nov 03 14:18:30 np0000049858 systemd-timesyncd[387]: Initial clock synchronization to Tue 2026-11-03 14:18:30.070206 UTC.
+
+○ systemd-tmpfiles-clean.service - Cleanup of Temporary Directories
+     Loaded: loaded (/usr/lib/systemd/system/systemd-tmpfiles-clean.service; static)
+     Active: inactive (dead)
+TriggeredBy: ● systemd-tmpfiles-clean.timer
+       Docs: man:tmpfiles.d(5)
+             man:systemd-tmpfiles(8)
+
+● systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully
+     Loaded: loaded (/usr/lib/systemd/system/systemd-tmpfiles-setup-dev-early.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: e0d5131668eb46b8886e2f058d196f26
+       Docs: man:tmpfiles.d(5)
+             man:systemd-tmpfiles(8)
+    Process: 350 ExecStart=systemd-tmpfiles --prefix=/dev --create --boot --graceful (code=exited, status=0/SUCCESS)
+   Main PID: 350 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 9ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully.
+
+● systemd-tmpfiles-setup-dev.service - Create Static Device Nodes in /dev
+     Loaded: loaded (/usr/lib/systemd/system/systemd-tmpfiles-setup-dev.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 184f2bf8c1fb4dc59f42d820a2009eb8
+       Docs: man:tmpfiles.d(5)
+             man:systemd-tmpfiles(8)
+    Process: 389 ExecStart=systemd-tmpfiles --prefix=/dev --create --boot (code=exited, status=0/SUCCESS)
+   Main PID: 389 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 10ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-tmpfiles-setup-dev.service - Create Static Device Nodes in /dev...
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-tmpfiles-setup-dev.service - Create Static Device Nodes in /dev.
+
+● systemd-tmpfiles-setup.service - Create System Files and Directories
+     Loaded: loaded (/usr/lib/systemd/system/systemd-tmpfiles-setup.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: dbd5e3c364fe44a5a70722d98a2bcdd2
+       Docs: man:tmpfiles.d(5)
+             man:systemd-tmpfiles(8)
+    Process: 410 ExecStart=systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev (code=exited, status=0/SUCCESS)
+   Main PID: 410 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 13ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-tmpfiles-setup.service - Create System Files and Directories...
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-tmpfiles-setup.service - Create System Files and Directories.
+
+○ systemd-tpm2-setup-early.service - Early TPM SRK Setup
+     Loaded: loaded (/usr/lib/systemd/system/systemd-tpm2-setup-early.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionSecurity=measured-uki was not met
+       Docs: man:systemd-tpm2-setup.service(8)
+
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-tpm2-setup-early.service - Early TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-tpm2-setup-early.service - Early TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+
+○ systemd-tpm2-setup.service - TPM SRK Setup
+     Loaded: loaded (/usr/lib/systemd/system/systemd-tpm2-setup.service; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:26 UTC; 8min ago
+             └─ ConditionSecurity=measured-uki was not met
+       Docs: man:systemd-tpm2-setup.service(8)
+
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-tpm2-setup.service - TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+Nov 03 14:16:25 ubuntu systemd[1]: systemd-tpm2-setup.service - TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+Nov 03 14:16:26 ubuntu systemd[1]: systemd-tpm2-setup.service - TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+
+● systemd-udev-load-credentials.service - Load udev Rules from Credentials
+     Loaded: loaded (/usr/lib/systemd/system/systemd-udev-load-credentials.service; disabled; preset: enabled)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 5f8e2266e314435bafb718187d29d5b9
+       Docs: man:udevadm(8)
+             man:udev(7)
+             man:systemd.system-credentials(7)
+    Process: 342 ExecStart=udevadm control --load-credentials (code=exited, status=0/SUCCESS)
+   Main PID: 342 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.4M
+        CPU: 7ms
+
+● systemd-udev-settle.service - Wait for udev To Complete Device Initialization
+     Loaded: loaded (/usr/lib/systemd/system/systemd-udev-settle.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 568a3a0a41824dad9c847346e804255c
+       Docs: man:systemd-udev-settle.service(8)
+    Process: 402 ExecStart=udevadm settle (code=exited, status=0/SUCCESS)
+   Main PID: 402 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.7M
+        CPU: 6ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-udev-settle.service - Wait for udev To Complete Device Initialization...
+Nov 03 14:16:25 ubuntu udevadm[402]: systemd-udev-settle.service is deprecated. Please fix growroot.service not to pull it in.
+Nov 03 14:16:26 ubuntu systemd[1]: Finished systemd-udev-settle.service - Wait for udev To Complete Device Initialization.
+
+● systemd-udev-trigger.service - Coldplug All udev Devices
+     Loaded: loaded (/usr/lib/systemd/system/systemd-udev-trigger.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 2788bbcfa60145d597baf1d270ebbbdd
+       Docs: man:udev(7)
+             man:systemd-udevd.service(8)
+    Process: 343 ExecStart=udevadm trigger --type=all --action=add --prioritized-subsystem=module,block,tpmrm,net,tty,input (code=exited, status=0/SUCCESS)
+   Main PID: 343 (code=exited, status=0/SUCCESS)
+   Mem peak: 4.1M
+        CPU: 178ms
+
+Nov 03 14:16:25 ubuntu systemd[1]: Finished systemd-udev-trigger.service - Coldplug All udev Devices.
+
+● systemd-udevd.service - Rule-based Manager for Device Events and Files
+     Loaded: loaded (/usr/lib/systemd/system/systemd-udevd.service; static)
+    Drop-In: /usr/lib/systemd/system/systemd-udevd.service.d
+             └─syscall-architecture.conf
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 1c34413fe9dd4514904cde101f244d9d
+TriggeredBy: ● systemd-udevd-control.socket
+             ● systemd-udevd-varlink.socket
+             ● systemd-udevd-kernel.socket
+       Docs: man:systemd-udevd.service(8)
+             man:udev(7)
+   Main PID: 398 (systemd-udevd)
+     Status: "Processing requests..."
+      Tasks: 1
+   FD Store: 1 (limit: 512)
+     Memory: 20M (peak: 41.7M)
+        CPU: 1.297s
+     CGroup: /system.slice/systemd-udevd.service
+             └─udev
+               └─398 /usr/lib/systemd/systemd-udevd
+
+Nov 03 14:16:25 ubuntu systemd[1]: Starting systemd-udevd.service - Rule-based Manager for Device Events and Files...
+Nov 03 14:16:25 ubuntu systemd-udevd[398]: Using default interface naming scheme 'v259'.
+Nov 03 14:16:25 ubuntu systemd-udevd[398]: /usr/lib/udev/rules.d/99-pure-storage.rules:13 Invalid key/value pair, ignoring.
+Nov 03 14:16:25 ubuntu systemd[1]: Started systemd-udevd.service - Rule-based Manager for Device Events and Files.
+Nov 03 14:16:26 ubuntu 55-scsi-sg3_id.rules[461]: WARNING: SCSI device sr0 has no device ID, consider changing .SCSI_ID_SERIAL_SRC in 00-scsi-sg3_config.rules
+
+● systemd-update-done.service - Update is Completed
+     Loaded: loaded (/usr/lib/systemd/system/systemd-update-done.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: e919a42e1fb54790bf05c23a852a1fcb
+       Docs: man:systemd-update-done.service(8)
+    Process: 486 ExecStart=/usr/lib/systemd/systemd-update-done (code=exited, status=0/SUCCESS)
+   Main PID: 486 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 6ms
+
+Nov 03 14:16:26 ubuntu systemd[1]: Starting systemd-update-done.service - Update is Completed...
+Nov 03 14:16:26 ubuntu systemd[1]: Finished systemd-update-done.service - Update is Completed.
+
+● systemd-user-sessions.service - Permit User Sessions
+     Loaded: loaded (/usr/lib/systemd/system/systemd-user-sessions.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: a2fb23cffae44ae789b4ea11878d6571
+       Docs: man:systemd-user-sessions.service(8)
+    Process: 902 ExecStart=/usr/lib/systemd/systemd-user-sessions start (code=exited, status=0/SUCCESS)
+   Main PID: 902 (code=exited, status=0/SUCCESS)
+   Mem peak: 1.7M
+        CPU: 5ms
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Starting systemd-user-sessions.service - Permit User Sessions...
+Nov 03 14:18:27 np0000049858 systemd[1]: Finished systemd-user-sessions.service - Permit User Sessions.
+
+× unbound-resolvconf.service - Unbound asyncronous resolvconf update helper
+     Loaded: loaded (/usr/lib/systemd/system/unbound-resolvconf.service; enabled; preset: enabled)
+     Active: failed (Result: start-limit-hit) since Tue 2026-11-03 14:16:29 UTC; 8min ago
+   Duration: 348ms
+ Invocation: cc1b50f03c044544abf839feef8a6a52
+    Process: 845 ExecStart=/usr/libexec/unbound-helper resolvconf_start (code=exited, status=0/SUCCESS)
+    Process: 849 ExecStop=/usr/libexec/unbound-helper resolvconf_stop (code=exited, status=0/SUCCESS)
+   Main PID: 845 (code=exited, status=0/SUCCESS)
+   Mem peak: 2.4M
+        CPU: 9ms
+
+Nov 03 14:16:29 np0000049858 systemd[1]: Started unbound-resolvconf.service - Unbound asyncronous resolvconf update helper.
+Nov 03 14:16:29 np0000049858 systemd[1]: Stopping unbound-resolvconf.service - Unbound asyncronous resolvconf update helper...
+Nov 03 14:16:29 np0000049858 systemd[1]: unbound-resolvconf.service: Deactivated successfully.
+Nov 03 14:16:29 np0000049858 systemd[1]: Stopped unbound-resolvconf.service - Unbound asyncronous resolvconf update helper.
+Nov 03 14:16:29 np0000049858 systemd[1]: unbound-resolvconf.service: Start request repeated too quickly.
+Nov 03 14:16:29 np0000049858 systemd[1]: unbound-resolvconf.service: Failed with result 'start-limit-hit'.
+Nov 03 14:16:29 np0000049858 systemd[1]: Failed to start unbound-resolvconf.service - Unbound asyncronous resolvconf update helper.
+
+× unbound.service - Unbound DNS server
+     Loaded: loaded (/usr/lib/systemd/system/unbound.service; enabled; preset: enabled)
+     Active: failed (Result: exit-code) since Tue 2026-11-03 14:16:29 UTC; 8min ago
+ Invocation: e0d4ffe9884342dabdc9475c17a49d8b
+       Docs: man:unbound(8)
+    Process: 834 ExecStartPre=/usr/libexec/unbound-helper chroot_setup (code=exited, status=0/SUCCESS)
+    Process: 837 ExecStartPre=/usr/libexec/unbound-helper root_trust_anchor_update (code=exited, status=1/FAILURE)
+    Process: 840 ExecStart=/usr/sbin/unbound -d -p $DAEMON_OPTS (code=exited, status=1/FAILURE)
+    Process: 842 ExecStopPost=/usr/libexec/unbound-helper chroot_teardown (code=exited, status=0/SUCCESS)
+   Main PID: 840 (code=exited, status=1/FAILURE)
+   Mem peak: 4.5M
+        CPU: 29ms
+
+Nov 03 14:16:29 np0000049858 systemd[1]: unbound.service: Scheduled restart job, restart counter is at 5.
+Nov 03 14:16:29 np0000049858 systemd[1]: unbound.service: Start request repeated too quickly.
+Nov 03 14:16:29 np0000049858 systemd[1]: unbound.service: Failed with result 'exit-code'.
+Nov 03 14:16:29 np0000049858 systemd[1]: Failed to start unbound.service - Unbound DNS server.
+
+● user-runtime-dir@1000.service - User Runtime Directory /run/user/1000
+     Loaded: loaded (/usr/lib/systemd/system/user-runtime-dir@.service; static)
+     Active: active (exited) since Tue 2026-11-03 14:21:46 UTC; 3min 11s ago
+ Invocation: 435982578b5444dc9a8ab380c1e5f6f8
+       Docs: man:user@.service(5)
+    Process: 1020 ExecStart=/usr/lib/systemd/systemd-user-runtime-dir start 1000 (code=exited, status=0/SUCCESS)
+   Main PID: 1020 (code=exited, status=0/SUCCESS)
+   Mem peak: 2M
+        CPU: 6ms
+
+Nov 03 14:21:45 np0000049858 systemd[1]: Starting user-runtime-dir@1000.service - User Runtime Directory /run/user/1000...
+Nov 03 14:21:46 np0000049858 systemd-user-runtime-dir[1020]: Successfully configured disk quota for UID 1000 on /tmp to 3G
+Nov 03 14:21:46 np0000049858 systemd-user-runtime-dir[1020]: Successfully configured disk quota for UID 1000 on /dev/shm to 3G
+Nov 03 14:21:46 np0000049858 systemd[1]: Finished user-runtime-dir@1000.service - User Runtime Directory /run/user/1000.
+
+● user@1000.service - User Manager for UID 1000
+     Loaded: loaded (/usr/lib/systemd/system/user@.service; static)
+    Drop-In: /usr/lib/systemd/system/user@.service.d
+             └─10-login-barrier.conf, timeout.conf
+     Active: active (running) since Tue 2026-11-03 14:21:46 UTC; 3min 11s ago
+ Invocation: e542d06006a64c29880996bfc58528f8
+       Docs: man:user@.service(5)
+   Main PID: 1022 (systemd)
+     Status: "Ready."
+      Tasks: 2
+     Memory: 5.4M (peak: 13.9M)
+        CPU: 86ms
+     CGroup: /user.slice/user-1000.slice/user@1000.service
+             └─init.scope
+               ├─1022 /usr/lib/systemd/systemd --user
+               └─1024 "(sd-pam)"
+
+Nov 03 14:21:46 np0000049858 systemd[1022]: Listening on systemd-ask-password.socket - Query the User Interactively for a Password.
+Nov 03 14:21:46 np0000049858 systemd[1022]: Listening on dbus.socket - D-Bus User Message Bus Socket.
+Nov 03 14:21:46 np0000049858 systemd[1022]: Listening on gpg-agent.socket - GnuPG cryptographic agent and passphrase cache.
+Nov 03 14:21:46 np0000049858 systemd[1022]: Listening on ssh-agent.socket - OpenSSH Agent socket.
+Nov 03 14:21:46 np0000049858 systemd[1022]: Listening on gpg-agent-ssh.socket - GnuPG cryptographic agent (ssh-agent emulation).
+Nov 03 14:21:46 np0000049858 systemd[1022]: Reached target sockets.target - Sockets.
+Nov 03 14:21:46 np0000049858 systemd[1022]: Reached target basic.target - Basic System.
+Nov 03 14:21:46 np0000049858 systemd[1022]: Reached target default.target - Main User Target.
+Nov 03 14:21:46 np0000049858 systemd[1022]: Startup finished in 80ms.
+Nov 03 14:21:46 np0000049858 systemd[1]: Started user@1000.service - User Manager for UID 1000.
+
+○ uuidd.service - Daemon for generating UUIDs
+     Loaded: loaded (/usr/lib/systemd/system/uuidd.service; indirect; preset: enabled)
+     Active: inactive (dead)
+TriggeredBy: ● uuidd.socket
+       Docs: man:uuidd(8)
+
+● -.slice - Root Slice
+     Loaded: loaded
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+       Docs: man:systemd.special(7)
+ Act. Units: 100
+      Tasks: 266
+     Memory: 698.5M
+        CPU: 2min 3.980s
+     CGroup: /
+             ├─init.scope
+             │ └─1 /sbin/init nofb
+             ├─system.slice
+             │ ├─atd.service
+             │ │ └─909 /usr/sbin/atd -f
+             │ ├─cron.service
+             │ │ └─899 /usr/sbin/cron -f -P
+             │ ├─dbus.service
+             │ │ └─508 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+             │ ├─haveged.service
+             │ │ └─445 /usr/sbin/haveged --Foreground --verbose=1
+             │ ├─iscsid.service
+             │ │ ├─878 /usr/sbin/iscsid
+             │ │ └─879 /usr/sbin/iscsid
+             │ ├─multipathd.service
+             │ │ └─370 /usr/sbin/multipathd -d -s
+             │ ├─packagekit.service
+             │ │ └─1920 /usr/libexec/packagekitd
+             │ ├─polkit.service
+             │ │ └─1925 /usr/lib/polkit-1/polkitd --no-debug --log-level=notice
+             │ ├─pure-boot.service
+             │ │ └─866 dhclient
+             │ ├─rsyslog.service
+             │ │ └─553 /usr/sbin/rsyslogd -n -iNONE
+             │ ├─ssh.service
+             │ │ └─993 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+             │ ├─system-getty.slice
+             │ │ └─getty@tty1.service
+             │ │   └─912 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d - linux
+             │ ├─system-glean.slice
+             │ │ └─glean@enp3s0.service
+             │ │   └─665 dhclient -1 -4 -v -i -pf /run/dhclient.enp3s0.pid -lf /var/lib/dhcp/dhclient.enp3s0.leases -I -df /var/lib/dhcp/dhclient6.enp3s0.leases enp3s0
+             │ ├─system-serial\x2dgetty.slice
+             │ │ └─serial-getty@ttyS0.service
+             │ │   └─913 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d --keep-baud 115200,57600,38400,9600 - vt220
+             │ ├─systemd-journald.service
+             │ │ └─329 /usr/lib/systemd/systemd-journald
+             │ ├─systemd-logind.service
+             │ │ └─527 /usr/lib/systemd/systemd-logind
+             │ ├─systemd-networkd.service
+             │ │ └─740 /usr/lib/systemd/systemd-networkd
+             │ ├─systemd-resolved.service
+             │ │ └─386 /usr/lib/systemd/systemd-resolved
+             │ ├─systemd-timesyncd.service
+             │ │ └─387 /usr/lib/systemd/systemd-timesyncd
+             │ └─systemd-udevd.service
+             │   └─udev
+             │     └─398 /usr/lib/systemd/systemd-udevd
+             └─user.slice
+               └─user-1000.slice
+                 ├─session-1.scope
+                 │ └─1170 /usr/bin/python3
+                 ├─session-9.scope
+                 │ ├─2088 "sshd-session: zuul [priv]"
+                 │ ├─2099 "sshd-session: zuul@notty"
+                 │ ├─2523 /bin/sh -c "sudo -H -S -n  -u root /bin/sh -c 'echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3' && sleep 0"
+                 │ ├─2524 sudo -H -S -n -u root /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+                 │ ├─2526 /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+                 │ ├─2527 /usr/bin/python3
+                 │ ├─2528 /bin/bash -c "sudo iptables-save > /home/zuul/iptables.txt\n\n# NOTE(sfernand): Run 'df' with a 60s timeout to prevent hangs from\n# stale NFS mounts.\ntimeout -s 9 60s df -h > /home/zuul/df.txt || true\n# If 'df' times out, the mount output helps debug which NFS share\n# is unresponsive.\nmount > /home/zuul/mount.txt\n\nfor py_ver in 2 3; do\n    if [[ \`which python\${py_ver}\` ]]; then\n        python\${py_ver} -m pip freeze > /home/zuul/pip\${py_ver}-freeze.txt\n    fi\ndone\n\nif [ \`command -v dpkg\` ]; then\n    dpkg -l> /home/zuul/dpkg-l.txt\nfi\nif [ \`command -v rpm\` ]; then\n    rpm -qa | sort > /home/zuul/rpm-qa.txt\nfi\n\n# Services status\nsudo systemctl status --all > services.txt 2>/dev/null\n\n# NOTE(kchamart) The 'audit.log' can be useful in cases when QEMU\n# failed to start due to denials from SELinux — useful for CentOS\n# and Fedora machines.  For Ubuntu (which runs AppArmor), DevStack\n# already captures the contents of /var/log/kern.log (via\n# \`journalctl -t kernel\` redirected into syslog.txt.gz), which\n# contains AppArmor-related messages.\nif [ -f /var/log/audit/audit.log ] ; then\n    sudo cp /var/log/audit/audit.log /home/zuul/audit.log &&\n    chmod +r /home/zuul/audit.log;\nfi\n\n# gzip and save any coredumps in /var/core\nif [ -d /var/core ]; then\n    sudo gzip -r /var/core\n    sudo cp -r /var/core /home/zuul/\nfi\n\nsudo ss -lntup | grep ':53' > /home/zuul/listen53.txt\n\n# NOTE(andreaf) Service logs are already in logs/ thanks for the\n# export-devstack-journal log. Apache logs are under apache/ thans to the\n# apache-logs-conf role.\ngrep -i deprecat /home/zuul/logs/*.txt /home/zuul/apache/*.log | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}\\.[0-9]{1,3}/ /g' | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}/ /g' | \\\n    sed -r 's/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}/ /g' |\n    sed -r 's/\\[.*\\]/ /g' | \\\n    sed -r 's/\\s[0-9]+\\s/ /g' | \\\n    awk '{if (\$0 in seen) {seen[\$0]++} else {out[++n]=\$0;seen[\$0]=1}} END { for (i=1; i<=n; i++) print seen[out[i]]\" :: \" out[i] }' > /home/zuul/deprecations.log\n"
+                 │ ├─2542 sudo systemctl status --all
+                 │ └─2544 systemctl status --all
+                 └─user@1000.service
+                   └─init.scope
+                     ├─1022 /usr/lib/systemd/systemd --user
+                     └─1024 "(sd-pam)"
+
+Nov 03 14:24:01 np0000049858 systemd[1]: Starting polkit.service - Authorization Manager...
+Nov 03 14:24:01 np0000049858 systemd[1]: Started polkit.service - Authorization Manager.
+Nov 03 14:24:01 np0000049858 systemd[1]: Started packagekit.service - PackageKit Daemon.
+Nov 03 14:24:40 np0000049858 systemd[1]: session-6.scope: Deactivated successfully.
+Nov 03 14:24:40 np0000049858 systemd[1]: session-6.scope: Consumed 3.473s CPU time over 1min 5.975s wall clock time, 351.2M memory peak.
+Nov 03 14:24:40 np0000049858 systemd[1]: Started session-7.scope - Session 7 of User zuul.
+Nov 03 14:24:42 np0000049858 systemd[1]: session-7.scope: Deactivated successfully.
+Nov 03 14:24:42 np0000049858 systemd[1]: Started session-8.scope - Session 8 of User zuul.
+Nov 03 14:24:45 np0000049858 systemd[1]: session-8.scope: Deactivated successfully.
+Nov 03 14:24:45 np0000049858 systemd[1]: Started session-9.scope - Session 9 of User zuul.
+
+● system-getty.slice - Slice /system/getty
+     Loaded: loaded
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 6c92fdc9f1df48769e0f36c92802babf
+ Act. Units: 1
+      Tasks: 1
+     Memory: 388K (peak: 2M)
+        CPU: 7ms
+     CGroup: /system.slice/system-getty.slice
+             └─getty@tty1.service
+               └─912 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d - linux
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● system-glean.slice - Slice /system/glean
+     Loaded: loaded
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: a56db97f0d854df68f55fa6ad4398c50
+ Act. Units: 2
+      Tasks: 1
+     Memory: 3.4M (peak: 27M)
+        CPU: 265ms
+     CGroup: /system.slice/system-glean.slice
+             └─glean@enp3s0.service
+               └─665 dhclient -1 -4 -v -i -pf /run/dhclient.enp3s0.pid -lf /var/lib/dhcp/dhclient.enp3s0.leases -I -df /var/lib/dhcp/dhclient6.enp3s0.leases enp3s0
+
+Nov 03 14:16:27 np0000049858 dhclient[665]: DHCPREQUEST for 10.241.128.142 on enp3s0 to 255.255.255.255 port 67 (xid=0x5f14e4c9)
+Nov 03 14:16:27 np0000049858 dhclient[665]: DHCPACK of 10.241.128.142 from 10.241.128.1 (xid=0xc9e4145f)
+Nov 03 14:16:27 np0000049858 ifup[665]: DHCPACK of 10.241.128.142 from 10.241.128.1 (xid=0xc9e4145f)
+Nov 03 14:16:27 np0000049858 ifup[665]: suspect value in domain_search option - discarded
+Nov 03 14:16:27 np0000049858 dhclient[665]: suspect value in domain_search option - discarded
+Nov 03 14:16:27 np0000049858 ifup[715]: Setting LLMNR support level "yes" for "2", but the global support level is "no".
+Nov 03 14:16:27 np0000049858 dhclient[665]: Error printing text.
+Nov 03 14:16:27 np0000049858 ifup[665]: Error printing text.
+Nov 03 14:16:27 np0000049858 dhclient[665]: bound to 10.241.128.142 -- renewal in 21514 seconds.
+Nov 03 14:16:27 np0000049858 ifup[665]: bound to 10.241.128.142 -- renewal in 21514 seconds.
+
+● system-modprobe.slice - Slice /system/modprobe
+     Loaded: loaded
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 1855c1fba98e40a88b1af08bb4976a2a
+ Act. Units: 0
+      Tasks: 0
+     Memory: 8K (peak: 3.4M)
+        CPU: 28ms
+     CGroup: /system.slice/system-modprobe.slice
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● system-serial\x2dgetty.slice - Slice /system/serial-getty
+     Loaded: loaded
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 68c8355151f14ba7a22cec416cddcd79
+ Act. Units: 1
+      Tasks: 1
+     Memory: 332K (peak: 2M)
+        CPU: 7ms
+     CGroup: /system.slice/system-serial\x2dgetty.slice
+             └─serial-getty@ttyS0.service
+               └─913 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d --keep-baud 115200,57600,38400,9600 - vt220
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+○ system-sshd.slice - Slice /system/sshd
+     Loaded: loaded
+     Active: inactive (dead)
+ Act. Units: 0
+
+● system.slice - System Slice
+     Loaded: loaded
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+       Docs: man:systemd.special(7)
+ Act. Units: 84
+      Tasks: 38
+     Memory: 143.3M (peak: 251.6M)
+        CPU: 4.387s
+     CGroup: /system.slice
+             ├─atd.service
+             │ └─909 /usr/sbin/atd -f
+             ├─cron.service
+             │ └─899 /usr/sbin/cron -f -P
+             ├─dbus.service
+             │ └─508 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+             ├─haveged.service
+             │ └─445 /usr/sbin/haveged --Foreground --verbose=1
+             ├─iscsid.service
+             │ ├─878 /usr/sbin/iscsid
+             │ └─879 /usr/sbin/iscsid
+             ├─multipathd.service
+             │ └─370 /usr/sbin/multipathd -d -s
+             ├─packagekit.service
+             │ └─1920 /usr/libexec/packagekitd
+             ├─polkit.service
+             │ └─1925 /usr/lib/polkit-1/polkitd --no-debug --log-level=notice
+             ├─pure-boot.service
+             │ └─866 dhclient
+             ├─rsyslog.service
+             │ └─553 /usr/sbin/rsyslogd -n -iNONE
+             ├─ssh.service
+             │ └─993 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+             ├─system-getty.slice
+             │ └─getty@tty1.service
+             │   └─912 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d - linux
+             ├─system-glean.slice
+             │ └─glean@enp3s0.service
+             │   └─665 dhclient -1 -4 -v -i -pf /run/dhclient.enp3s0.pid -lf /var/lib/dhcp/dhclient.enp3s0.leases -I -df /var/lib/dhcp/dhclient6.enp3s0.leases enp3s0
+             ├─system-serial\x2dgetty.slice
+             │ └─serial-getty@ttyS0.service
+             │   └─913 /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d --keep-baud 115200,57600,38400,9600 - vt220
+             ├─systemd-journald.service
+             │ └─329 /usr/lib/systemd/systemd-journald
+             ├─systemd-logind.service
+             │ └─527 /usr/lib/systemd/systemd-logind
+             ├─systemd-networkd.service
+             │ └─740 /usr/lib/systemd/systemd-networkd
+             ├─systemd-resolved.service
+             │ └─386 /usr/lib/systemd/systemd-resolved
+             ├─systemd-timesyncd.service
+             │ └─387 /usr/lib/systemd/systemd-timesyncd
+             └─systemd-udevd.service
+               └─udev
+                 └─398 /usr/lib/systemd/systemd-udevd
+
+Nov 03 14:24:42 np0000049858 systemd-logind[527]: Removed session 7.
+Nov 03 14:24:42 np0000049858 sshd-session[2031]: Accepted publickey for zuul from 10.241.128.101 port 39400 ssh2: RSA SHA256:ZptyCIeufZ/ecMODHLeyq5Pm0T/zRDbGPjtTSbQYWfM
+Nov 03 14:24:42 np0000049858 sshd-session[2031]: pam_unix(sshd:session): session opened for user zuul(uid=1000) by zuul(uid=0)
+Nov 03 14:24:42 np0000049858 systemd-logind[527]: New session '8' of user 'zuul' with class 'user' and type 'tty'.
+Nov 03 14:24:42 np0000049858 sshd-session[2031]: syslogin_perform_logout: logout() returned an error
+Nov 03 14:24:45 np0000049858 systemd-logind[527]: Session 8 logged out. Waiting for processes to exit.
+Nov 03 14:24:45 np0000049858 systemd-logind[527]: Removed session 8.
+Nov 03 14:24:45 np0000049858 sshd-session[2088]: Accepted publickey for zuul from 10.241.128.101 port 39412 ssh2: RSA SHA256:ZptyCIeufZ/ecMODHLeyq5Pm0T/zRDbGPjtTSbQYWfM
+Nov 03 14:24:45 np0000049858 sshd-session[2088]: pam_unix(sshd:session): session opened for user zuul(uid=1000) by zuul(uid=0)
+Nov 03 14:24:45 np0000049858 systemd-logind[527]: New session '9' of user 'zuul' with class 'user' and type 'tty'.
+
+● user-1000.slice - User Slice of UID 1000
+     Loaded: loaded
+    Drop-In: /usr/lib/systemd/system/user-.slice.d
+             └─10-defaults.conf
+     Active: active since Tue 2026-11-03 14:21:45 UTC; 3min 11s ago
+ Invocation: 3ae1bfaeb5e4419180b2191d89746519
+       Docs: man:user@.service(5)
+ Act. Units: 4
+      Tasks: 21 (limit: 17536)
+     Memory: 6.9G (peak: 7.2G)
+        CPU: 2min 4.553s
+     CGroup: /user.slice/user-1000.slice
+             ├─session-1.scope
+             │ └─1170 /usr/bin/python3
+             ├─session-9.scope
+             │ ├─2088 "sshd-session: zuul [priv]"
+             │ ├─2099 "sshd-session: zuul@notty"
+             │ ├─2523 /bin/sh -c "sudo -H -S -n  -u root /bin/sh -c 'echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3' && sleep 0"
+             │ ├─2524 sudo -H -S -n -u root /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+             │ ├─2526 /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+             │ ├─2527 /usr/bin/python3
+             │ ├─2528 /bin/bash -c "sudo iptables-save > /home/zuul/iptables.txt\n\n# NOTE(sfernand): Run 'df' with a 60s timeout to prevent hangs from\n# stale NFS mounts.\ntimeout -s 9 60s df -h > /home/zuul/df.txt || true\n# If 'df' times out, the mount output helps debug which NFS share\n# is unresponsive.\nmount > /home/zuul/mount.txt\n\nfor py_ver in 2 3; do\n    if [[ \`which python\${py_ver}\` ]]; then\n        python\${py_ver} -m pip freeze > /home/zuul/pip\${py_ver}-freeze.txt\n    fi\ndone\n\nif [ \`command -v dpkg\` ]; then\n    dpkg -l> /home/zuul/dpkg-l.txt\nfi\nif [ \`command -v rpm\` ]; then\n    rpm -qa | sort > /home/zuul/rpm-qa.txt\nfi\n\n# Services status\nsudo systemctl status --all > services.txt 2>/dev/null\n\n# NOTE(kchamart) The 'audit.log' can be useful in cases when QEMU\n# failed to start due to denials from SELinux — useful for CentOS\n# and Fedora machines.  For Ubuntu (which runs AppArmor), DevStack\n# already captures the contents of /var/log/kern.log (via\n# \`journalctl -t kernel\` redirected into syslog.txt.gz), which\n# contains AppArmor-related messages.\nif [ -f /var/log/audit/audit.log ] ; then\n    sudo cp /var/log/audit/audit.log /home/zuul/audit.log &&\n    chmod +r /home/zuul/audit.log;\nfi\n\n# gzip and save any coredumps in /var/core\nif [ -d /var/core ]; then\n    sudo gzip -r /var/core\n    sudo cp -r /var/core /home/zuul/\nfi\n\nsudo ss -lntup | grep ':53' > /home/zuul/listen53.txt\n\n# NOTE(andreaf) Service logs are already in logs/ thanks for the\n# export-devstack-journal log. Apache logs are under apache/ thans to the\n# apache-logs-conf role.\ngrep -i deprecat /home/zuul/logs/*.txt /home/zuul/apache/*.log | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}\\.[0-9]{1,3}/ /g' | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}/ /g' | \\\n    sed -r 's/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}/ /g' |\n    sed -r 's/\\[.*\\]/ /g' | \\\n    sed -r 's/\\s[0-9]+\\s/ /g' | \\\n    awk '{if (\$0 in seen) {seen[\$0]++} else {out[++n]=\$0;seen[\$0]=1}} END { for (i=1; i<=n; i++) print seen[out[i]]\" :: \" out[i] }' > /home/zuul/deprecations.log\n"
+             │ ├─2542 sudo systemctl status --all
+             │ └─2544 systemctl status --all
+             └─user@1000.service
+               └─init.scope
+                 ├─1022 /usr/lib/systemd/systemd --user
+                 └─1024 "(sd-pam)"
+
+Nov 03 14:24:56 np0000049858 ansible-stat[2518]: Invoked with path=/etc/openstack follow=False get_md5=False get_checksum=True get_mime=True get_attributes=True checksum_algorithm=sha1
+Nov 03 14:24:56 np0000049858 sudo[2515]: pam_unix(sudo:session): session closed for user root
+Nov 03 14:24:56 np0000049858 sudo[2524]: pam_unix(sudo:session): session opened for user root(uid=0) by zuul(uid=1000)
+Nov 03 14:24:56 np0000049858 sudo[2524]: zuul :  PWD=/home/zuul ; USER=root ; COMMAND=/usr/bin/sh -c echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3
+Nov 03 14:24:56 np0000049858 ansible-ansible.legacy.command[2527]: Invoked with executable=/bin/bash _raw_params=sudo iptables-save > /home/zuul/iptables.txt
+                                                                   
+                                                                   # NOTE(sfernand): Run 'df' with a 60s timeout to prevent hangs from
+                                                                   # stale NFS mounts.
+                                                                   timeout -s 9 60s df -h > /home/zuul/df.txt || true
+                                                                   # If 'df' times out, the mount output helps debug which NFS share
+                                                                   # is unresponsive.
+                                                                   mount > /home/zuul/mount.txt
+                                                                   
+                                                                   for py_ver in 2 3; do
+                                                                       if [[ `which python${py_ver}` ]]; then
+                                                                           python${py_ver} -m pip freeze > /home/zuul/pip${py_ver}-freeze.txt
+                                                                       fi
+                                                                   done
+                                                                   
+                                                                   if [ `command -v dpkg` ]; then
+                                                                       dpkg -l> /home/zuul/dpkg-l.txt
+                                                                   fi
+                                                                   if [ `command -v rpm` ]; then
+                                                                       rpm -qa | sort > /home/zuul/rpm-qa.txt
+                                                                   fi
+                                                                   
+                                                                   # Services status
+                                                                   sudo systemctl status --all > services.txt 2>/dev/null
+                                                                   
+                                                                   # NOTE(kchamart) The 'audit.log' can be useful in cases when QEMU
+                                                                   # failed to start due to denials from SELinux — useful for CentOS
+                                                                   # and Fedora machines.  For Ubuntu (which runs AppArmor), DevStack
+                                                                   # already captures the contents of /var/log/kern.log (via
+                                                                   # `journalctl -t kernel` redirected into syslog.txt.gz), which
+                                                                   # contains AppArmor-related messages.
+                                                                   if [ -f /var/log/audit/audit.log ] ; then
+                                                                       sudo cp /var/log/audit/audit.log /home/zuul/audit.log &&
+                                                                       chmod +r /home/zuul/audit.log;
+                                                                   fi
+                                                                   
+                                                                   # gzip and save any coredumps in /var/core
+                                                                   if [ -d /var/core ]; then
+                                                                       sudo gzip -r /var/core
+                                                                       sudo cp -r /var/core /home/zuul/
+                                                                   fi
+                                                                   
+                                                                   sudo ss -lntup | grep ':53' > /home/zuul/listen53.txt
+                                                                   
+                                                                   # NOTE(andreaf) Service logs are already in logs/ thanks for the
+                                                                   # export-devstack-journal log. Apache logs are under apache/ thans to the
+                                                                   # apache-logs-conf role.
+                                                                   grep -i deprecat /home/zuul/logs/*.txt /home/zuul/apache/*.log | \
+                                                                       sed -r 's/[0-9]{1,2}\:[0-9]{1,2}\:[0-9]{1,2}\.[0-9]{1,3}/ /g' | \
+                                                                       sed -r 's/[0-9]{1,2}\:[0-9]{1,2}\:[0-9]{1,2}/ /g' | \
+                                                                       sed -r 's/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}/ /g' |
+                                                                       sed -r 's/\[.*\]/ /g' | \
+                                                                       sed -r 's/\s[0-9]+\s/ /g' | \
+                                                                       awk '{if ($0 in seen) {seen[$0]++} else {out[++n]=$0;seen[$0]=1}} END { for (i=1; i<=n; i++) print seen[out[i]]" :: " out[i] }' > /home/zuul/deprecations.log
+                                                                    _uses_shell=True zuul_log_id=fa163ee8-4689-495c-7aff-000000000033-1-controller zuul_ansible_split_streams=False warn=False stdin_add_newline=True strip_empty_ends=True argv=None chdir=None creates=None removes=None stdin=None
+Nov 03 14:24:56 np0000049858 sudo[2530]: pam_unix(sudo:session): session opened for user root(uid=0) by zuul(uid=0)
+Nov 03 14:24:56 np0000049858 sudo[2530]: root :  PWD=/home/zuul ; USER=root ; COMMAND=/usr/sbin/iptables-save
+Nov 03 14:24:56 np0000049858 sudo[2530]: pam_unix(sudo:session): session closed for user root
+Nov 03 14:24:56 np0000049858 sudo[2542]: pam_unix(sudo:session): session opened for user root(uid=0) by zuul(uid=0)
+Nov 03 14:24:56 np0000049858 sudo[2542]: root :  PWD=/home/zuul ; USER=root ; COMMAND=/usr/bin/systemctl status --all
+
+● user.slice - User and Session Slice
+     Loaded: loaded (/usr/lib/systemd/system/user.slice; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: d2bb4a0e53ca42e189c6fd8e83c22f6b
+       Docs: man:systemd.special(7)
+ Act. Units: 5
+      Tasks: 21
+     Memory: 6.9G (peak: 7.2G)
+        CPU: 2min 4.559s
+     CGroup: /user.slice
+             └─user-1000.slice
+               ├─session-1.scope
+               │ └─1170 /usr/bin/python3
+               ├─session-9.scope
+               │ ├─2088 "sshd-session: zuul [priv]"
+               │ ├─2099 "sshd-session: zuul@notty"
+               │ ├─2523 /bin/sh -c "sudo -H -S -n  -u root /bin/sh -c 'echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3' && sleep 0"
+               │ ├─2524 sudo -H -S -n -u root /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+               │ ├─2526 /bin/sh -c "echo BECOME-SUCCESS-thnftblmavugicgorvdqsaufuatjfjqm ; /usr/bin/python3"
+               │ ├─2527 /usr/bin/python3
+               │ ├─2528 /bin/bash -c "sudo iptables-save > /home/zuul/iptables.txt\n\n# NOTE(sfernand): Run 'df' with a 60s timeout to prevent hangs from\n# stale NFS mounts.\ntimeout -s 9 60s df -h > /home/zuul/df.txt || true\n# If 'df' times out, the mount output helps debug which NFS share\n# is unresponsive.\nmount > /home/zuul/mount.txt\n\nfor py_ver in 2 3; do\n    if [[ \`which python\${py_ver}\` ]]; then\n        python\${py_ver} -m pip freeze > /home/zuul/pip\${py_ver}-freeze.txt\n    fi\ndone\n\nif [ \`command -v dpkg\` ]; then\n    dpkg -l> /home/zuul/dpkg-l.txt\nfi\nif [ \`command -v rpm\` ]; then\n    rpm -qa | sort > /home/zuul/rpm-qa.txt\nfi\n\n# Services status\nsudo systemctl status --all > services.txt 2>/dev/null\n\n# NOTE(kchamart) The 'audit.log' can be useful in cases when QEMU\n# failed to start due to denials from SELinux — useful for CentOS\n# and Fedora machines.  For Ubuntu (which runs AppArmor), DevStack\n# already captures the contents of /var/log/kern.log (via\n# \`journalctl -t kernel\` redirected into syslog.txt.gz), which\n# contains AppArmor-related messages.\nif [ -f /var/log/audit/audit.log ] ; then\n    sudo cp /var/log/audit/audit.log /home/zuul/audit.log &&\n    chmod +r /home/zuul/audit.log;\nfi\n\n# gzip and save any coredumps in /var/core\nif [ -d /var/core ]; then\n    sudo gzip -r /var/core\n    sudo cp -r /var/core /home/zuul/\nfi\n\nsudo ss -lntup | grep ':53' > /home/zuul/listen53.txt\n\n# NOTE(andreaf) Service logs are already in logs/ thanks for the\n# export-devstack-journal log. Apache logs are under apache/ thans to the\n# apache-logs-conf role.\ngrep -i deprecat /home/zuul/logs/*.txt /home/zuul/apache/*.log | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}\\.[0-9]{1,3}/ /g' | \\\n    sed -r 's/[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}/ /g' | \\\n    sed -r 's/[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,4}/ /g' |\n    sed -r 's/\\[.*\\]/ /g' | \\\n    sed -r 's/\\s[0-9]+\\s/ /g' | \\\n    awk '{if (\$0 in seen) {seen[\$0]++} else {out[++n]=\$0;seen[\$0]=1}} END { for (i=1; i<=n; i++) print seen[out[i]]\" :: \" out[i] }' > /home/zuul/deprecations.log\n"
+               │ ├─2542 sudo systemctl status --all
+               │ └─2544 systemctl status --all
+               └─user@1000.service
+                 └─init.scope
+                   ├─1022 /usr/lib/systemd/systemd --user
+                   └─1024 "(sd-pam)"
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● acpid.socket - ACPID Listen Socket
+     Loaded: loaded (/usr/lib/systemd/system/acpid.socket; enabled; preset: enabled)
+     Active: active (listening) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: c087a7156ad74d8fbbb32dfe98cf011c
+   Triggers: ● acpid.service
+     Listen: /run/acpid.socket (Stream)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on acpid.socket - ACPID Listen Socket.
+
+● dbus.socket - D-Bus System Message Bus Socket
+     Loaded: loaded (/usr/lib/systemd/system/dbus.socket; static)
+     Active: active (running) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 1dfa6edfa3df4a5dad8acd930d6016b1
+   Triggers: ● dbus.service
+     Listen: /run/dbus/system_bus_socket (Stream)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on dbus.socket - D-Bus System Message Bus Socket.
+
+● iscsid.socket - Open-iSCSI iscsid Socket
+     Loaded: loaded (/usr/lib/systemd/system/iscsid.socket; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 5e55f6fac1a84f188ef3fd48d54b6206
+   Triggers: ● iscsid.service
+       Docs: man:iscsid(8)
+             man:iscsiadm(8)
+     Listen: @ISCSIADM_ABSTRACT_NAMESPACE (Stream)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on iscsid.socket - Open-iSCSI iscsid Socket.
+
+○ multipathd.socket - multipathd control socket
+     Loaded: loaded (/usr/lib/systemd/system/multipathd.socket; static)
+     Active: inactive (dead)
+   Triggers: ● multipathd.service
+     Listen: @/org/kernel/linux/storage/multipathd (Stream)
+             /run/multipathd.socket (Stream)
+
+● polkit-agent-helper.socket - Authorization Manager Agent Helper
+     Loaded: loaded (/usr/lib/systemd/system/polkit-agent-helper.socket; enabled; preset: enabled)
+     Active: active (listening) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 76dc24560e1b4f068aae87137a4ef7fe
+       Docs: man:polkit(8)
+     Listen: /run/polkit/agent-helper.socket (Stream)
+   Accepted: 0; Connected: 0;
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on polkit-agent-helper.socket - Authorization Manager Agent Helper.
+
+● sshd-unix-local.socket - OpenSSH Server Socket (systemd-ssh-generator, AF_UNIX Local)
+     Loaded: loaded (/run/systemd/generator/sshd-unix-local.socket; generated)
+     Active: active (listening) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: fcbc197a48674ed8affc580872cce229
+       Docs: man:systemd-ssh-generator(8)
+     Listen: /run/ssh-unix-local/socket (Stream)
+   Accepted: 0; Connected: 0;
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on sshd-unix-local.socket - OpenSSH Server Socket (systemd-ssh-generator, AF_UNIX Local).
+
+● syslog.socket - Syslog Socket
+     Loaded: loaded (/usr/lib/systemd/system/syslog.socket; static)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 208e4c9972a54e6b88791cef12484e50
+   Triggers: ● rsyslog.service
+       Docs: man:systemd.special(7)
+             https://systemd.io/SYSLOG
+     Listen: /run/systemd/journal/syslog (Datagram)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-ask-password.socket - Query the User Interactively for a Password
+     Loaded: loaded (/usr/lib/systemd/system/systemd-ask-password.socket; static)
+     Active: active (listening) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: fbabadab006a4b25a1537c7f18234499
+       Docs: man:systemd-ask-password(1)
+     Listen: /run/systemd/io.systemd.AskPassword (Stream)
+   Accepted: 0; Connected: 0;
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-creds.socket - Credential Encryption/Decryption
+     Loaded: loaded (/usr/lib/systemd/system/systemd-creds.socket; static)
+     Active: active (listening) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 5b585cc013b84e968ccc0ee86dd13030
+       Docs: man:systemd-creds(1)
+     Listen: /run/systemd/io.systemd.Credentials (Stream)
+   Accepted: 0; Connected: 0;
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-factory-reset.socket - Factory Reset Management
+     Loaded: loaded (/usr/lib/systemd/system/systemd-factory-reset.socket; disabled; preset: enabled)
+     Active: active (listening) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 5096559ceb954b0fb627739c8929bc5f
+       Docs: man:systemd-factory-reset.service(8)
+     Listen: /run/systemd/io.systemd.FactoryReset (Stream)
+   Accepted: 0; Connected: 0;
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-hostnamed.socket - Hostname Service Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-hostnamed.socket; static)
+     Active: active (listening) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 0cf8bd3b75f645d596dea1f25585d274
+   Triggers: ● systemd-hostnamed.service
+       Docs: man:systemd-hostnamed.service(8)
+             man:hostname(5)
+             man:machine-info(5)
+     Listen: /run/systemd/io.systemd.Hostname (Stream)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on systemd-hostnamed.socket - Hostname Service Socket.
+
+○ systemd-journald-audit.socket - Journal Audit Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-journald-audit.socket; disabled; preset: enabled)
+     Active: inactive (dead)
+   Triggers: ● systemd-journald.service
+       Docs: man:systemd-journald.service(8)
+             man:journald.conf(5)
+     Listen: audit 1 (Netlink)
+
+● systemd-journald-dev-log.socket - Journal Socket (/dev/log)
+     Loaded: loaded (/usr/lib/systemd/system/systemd-journald-dev-log.socket; static)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: b27c3ba3fd6546fa90127e690f9d5a2a
+   Triggers: ● systemd-journald.service
+       Docs: man:systemd-journald.service(8)
+             man:journald.conf(5)
+     Listen: /run/systemd/journal/dev-log (Datagram)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-journald.socket - Journal Sockets
+     Loaded: loaded (/usr/lib/systemd/system/systemd-journald.socket; static)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 4147dbaf1b904676b40895fe3bbcccbf
+   Triggers: ● systemd-journald.service
+       Docs: man:systemd-journald.service(8)
+             man:journald.conf(5)
+     Listen: /run/systemd/journal/socket (Datagram)
+             /run/systemd/journal/stdout (Stream)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-logind-varlink.socket - User Login Management Varlink Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-logind-varlink.socket; static)
+     Active: active (running) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: f36f3ec6ff1f497eb600499a46975a78
+   Triggers: ● systemd-logind.service
+       Docs: man:systemd-logind.service(8)
+     Listen: /run/systemd/io.systemd.Login (Stream)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on systemd-logind-varlink.socket - User Login Management Varlink Socket.
+
+● systemd-mute-console.socket - Console Output Muting Service Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-mute-console.socket; static)
+     Active: active (listening) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: e94268384b32438a89ad3aca037f6729
+       Docs: man:systemd-mute-console(8)
+     Listen: /run/systemd/io.systemd.MuteConsole (Stream)
+   Accepted: 0; Connected: 0;
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-networkd-resolve-hook.socket - Network Management Resolve Hook Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-networkd-resolve-hook.socket; disabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: 1ae98b8af07a492a86200e1aae69a48a
+   Triggers: ● systemd-networkd.service
+       Docs: man:systemd-networkd.service(8)
+     Listen: /run/systemd/resolve.hook/io.systemd.Network (Stream)
+
+Nov 03 14:16:27 np0000049858 systemd[1]: Listening on systemd-networkd-resolve-hook.socket - Network Management Resolve Hook Socket.
+
+● systemd-networkd-varlink.socket - Network Management Varlink Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-networkd-varlink.socket; disabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 787fd410794541d9a5708b591e5f641e
+   Triggers: ● systemd-networkd.service
+       Docs: man:systemd-networkd.service(8)
+     Listen: /run/systemd/netif/io.systemd.Network (Stream)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-networkd.socket - Network Management Netlink Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-networkd.socket; disabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 0cc6e0f43b12402988db4f6a78458591
+   Triggers: ● systemd-networkd.service
+       Docs: man:systemd-networkd.service(8)
+             man:rtnetlink(7)
+     Listen: route 1361 (Netlink)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+○ systemd-pcrextend.socket - TPM PCR Measurements
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pcrextend.socket; disabled; preset: enabled)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:25 UTC; 8min ago
+             └─ ConditionSecurity=measured-uki was not met
+       Docs: man:systemd-pcrextend(8)
+     Listen: /run/systemd/io.systemd.PCRExtend (Stream)
+   Accepted: 0; Connected: 0;
+
+○ systemd-pcrlock.socket - Make TPM PCR Policy
+     Loaded: loaded (/usr/lib/systemd/system/systemd-pcrlock.socket; static)
+     Active: inactive (dead)
+  Condition: start condition unmet at Tue 2026-11-03 14:16:25 UTC; 8min ago
+             └─ ConditionSecurity=measured-uki was not met
+       Docs: man:systemd-pcrlock(8)
+     Listen: /run/systemd/io.systemd.PCRLock (Stream)
+   Accepted: 0; Connected: 0;
+
+● systemd-resolved-monitor.socket - Resolve Monitor Varlink Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-resolved-monitor.socket; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: bbab5e3a39e54c3a8a9d3d52919d485e
+   Triggers: ● systemd-resolved.service
+       Docs: man:systemd-resolved.service(8)
+     Listen: /run/systemd/resolve/io.systemd.Resolve.Monitor (Stream)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-resolved-varlink.socket - Resolve Service Varlink Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-resolved-varlink.socket; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: cb53c8c0c66744aea02e60a02e9b8d0e
+   Triggers: ● systemd-resolved.service
+       Docs: man:systemd-resolved.service(8)
+     Listen: /run/systemd/resolve/io.systemd.Resolve (Stream)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-rfkill.socket - Load/Save RF Kill Switch Status /dev/rfkill Watch
+     Loaded: loaded (/usr/lib/systemd/system/systemd-rfkill.socket; static)
+     Active: active (listening) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: b41ee61f676b43ae917d6525b98ca6bb
+   Triggers: ● systemd-rfkill.service
+       Docs: man:systemd-rfkill.socket(8)
+     Listen: /dev/rfkill (Special)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on systemd-rfkill.socket - Load/Save RF Kill Switch Status /dev/rfkill Watch.
+
+● systemd-sysext.socket - System Extension Image Management
+     Loaded: loaded (/usr/lib/systemd/system/systemd-sysext.socket; disabled; preset: enabled)
+     Active: active (listening) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: a076ce5ec362489497a4774fe7898a37
+       Docs: man:systemd-sysext(8)
+     Listen: /run/systemd/io.systemd.sysext (Stream)
+   Accepted: 0; Connected: 0;
+
+Nov 03 14:16:25 ubuntu systemd[1]: Listening on systemd-sysext.socket - System Extension Image Management.
+
+● systemd-udevd-control.socket - udev Control Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-udevd-control.socket; static)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: bc6e7e91c838446a9ddd38ae2ff26cd9
+   Triggers: ● systemd-udevd.service
+       Docs: man:systemd-udevd-control.socket(8)
+             man:udev(7)
+     Listen: /run/udev/control (SequentialPacket)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-udevd-kernel.socket - udev Kernel Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-udevd-kernel.socket; static)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: fb813722e95847b88962cf29dbe1d86d
+   Triggers: ● systemd-udevd.service
+       Docs: man:systemd-udevd-kernel.socket(8)
+             man:udev(7)
+     Listen: kobject-uevent 1 (Netlink)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● systemd-udevd-varlink.socket - udev Varlink Socket
+     Loaded: loaded (/usr/lib/systemd/system/systemd-udevd-varlink.socket; static)
+     Active: active (running) since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 2642e1d3d7ce42ae972d19b5aade9a1d
+   Triggers: ● systemd-udevd.service
+       Docs: man:systemd-udevd-varlink.socket(8)
+             man:udev(7)
+     Listen: /run/udev/io.systemd.Udev (Stream)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● uuidd.socket - UUID daemon activation socket
+     Loaded: loaded (/usr/lib/systemd/system/uuidd.socket; enabled; preset: enabled)
+     Active: active (listening) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 0c576a5ee57c43e7b9416be518129364
+   Triggers: ● uuidd.service
+     Listen: /run/uuidd/request (Stream)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Listening on uuidd.socket - UUID daemon activation socket.
+
+● root-swapfile.swap - /root/swapfile
+     Loaded: loaded
+     Active: active since Tue 2026-11-03 14:23:09 UTC; 1min 47s ago
+ Invocation: f654675e5b5b4bf1b16300651881820d
+       What: /root/swapfile
+
+● basic.target - Basic System
+     Loaded: loaded (/usr/lib/systemd/system/basic.target; static)
+     Active: active since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 2f6fe57ea3ce45898e11754e6c4f6d33
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Reached target basic.target - Basic System.
+
+○ blockdev@dev-disk-by\x2dlabel-cloudimg\x2drootfs.target - Block Device Preparation for /dev/disk/by-label/cloudimg-rootfs
+     Loaded: loaded (/usr/lib/systemd/system/blockdev@.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ blockdev@dev-sr0.target - Block Device Preparation for /dev/sr0
+     Loaded: loaded (/usr/lib/systemd/system/blockdev@.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● boot-complete.target - Boot Completion Check
+     Loaded: loaded (/usr/lib/systemd/system/boot-complete.target; static)
+     Active: active since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 779600b9acf3479aa4ee31d4c0348673
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Reached target boot-complete.target - Boot Completion Check.
+
+○ cryptsetup-pre.target - Local Encrypted Volumes (Pre)
+     Loaded: loaded (/usr/lib/systemd/system/cryptsetup-pre.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● cryptsetup.target - Local Encrypted Volumes
+     Loaded: loaded (/usr/lib/systemd/system/cryptsetup.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 426704d1c7b348609f6c30b8ba51caed
+       Docs: man:systemd.special(7)
+
+○ emergency.target - Emergency Mode
+     Loaded: loaded (/usr/lib/systemd/system/emergency.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ final.target - Late Shutdown Services
+     Loaded: loaded (/usr/lib/systemd/system/final.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● first-boot-complete.target - First Boot Complete
+     Loaded: loaded (/usr/lib/systemd/system/first-boot-complete.target; static)
+     Active: active since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: a4ff0fd83c8142459e58b71e5b5f9bd2
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Reached target first-boot-complete.target - First Boot Complete.
+
+○ getty-pre.target - Preparation for Logins
+     Loaded: loaded (/usr/lib/systemd/system/getty-pre.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+             man:systemd-getty-generator(8)
+             https://0pointer.de/blog/projects/serial-console.html
+
+● getty.target - Login Prompts
+     Loaded: loaded (/usr/lib/systemd/system/getty.target; static)
+     Active: active since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: 956adee7db6145b19fcac933fe0c7498
+       Docs: man:systemd.special(7)
+             man:systemd-getty-generator(8)
+             https://0pointer.de/blog/projects/serial-console.html
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Reached target getty.target - Login Prompts.
+
+● graphical.target - Graphical Interface
+     Loaded: loaded (/usr/lib/systemd/system/graphical.target; static)
+     Active: active since Tue 2026-11-03 14:18:28 UTC; 6min ago
+ Invocation: 673ffe15c83c4e0f8f815033f38bd13d
+       Docs: man:systemd.special(7)
+
+Nov 03 14:18:28 np0000049858 systemd[1]: Reached target graphical.target - Graphical Interface.
+
+○ hibernate.target - System Hibernation
+     Loaded: loaded (/usr/lib/systemd/system/hibernate.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ hybrid-sleep.target - Hybrid Suspend+Hibernate
+     Loaded: loaded (/usr/lib/systemd/system/hybrid-sleep.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● imports.target - Image Downloads
+     Loaded: loaded (/usr/lib/systemd/system/imports.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: c22b25a0bd6f47f69f9e3ac3c7dd83d0
+       Docs: man:systemd.special(7)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+○ initrd-fs.target - Initrd File Systems
+     Loaded: loaded (/usr/lib/systemd/system/initrd-fs.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ initrd-root-device.target - Initrd Root Device
+     Loaded: loaded (/usr/lib/systemd/system/initrd-root-device.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ initrd-root-fs.target - Initrd Root File System
+     Loaded: loaded (/usr/lib/systemd/system/initrd-root-fs.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ initrd-switch-root.target - Switch Root
+     Loaded: loaded (/usr/lib/systemd/system/initrd-switch-root.target; static)
+     Active: inactive (dead)
+       Docs: man:bootup(7)
+
+○ initrd-usr-fs.target - Initrd /usr File System
+     Loaded: loaded (/usr/lib/systemd/system/initrd-usr-fs.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ initrd.target - Initrd Default Target
+     Loaded: loaded (/usr/lib/systemd/system/initrd.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ integritysetup-pre.target - Local Integrity Protected Volumes (Pre)
+     Loaded: loaded (/usr/lib/systemd/system/integritysetup-pre.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● integritysetup.target - Local Integrity Protected Volumes
+     Loaded: loaded (/usr/lib/systemd/system/integritysetup.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 51023ad230e14a11bb14ed1f76be2ce3
+       Docs: man:systemd.special(7)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● local-fs-pre.target - Preparation for Local File Systems
+     Loaded: loaded (/usr/lib/systemd/system/local-fs-pre.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 0f3e073f59664227a9bc0e69af09fd31
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:25 ubuntu systemd[1]: Reached target local-fs-pre.target - Preparation for Local File Systems.
+
+● local-fs.target - Local File Systems
+     Loaded: loaded (/usr/lib/systemd/system/local-fs.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 84a2cf6b6e0e426787f10e2c5df7c71e
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:25 ubuntu systemd[1]: Reached target local-fs.target - Local File Systems.
+
+● multi-user.target - Multi-User System
+     Loaded: loaded (/usr/lib/systemd/system/multi-user.target; static)
+     Active: active since Tue 2026-11-03 14:18:28 UTC; 6min ago
+ Invocation: ef0792f168054871931997cbf4302626
+       Docs: man:systemd.special(7)
+
+Nov 03 14:18:28 np0000049858 systemd[1]: Reached target multi-user.target - Multi-User System.
+
+● network-online.target - Network is Online
+     Loaded: loaded (/usr/lib/systemd/system/network-online.target; static)
+     Active: active since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: b99f68a683ed431388d8e520aab03c1d
+       Docs: man:systemd.special(7)
+             https://systemd.io/NETWORK_ONLINE
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Reached target network-online.target - Network is Online.
+
+● network-pre.target - Preparation for Network
+     Loaded: loaded (/usr/lib/systemd/system/network-pre.target; static)
+     Active: active since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: e4e5505c2cae44d1b941b7cdc3cca8d5
+       Docs: man:systemd.special(7)
+             https://systemd.io/NETWORK_ONLINE
+
+Nov 03 14:16:27 np0000049858 systemd[1]: Reached target network-pre.target - Preparation for Network.
+
+● network.target - Network
+     Loaded: loaded (/usr/lib/systemd/system/network.target; static)
+     Active: active since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: 981bab34d4ba47b9a7e210626ba59473
+       Docs: man:systemd.special(7)
+             https://systemd.io/NETWORK_ONLINE
+
+Nov 03 14:16:27 np0000049858 systemd[1]: Reached target network.target - Network.
+
+● nss-lookup.target - Host and Network Name Lookups
+     Loaded: loaded (/usr/lib/systemd/system/nss-lookup.target; static)
+     Active: active since Tue 2026-11-03 14:16:27 UTC; 8min ago
+ Invocation: 516372f0327641c4899c5de2774a49a3
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:27 np0000049858 systemd[1]: Reached target nss-lookup.target - Host and Network Name Lookups.
+
+○ nss-user-lookup.target - User and Group Name Lookups
+     Loaded: loaded (/usr/lib/systemd/system/nss-user-lookup.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● paths.target - Path Units
+     Loaded: loaded (/usr/lib/systemd/system/paths.target; static)
+     Active: active since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 901e64371d7641d88d37223a3b8eb8ff
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Reached target paths.target - Path Units.
+
+○ remote-cryptsetup.target - Remote Encrypted Volumes
+     Loaded: loaded (/usr/lib/systemd/system/remote-cryptsetup.target; disabled; preset: enabled)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● remote-fs-pre.target - Preparation for Remote File Systems
+     Loaded: loaded (/usr/lib/systemd/system/remote-fs-pre.target; static)
+     Active: active since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: 541fb939e9ac4b84b3fed6251e330e00
+       Docs: man:systemd.special(7)
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Reached target remote-fs-pre.target - Preparation for Remote File Systems.
+
+● remote-fs.target - Remote File Systems
+     Loaded: loaded (/usr/lib/systemd/system/remote-fs.target; enabled; preset: enabled)
+     Active: active since Tue 2026-11-03 14:18:27 UTC; 6min ago
+ Invocation: a2077a16bdd44bcfa10a06f210ba792c
+       Docs: man:systemd.special(7)
+
+Nov 03 14:18:27 np0000049858 systemd[1]: Reached target remote-fs.target - Remote File Systems.
+
+○ remote-integritysetup.target - Remote Integrity Protected Volumes
+     Loaded: loaded (/usr/lib/systemd/system/remote-integritysetup.target; disabled; preset: enabled)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ remote-veritysetup.target - Remote Verity Protected Volumes
+     Loaded: loaded (/usr/lib/systemd/system/remote-veritysetup.target; disabled; preset: enabled)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ rescue.target - Rescue Mode
+     Loaded: loaded (/usr/lib/systemd/system/rescue.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ shutdown.target - System Shutdown
+     Loaded: loaded (/usr/lib/systemd/system/shutdown.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ sleep.target - Sleep
+     Loaded: loaded (/usr/lib/systemd/system/sleep.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● slices.target - Slice Units
+     Loaded: loaded (/usr/lib/systemd/system/slices.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 64c566a833644121ac03283637215bb5
+       Docs: man:systemd.special(7)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● sockets.target - Socket Units
+     Loaded: loaded (/usr/lib/systemd/system/sockets.target; static)
+     Active: active since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: ba8cf4c9c64742b0bd91b13fb0af19b5
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Reached target sockets.target - Socket Units.
+
+○ soft-reboot.target - Reboot System Userspace
+     Loaded: loaded (/usr/lib/systemd/system/soft-reboot.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ suspend-then-hibernate.target - Suspend; Hibernate if not used for a period of time
+     Loaded: loaded (/usr/lib/systemd/system/suspend-then-hibernate.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ suspend.target - Suspend
+     Loaded: loaded (/usr/lib/systemd/system/suspend.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● swap.target - Swaps
+     Loaded: loaded (/usr/lib/systemd/system/swap.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: b30039b389c64fcd8601b1062e2cc8da
+       Docs: man:systemd.special(7)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● sysinit.target - System Initialization
+     Loaded: loaded (/usr/lib/systemd/system/sysinit.target; static)
+     Active: active since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: ee907fcd56514b3f9a441f02385c4aef
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Reached target sysinit.target - System Initialization.
+
+● time-set.target - System Time Set
+     Loaded: loaded (/usr/lib/systemd/system/time-set.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 1951e89502e944ada54576bcd24a3dac
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:25 ubuntu systemd[1]: Reached target time-set.target - System Time Set.
+
+○ time-sync.target - System Time Synchronized
+     Loaded: loaded (/usr/lib/systemd/system/time-sync.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● timers.target - Timer Units
+     Loaded: loaded (/usr/lib/systemd/system/timers.target; static)
+     Active: active since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 83f3d53918d94473a54c9b7cbf1c840a
+       Docs: man:systemd.special(7)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Reached target timers.target - Timer Units.
+
+○ tpm2.target - Trusted Platform Module
+     Loaded: loaded (/usr/lib/systemd/system/tpm2.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ umount.target - Unmount All Filesystems
+     Loaded: loaded (/usr/lib/systemd/system/umount.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+○ veritysetup-pre.target - Local Verity Protected Volumes (Pre)
+     Loaded: loaded (/usr/lib/systemd/system/veritysetup-pre.target; static)
+     Active: inactive (dead)
+       Docs: man:systemd.special(7)
+
+● veritysetup.target - Local Verity Protected Volumes
+     Loaded: loaded (/usr/lib/systemd/system/veritysetup.target; static)
+     Active: active since Tue 2026-11-03 14:16:25 UTC; 8min ago
+ Invocation: 6b37159e860b4ca0a165ea6443e4c6f4
+       Docs: man:systemd.special(7)
+
+Notice: journal has been rotated since unit was started, output may be incomplete.
+
+● apt-daily-upgrade.timer - Daily apt upgrade and clean activities
+     Loaded: loaded (/usr/lib/systemd/system/apt-daily-upgrade.timer; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 1ab97266b6cf42af98c4090e19ab6cb0
+    Trigger: Wed 2026-11-04 06:43:33 UTC; 16h left
+   Triggers: ● apt-daily-upgrade.service
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started apt-daily-upgrade.timer - Daily apt upgrade and clean activities.
+
+● apt-daily.timer - Daily apt download activities
+     Loaded: loaded (/usr/lib/systemd/system/apt-daily.timer; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: e082bffd066c45b7adb9a1b786cfcee5
+    Trigger: Wed 2026-11-04 02:28:16 UTC; 12h left
+   Triggers: ● apt-daily.service
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started apt-daily.timer - Daily apt download activities.
+
+● dpkg-db-backup.timer - Daily dpkg database backup timer
+     Loaded: loaded (/usr/lib/systemd/system/dpkg-db-backup.timer; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 1d936b6ebcb64e9f90debaa8876a5f98
+    Trigger: Wed 2026-11-04 00:00:00 UTC; 9h left
+   Triggers: ● dpkg-db-backup.service
+       Docs: man:dpkg(1)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started dpkg-db-backup.timer - Daily dpkg database backup timer.
+
+● e2scrub_all.timer - Periodic ext4 Online Metadata Check for All Filesystems
+     Loaded: loaded (/usr/lib/systemd/system/e2scrub_all.timer; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 7842ca9e4d5a46a5b5156ec428510b24
+    Trigger: Sun 2026-11-08 03:10:58 UTC; 4 days left
+   Triggers: ● e2scrub_all.service
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started e2scrub_all.timer - Periodic ext4 Online Metadata Check for All Filesystems.
+
+● fstrim.timer - Discard unused filesystem blocks once a week
+     Loaded: loaded (/usr/lib/systemd/system/fstrim.timer; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: e854a33a40ee4206beeb70ea13a32ea7
+    Trigger: Mon 2026-11-09 00:20:40 UTC; 5 days left
+   Triggers: ● fstrim.service
+       Docs: man:fstrim
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started fstrim.timer - Discard unused filesystem blocks once a week.
+
+● motd-news.timer - Message of the Day
+     Loaded: loaded (/usr/lib/systemd/system/motd-news.timer; enabled; preset: enabled)
+     Active: active (waiting) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 0805c6c2778045208fe85e96575a7fb5
+    Trigger: Tue 2026-11-03 19:07:34 UTC; 4h 42min left
+   Triggers: ● motd-news.service
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started motd-news.timer - Message of the Day.
+
+● systemd-tmpfiles-clean.timer - Daily Cleanup of Temporary Directories
+     Loaded: loaded (/usr/lib/systemd/system/systemd-tmpfiles-clean.timer; static)
+     Active: active (waiting) since Tue 2026-11-03 14:16:26 UTC; 8min ago
+ Invocation: 631b0b9c6b264e4284244b91d828a578
+    Trigger: Tue 2026-11-03 14:31:20 UTC; 6min left
+   Triggers: ● systemd-tmpfiles-clean.service
+       Docs: man:tmpfiles.d(5)
+             man:systemd-tmpfiles(8)
+
+Nov 03 14:16:26 ubuntu systemd[1]: Started systemd-tmpfiles-clean.timer - Daily Cleanup of Temporary Directories.
