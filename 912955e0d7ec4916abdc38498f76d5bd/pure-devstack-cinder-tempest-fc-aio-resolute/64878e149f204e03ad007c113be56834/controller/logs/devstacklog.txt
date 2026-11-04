@@ -1,0 +1,1484 @@
+2026-11-04 15:02:18.090 | + ./stack.sh:main:491                      :   exec
+2026-11-04 15:02:18.091 | + ./stack.sh:main:499                      :   echo_summary 'stack.sh log /opt/stack/logs/devstacklog.txt.2026-11-04-150218'
+2026-11-04 15:02:18.091 | ++ ./stack.sh:main:491                      :   /usr/bin/python3.14 /opt/stack/devstack/tools/outfilter.py -o /opt/stack/logs/devstacklog.txt.2026-11-04-150218.summary.2026-11-04-150218
+2026-11-04 15:02:18.091 | + ./stack.sh:echo_summary:444              :   [[ -t 3 ]]
+2026-11-04 15:02:18.091 | + ./stack.sh:echo_summary:450              :   echo -e stack.sh log /opt/stack/logs/devstacklog.txt.2026-11-04-150218
+2026-11-04 15:02:18.091 | + ./stack.sh:main:501                      :   ln -sf /opt/stack/logs/devstacklog.txt.2026-11-04-150218 /opt/stack/logs/devstacklog.txt
+2026-11-04 15:02:18.091 | + ./stack.sh:main:502                      :   ln -sf /opt/stack/logs/devstacklog.txt.2026-11-04-150218.summary.2026-11-04-150218 /opt/stack/logs/devstacklog.txt.summary
+2026-11-04 15:02:18.091 | + ./stack.sh:main:517                      :   check_path_perm_sanity /opt/stack
+2026-11-04 15:02:18.091 | + functions:check_path_perm_sanity:615     :   local real_path
+2026-11-04 15:02:18.091 | ++ functions:check_path_perm_sanity:616     :   readlink -f /opt/stack
+2026-11-04 15:02:18.091 | + functions:check_path_perm_sanity:616     :   real_path=/opt/stack
+2026-11-04 15:02:18.091 | + functions:check_path_perm_sanity:617     :   local rebuilt_path=
+2026-11-04 15:02:18.091 | ++ functions:check_path_perm_sanity:618     :   tr / ' '
+2026-11-04 15:02:18.091 | ++ functions:check_path_perm_sanity:618     :   echo /opt/stack
+2026-11-04 15:02:18.091 | + functions:check_path_perm_sanity:618     :   for i in $(echo ${real_path} | tr "/" " ")
+2026-11-04 15:02:18.091 | + functions:check_path_perm_sanity:619     :   rebuilt_path=/opt
+2026-11-04 15:02:18.091 | ++ functions:check_path_perm_sanity:621     :   stat -c %a /opt
+2026-11-04 15:02:18.091 | + functions:check_path_perm_sanity:621     :   [[ 755 = 700 ]]
+2026-11-04 15:02:18.091 | + functions:check_path_perm_sanity:618     :   for i in $(echo ${real_path} | tr "/" " ")
+2026-11-04 15:02:18.091 | + functions:check_path_perm_sanity:619     :   rebuilt_path=/opt/stack
+2026-11-04 15:02:18.093 | ++ functions:check_path_perm_sanity:621     :   stat -c %a /opt/stack
+2026-11-04 15:02:18.099 | + functions:check_path_perm_sanity:621     :   [[ 755 = 700 ]]
+2026-11-04 15:02:18.100 | + ./stack.sh:main:523                      :   trap exit_trap EXIT
+2026-11-04 15:02:18.101 | + ./stack.sh:main:564                      :   trap err_trap ERR
+2026-11-04 15:02:18.102 | + ./stack.sh:main:577                      :   set -o errexit
+2026-11-04 15:02:18.103 | + ./stack.sh:main:580                      :   uname -a
+2026-11-04 15:02:18.105 | Linux np0000050022 7.0.0-42-generic #42-Ubuntu SMP PREEMPT_DYNAMIC Thu Oct 15 08:06:44 UTC 2026 x86_64 GNU/Linux
+2026-11-04 15:02:18.107 | + ./stack.sh:main:583                      :   SSL_BUNDLE_FILE=/opt/stack/data/ca-bundle.pem
+2026-11-04 15:02:18.108 | + ./stack.sh:main:584                      :   rm -f /opt/stack/data/ca-bundle.pem
+2026-11-04 15:02:18.110 | + ./stack.sh:main:587                      :   source /opt/stack/devstack/lib/database
+2026-11-04 15:02:18.129 | + ./stack.sh:main:588                      :   source /opt/stack/devstack/lib/rpc_backend
+2026-11-04 15:02:18.137 | + ./stack.sh:main:591                      :   source /opt/stack/devstack/lib/host
+2026-11-04 15:02:18.139 | +++ lib/host:source:12                       :   trueorfalse True ENABLE_KSM
+2026-11-04 15:02:18.146 | ++ lib/host:source:12                       :   ENABLE_KSM=True
+2026-11-04 15:02:18.147 | +++ lib/host:source:13                       :   trueorfalse True ENABLE_KSMTUNED
+2026-11-04 15:02:18.154 | ++ lib/host:source:13                       :   ENABLE_KSMTUNED=True
+2026-11-04 15:02:18.156 | +++ lib/host:source:56                       :   trueorfalse False ENABLE_ZSWAP
+2026-11-04 15:02:18.163 | ++ lib/host:source:56                       :   ENABLE_ZSWAP=True
+2026-11-04 15:02:18.164 | ++ lib/host:source:59                       :   ZSWAP_COMPRESSOR=lz4
+2026-11-04 15:02:18.165 | ++ lib/host:source:60                       :   ZSWAP_ZPOOL=zsmalloc
+2026-11-04 15:02:18.166 | +++ lib/host:source:82                       :   trueorfalse False ENABLE_SYSCTL_MEM_TUNING
+2026-11-04 15:02:18.173 | ++ lib/host:source:82                       :   ENABLE_SYSCTL_MEM_TUNING=True
+2026-11-04 15:02:18.174 | +++ lib/host:source:104                      :   trueorfalse False ENABLE_SYSCTL_NET_TUNING
+2026-11-04 15:02:18.181 | ++ lib/host:source:104                      :   ENABLE_SYSCTL_NET_TUNING=True
+2026-11-04 15:02:18.183 | + ./stack.sh:main:594                      :   tune_host
+2026-11-04 15:02:18.184 | + lib/host:tune_host:125                   :   configure_host_mem
+2026-11-04 15:02:18.185 | + lib/host:configure_host_mem:99           :   configure_zswap
+2026-11-04 15:02:18.186 | + lib/host:configure_zswap:69              :   [[ True == True ]]
+2026-11-04 15:02:18.187 | + lib/host:configure_zswap:72              :   is_ubuntu
+2026-11-04 15:02:18.188 | + functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-04 15:02:18.189 | + functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-04 15:02:18.189 | + lib/host:configure_zswap:73              :   set_zswap_parameter compressor lz4
+2026-11-04 15:02:18.190 | + lib/host:set_zswap_parameter:62          :   local name=compressor
+2026-11-04 15:02:18.191 | + lib/host:set_zswap_parameter:63          :   local value=lz4
+2026-11-04 15:02:18.192 | + lib/host:set_zswap_parameter:65          :   set_sysfs_parameter zswap lz4 /sys/module/zswap/parameters/compressor
+2026-11-04 15:02:18.193 | + lib/host:set_sysfs_parameter:15          :   local name=zswap
+2026-11-04 15:02:18.194 | + lib/host:set_sysfs_parameter:16          :   local value=lz4
+2026-11-04 15:02:18.195 | + lib/host:set_sysfs_parameter:17          :   local param_file=/sys/module/zswap/parameters/compressor
+2026-11-04 15:02:18.196 | + lib/host:set_sysfs_parameter:19          :   [[ ! -e /sys/module/zswap/parameters/compressor ]]
+2026-11-04 15:02:18.197 | + lib/host:set_sysfs_parameter:24          :   echo lz4
+2026-11-04 15:02:18.198 | + lib/host:set_sysfs_parameter:24          :   sudo tee /sys/module/zswap/parameters/compressor
+2026-11-04 15:02:18.204 | lz4
+2026-11-04 15:02:18.206 | + lib/host:configure_zswap:74              :   set_zswap_parameter zpool zsmalloc
+2026-11-04 15:02:18.207 | + lib/host:set_zswap_parameter:62          :   local name=zpool
+2026-11-04 15:02:18.208 | + lib/host:set_zswap_parameter:63          :   local value=zsmalloc
+2026-11-04 15:02:18.209 | + lib/host:set_zswap_parameter:65          :   set_sysfs_parameter zswap zsmalloc /sys/module/zswap/parameters/zpool
+2026-11-04 15:02:18.210 | + lib/host:set_sysfs_parameter:15          :   local name=zswap
+2026-11-04 15:02:18.211 | + lib/host:set_sysfs_parameter:16          :   local value=zsmalloc
+2026-11-04 15:02:18.212 | + lib/host:set_sysfs_parameter:17          :   local param_file=/sys/module/zswap/parameters/zpool
+2026-11-04 15:02:18.213 | + lib/host:set_sysfs_parameter:19          :   [[ ! -e /sys/module/zswap/parameters/zpool ]]
+2026-11-04 15:02:18.214 | + lib/host:set_sysfs_parameter:20          :   echo 'WARNING: zswap parameter /sys/module/zswap/parameters/zpool is not present, skipping'
+2026-11-04 15:02:18.214 | WARNING: zswap parameter /sys/module/zswap/parameters/zpool is not present, skipping
+2026-11-04 15:02:18.215 | + lib/host:set_sysfs_parameter:21          :   return 0
+2026-11-04 15:02:18.216 | + lib/host:configure_zswap:76              :   set_zswap_parameter enabled 1
+2026-11-04 15:02:18.217 | + lib/host:set_zswap_parameter:62          :   local name=enabled
+2026-11-04 15:02:18.217 | + lib/host:set_zswap_parameter:63          :   local value=1
+2026-11-04 15:02:18.218 | + lib/host:set_zswap_parameter:65          :   set_sysfs_parameter zswap 1 /sys/module/zswap/parameters/enabled
+2026-11-04 15:02:18.219 | + lib/host:set_sysfs_parameter:15          :   local name=zswap
+2026-11-04 15:02:18.220 | + lib/host:set_sysfs_parameter:16          :   local value=1
+2026-11-04 15:02:18.221 | + lib/host:set_sysfs_parameter:17          :   local param_file=/sys/module/zswap/parameters/enabled
+2026-11-04 15:02:18.222 | + lib/host:set_sysfs_parameter:19          :   [[ ! -e /sys/module/zswap/parameters/enabled ]]
+2026-11-04 15:02:18.223 | + lib/host:set_sysfs_parameter:24          :   echo 1
+2026-11-04 15:02:18.223 | + lib/host:set_sysfs_parameter:24          :   sudo tee /sys/module/zswap/parameters/enabled
+2026-11-04 15:02:18.231 | 1
+2026-11-04 15:02:18.240 | + lib/host:configure_zswap:78              :   sudo grep -R . /sys/module/zswap/parameters
+2026-11-04 15:02:18.245 | /sys/module/zswap/parameters/enabled:Y
+2026-11-04 15:02:18.245 | /sys/module/zswap/parameters/shrinker_enabled:Y
+2026-11-04 15:02:18.245 | /sys/module/zswap/parameters/max_pool_percent:20
+2026-11-04 15:02:18.245 | /sys/module/zswap/parameters/compressor:lz4
+2026-11-04 15:02:18.245 | /sys/module/zswap/parameters/accept_threshold_percent:90
+2026-11-04 15:02:18.247 | + lib/host:configure_host_mem:100          :   configure_ksm
+2026-11-04 15:02:18.248 | + lib/host:configure_ksm:39                :   [[ True == True ]]
+2026-11-04 15:02:18.249 | + lib/host:configure_ksm:40                :   install_package ksmtuned
+2026-11-04 15:02:18.250 | + functions-common:install_package:1438    :   update_package_repo
+2026-11-04 15:02:18.251 | + functions-common:update_package_repo:1412 :   NO_UPDATE_REPOS=False
+2026-11-04 15:02:18.252 | + functions-common:update_package_repo:1413 :   REPOS_UPDATED=False
+2026-11-04 15:02:18.254 | + functions-common:update_package_repo:1414 :   RETRY_UPDATE=False
+2026-11-04 15:02:18.255 | + functions-common:update_package_repo:1416 :   [[ False = True ]]
+2026-11-04 15:02:18.255 | + functions-common:update_package_repo:1420 :   is_ubuntu
+2026-11-04 15:02:18.257 | + functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-04 15:02:18.258 | + functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-04 15:02:18.259 | + functions-common:update_package_repo:1421 :   apt_get_update
+2026-11-04 15:02:18.260 | + functions-common:apt_get_update:1166     :   [[ False == True ]]
+2026-11-04 15:02:18.261 | + functions-common:apt_get_update:1171     :   [[ False = True ]]
+2026-11-04 15:02:18.263 | + functions-common:apt_get_update:1173     :   local sudo=sudo
+2026-11-04 15:02:18.264 | ++ functions-common:apt_get_update:1174     :   id -u
+2026-11-04 15:02:18.267 | + functions-common:apt_get_update:1174     :   [[ 1001 = 0 ]]
+2026-11-04 15:02:18.268 | + functions-common:apt_get_update:1177     :   time_start apt-get-update
+2026-11-04 15:02:18.270 | + functions-common:time_start:2406         :   local name=apt-get-update
+2026-11-04 15:02:18.271 | + functions-common:time_start:2407         :   local start_time=
+2026-11-04 15:02:18.272 | + functions-common:time_start:2408         :   [[ -n '' ]]
+2026-11-04 15:02:18.273 | ++ functions-common:time_start:2411         :   date +%s%3N
+2026-11-04 15:02:18.278 | + functions-common:time_start:2411         :   _TIME_START[$name]=1793804538276
+2026-11-04 15:02:18.279 | + functions-common:apt_get_update:1179     :   local 'proxies=http_proxy= https_proxy= no_proxy= '
+2026-11-04 15:02:18.280 | + functions-common:apt_get_update:1180     :   local 'update_cmd=sudo http_proxy= https_proxy= no_proxy=  apt-get update'
+2026-11-04 15:02:18.281 | + functions-common:apt_get_update:1181     :   timeout 300 sh -c 'while ! sudo http_proxy= https_proxy= no_proxy=  apt-get update; do sleep 30; done'
+2026-11-04 15:02:20.793 | Hit:1 http://mirrors.edge.kernel.org/ubuntu resolute InRelease
+2026-11-04 15:02:20.927 | Hit:2 http://mirrors.edge.kernel.org/ubuntu resolute-updates InRelease
+2026-11-04 15:02:21.109 | Hit:3 http://mirrors.edge.kernel.org/ubuntu resolute-security InRelease
+2026-11-04 15:02:21.642 | Hit:4 http://mirrors.edge.kernel.org/ubuntu resolute-backports InRelease
+2026-11-04 15:02:22.184 | Reading package lists...
+2026-11-04 15:02:22.197 | + functions-common:apt_get_update:1185     :   REPOS_UPDATED=True
+2026-11-04 15:02:22.199 | + functions-common:apt_get_update:1187     :   time_stop apt-get-update
+2026-11-04 15:02:22.200 | + functions-common:time_stop:2420          :   local name
+2026-11-04 15:02:22.201 | + functions-common:time_stop:2421          :   local end_time
+2026-11-04 15:02:22.203 | + functions-common:time_stop:2422          :   local elapsed_time
+2026-11-04 15:02:22.205 | + functions-common:time_stop:2423          :   local total
+2026-11-04 15:02:22.206 | + functions-common:time_stop:2424          :   local start_time
+2026-11-04 15:02:22.207 | + functions-common:time_stop:2426          :   name=apt-get-update
+2026-11-04 15:02:22.208 | + functions-common:time_stop:2427          :   start_time=1793804538276
+2026-11-04 15:02:22.209 | + functions-common:time_stop:2429          :   [[ -z 1793804538276 ]]
+2026-11-04 15:02:22.211 | ++ functions-common:time_stop:2432          :   date +%s%3N
+2026-11-04 15:02:22.216 | + functions-common:time_stop:2432          :   end_time=1793804542214
+2026-11-04 15:02:22.217 | + functions-common:time_stop:2433          :   elapsed_time=3938
+2026-11-04 15:02:22.218 | + functions-common:time_stop:2434          :   total=0
+2026-11-04 15:02:22.220 | + functions-common:time_stop:2436          :   _TIME_START[$name]=
+2026-11-04 15:02:22.221 | + functions-common:time_stop:2437          :   _TIME_TOTAL[$name]=3938
+2026-11-04 15:02:22.222 | + functions-common:install_package:1439    :   real_install_package ksmtuned
+2026-11-04 15:02:22.223 | + functions-common:real_install_package:1426 :   is_ubuntu
+2026-11-04 15:02:22.224 | + functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-04 15:02:22.226 | + functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-04 15:02:22.227 | + functions-common:real_install_package:1427 :   apt_get install ksmtuned
+2026-11-04 15:02:22.240 | + functions-common:apt_get:1207            :   sudo DEBIAN_FRONTEND=noninteractive http_proxy= https_proxy= no_proxy= apt-get --option Dpkg::Options::=--force-confold --assume-yes install ksmtuned
+2026-11-04 15:02:22.266 | Reading package lists...
+2026-11-04 15:02:22.383 | Building dependency tree...
+2026-11-04 15:02:22.383 | Reading state information...
+2026-11-04 15:02:22.442 | Solving dependencies...
+2026-11-04 15:02:22.541 | The following NEW packages will be installed:
+2026-11-04 15:02:22.541 |   ksmtuned
+2026-11-04 15:02:27.853 | 0 upgraded, 1 newly installed, 0 to remove and 4 not upgraded.
+2026-11-04 15:02:27.853 | Need to get 7,638 B of archives.
+2026-11-04 15:02:27.853 | After this operation, 44.0 kB of additional disk space will be used.
+2026-11-04 15:02:27.853 | Get:1 http://mirrors.kernel.org/ubuntu resolute/universe amd64 ksmtuned amd64 4.20150326+nn-1 [7,638 B]
+2026-11-04 15:02:28.053 | Fetched 7,638 B in 5s (1,440 B/s)
+2026-11-04 15:02:28.075 | Selecting previously unselected package ksmtuned.
+2026-11-04 15:02:28.085 | (Reading database… (Reading database… 5%(Reading database… 10%(Reading database… 15%(Reading database… 20%(Reading database… 25%(Reading database… 30%(Reading database… 35%(Reading database… 40%(Reading database… 45%(Reading database… 50%(Reading database… 55%(Reading database… 60%(Reading database… 65%(Reading database… 70%(Reading database… 75%(Reading database… 80%(Reading database… 85%(Reading database… 90%(Reading database… 95%(Reading database… 100%(Reading database… 44517 files and directories currently installed.)
+2026-11-04 15:02:28.086 | Preparing to unpack …/ksmtuned_4.20150326+nn-1_amd64.deb…
+2026-11-04 15:02:28.090 | Unpacking ksmtuned (4.20150326+nn-1)…
+2026-11-04 15:02:28.117 | Setting up ksmtuned (4.20150326+nn-1)…
+2026-11-04 15:02:28.242 | Created symlink '/etc/systemd/system/multi-user.target.wants/ksm.service' → '/usr/lib/systemd/system/ksm.service'.
+2026-11-04 15:02:28.343 | Created symlink '/etc/systemd/system/multi-user.target.wants/ksmtuned.service' → '/usr/lib/systemd/system/ksmtuned.service'.
+2026-11-04 15:02:28.738 | + functions-common:apt_get:1211            :   result=0
+2026-11-04 15:02:28.739 | + functions-common:apt_get:1214            :   time_stop apt-get
+2026-11-04 15:02:28.740 | + functions-common:time_stop:2420          :   local name
+2026-11-04 15:02:28.741 | + functions-common:time_stop:2421          :   local end_time
+2026-11-04 15:02:28.742 | + functions-common:time_stop:2422          :   local elapsed_time
+2026-11-04 15:02:28.743 | + functions-common:time_stop:2423          :   local total
+2026-11-04 15:02:28.744 | + functions-common:time_stop:2424          :   local start_time
+2026-11-04 15:02:28.745 | + functions-common:time_stop:2426          :   name=apt-get
+2026-11-04 15:02:28.746 | + functions-common:time_stop:2427          :   start_time=1793804542238
+2026-11-04 15:02:28.747 | + functions-common:time_stop:2429          :   [[ -z 1793804542238 ]]
+2026-11-04 15:02:28.748 | ++ functions-common:time_stop:2432          :   date +%s%3N
+2026-11-04 15:02:28.752 | + functions-common:time_stop:2432          :   end_time=1793804548750
+2026-11-04 15:02:28.753 | + functions-common:time_stop:2433          :   elapsed_time=6512
+2026-11-04 15:02:28.753 | + functions-common:time_stop:2434          :   total=357
+2026-11-04 15:02:28.754 | + functions-common:time_stop:2436          :   _TIME_START[$name]=
+2026-11-04 15:02:28.755 | + functions-common:time_stop:2437          :   _TIME_TOTAL[$name]=6869
+2026-11-04 15:02:28.756 | + functions-common:apt_get:1215            :   return 0
+2026-11-04 15:02:28.758 | ++ lib/host:configure_ksm:42                :   bool_to_int ENABLE_KSM
+2026-11-04 15:02:28.765 | + lib/host:configure_ksm:42                :   set_sysfs_parameter ksm 0 /sys/kernel/mm/ksm/run
+2026-11-04 15:02:28.766 | + lib/host:set_sysfs_parameter:15          :   local name=ksm
+2026-11-04 15:02:28.767 | + lib/host:set_sysfs_parameter:16          :   local value=0
+2026-11-04 15:02:28.768 | + lib/host:set_sysfs_parameter:17          :   local param_file=/sys/kernel/mm/ksm/run
+2026-11-04 15:02:28.769 | + lib/host:set_sysfs_parameter:19          :   [[ ! -e /sys/kernel/mm/ksm/run ]]
+2026-11-04 15:02:28.770 | + lib/host:set_sysfs_parameter:24          :   echo 0
+2026-11-04 15:02:28.770 | + lib/host:set_sysfs_parameter:24          :   sudo tee /sys/kernel/mm/ksm/run
+2026-11-04 15:02:28.776 | 0
+2026-11-04 15:02:28.778 | + lib/host:configure_host_mem:101          :   configure_sysctl_mem_parmaters
+2026-11-04 15:02:28.779 | + lib/host:configure_sysctl_mem_parmaters:84 :   [[ True == True ]]
+2026-11-04 15:02:28.780 | + lib/host:configure_sysctl_mem_parmaters:86 :   set_sysctl_parameter vm.dirty_ratio 60
+2026-11-04 15:02:28.781 | + lib/host:set_sysctl_parameter:30         :   local name=vm.dirty_ratio
+2026-11-04 15:02:28.782 | + lib/host:set_sysctl_parameter:31         :   local value=60
+2026-11-04 15:02:28.783 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w vm.dirty_ratio=60
+2026-11-04 15:02:28.789 | vm.dirty_ratio = 60
+2026-11-04 15:02:28.790 | + lib/host:configure_sysctl_mem_parmaters:87 :   set_sysctl_parameter vm.dirty_background_ratio 10
+2026-11-04 15:02:28.791 | + lib/host:set_sysctl_parameter:30         :   local name=vm.dirty_background_ratio
+2026-11-04 15:02:28.792 | + lib/host:set_sysctl_parameter:31         :   local value=10
+2026-11-04 15:02:28.793 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w vm.dirty_background_ratio=10
+2026-11-04 15:02:28.798 | vm.dirty_background_ratio = 10
+2026-11-04 15:02:28.799 | + lib/host:configure_sysctl_mem_parmaters:88 :   set_sysctl_parameter vm.vfs_cache_pressure 50
+2026-11-04 15:02:28.800 | + lib/host:set_sysctl_parameter:30         :   local name=vm.vfs_cache_pressure
+2026-11-04 15:02:28.801 | + lib/host:set_sysctl_parameter:31         :   local value=50
+2026-11-04 15:02:28.802 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w vm.vfs_cache_pressure=50
+2026-11-04 15:02:28.807 | vm.vfs_cache_pressure = 50
+2026-11-04 15:02:28.808 | + lib/host:configure_sysctl_mem_parmaters:93 :   set_sysctl_parameter vm.swappiness 100
+2026-11-04 15:02:28.809 | + lib/host:set_sysctl_parameter:30         :   local name=vm.swappiness
+2026-11-04 15:02:28.810 | + lib/host:set_sysctl_parameter:31         :   local value=100
+2026-11-04 15:02:28.811 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w vm.swappiness=100
+2026-11-04 15:02:28.816 | vm.swappiness = 100
+2026-11-04 15:02:28.817 | + lib/host:configure_sysctl_mem_parmaters:94 :   sudo grep -R . /proc/sys/vm/
+2026-11-04 15:02:28.822 | /proc/sys/vm/admin_reserve_kbytes:8192
+2026-11-04 15:02:28.822 | grep: /proc/sys/vm/compact_memory: Permission denied
+2026-11-04 15:02:28.822 | /proc/sys/vm/compact_unevictable_allowed:1
+2026-11-04 15:02:28.823 | /proc/sys/vm/compaction_proactiveness:20
+2026-11-04 15:02:28.823 | /proc/sys/vm/defrag_mode:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/dirty_background_bytes:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/dirty_background_ratio:10
+2026-11-04 15:02:28.823 | /proc/sys/vm/dirty_bytes:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/dirty_expire_centisecs:3000
+2026-11-04 15:02:28.823 | /proc/sys/vm/dirty_ratio:60
+2026-11-04 15:02:28.823 | /proc/sys/vm/dirty_writeback_centisecs:500
+2026-11-04 15:02:28.823 | /proc/sys/vm/dirtytime_expire_seconds:43200
+2026-11-04 15:02:28.823 | grep: /proc/sys/vm/drop_caches: Permission denied
+2026-11-04 15:02:28.823 | /proc/sys/vm/enable_soft_offline:1
+2026-11-04 15:02:28.823 | /proc/sys/vm/extfrag_threshold:500
+2026-11-04 15:02:28.823 | /proc/sys/vm/hugetlb_optimize_vmemmap:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/hugetlb_shm_group:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/laptop_mode:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/legacy_va_layout:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/lowmem_reserve_ratio:256	256	32	0	0
+2026-11-04 15:02:28.823 | /proc/sys/vm/max_map_count:1048576
+2026-11-04 15:02:28.823 | /proc/sys/vm/memfd_noexec:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/memory_failure_early_kill:0
+2026-11-04 15:02:28.823 | /proc/sys/vm/memory_failure_recovery:1
+2026-11-04 15:02:28.823 | /proc/sys/vm/min_free_kbytes:67584
+2026-11-04 15:02:28.823 | /proc/sys/vm/min_slab_ratio:5
+2026-11-04 15:02:28.823 | /proc/sys/vm/min_unmapped_ratio:1
+2026-11-04 15:02:28.823 | /proc/sys/vm/mmap_min_addr:65536
+2026-11-04 15:02:28.823 | /proc/sys/vm/mmap_rnd_bits:32
+2026-11-04 15:02:28.824 | /proc/sys/vm/mmap_rnd_compat_bits:16
+2026-11-04 15:02:28.824 | /proc/sys/vm/movable_gigantic_pages:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/nr_hugepages:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/nr_hugepages_mempolicy:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/nr_overcommit_hugepages:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/numa_stat:1
+2026-11-04 15:02:28.824 | /proc/sys/vm/numa_zonelist_order:Node
+2026-11-04 15:02:28.824 | /proc/sys/vm/oom_dump_tasks:1
+2026-11-04 15:02:28.824 | /proc/sys/vm/oom_kill_allocating_task:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/overcommit_kbytes:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/overcommit_memory:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/overcommit_ratio:50
+2026-11-04 15:02:28.824 | /proc/sys/vm/page-cluster:3
+2026-11-04 15:02:28.824 | /proc/sys/vm/page_lock_unfairness:5
+2026-11-04 15:02:28.824 | /proc/sys/vm/panic_on_oom:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/percpu_pagelist_high_fraction:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/stat_interval:1
+2026-11-04 15:02:28.824 | /proc/sys/vm/swappiness:100
+2026-11-04 15:02:28.824 | /proc/sys/vm/unprivileged_userfaultfd:0
+2026-11-04 15:02:28.824 | /proc/sys/vm/user_reserve_kbytes:131072
+2026-11-04 15:02:28.824 | /proc/sys/vm/vfs_cache_pressure:50
+2026-11-04 15:02:28.824 | /proc/sys/vm/vfs_cache_pressure_denom:100
+2026-11-04 15:02:28.824 | /proc/sys/vm/watermark_boost_factor:15000
+2026-11-04 15:02:28.824 | /proc/sys/vm/watermark_scale_factor:10
+2026-11-04 15:02:28.824 | /proc/sys/vm/zone_reclaim_mode:0
+2026-11-04 15:02:28.825 | + lib/host:configure_sysctl_mem_parmaters:94 :   /bin/true
+2026-11-04 15:02:28.828 | + lib/host:tune_host:126                   :   configure_host_net
+2026-11-04 15:02:28.829 | + lib/host:configure_host_net:121          :   configure_sysctl_net_parmaters
+2026-11-04 15:02:28.830 | + lib/host:configure_sysctl_net_parmaters:106 :   [[ True == True ]]
+2026-11-04 15:02:28.831 | + lib/host:configure_sysctl_net_parmaters:108 :   set_sysctl_parameter net.ipv4.tcp_keepalive_time 60
+2026-11-04 15:02:28.832 | + lib/host:set_sysctl_parameter:30         :   local name=net.ipv4.tcp_keepalive_time
+2026-11-04 15:02:28.833 | + lib/host:set_sysctl_parameter:31         :   local value=60
+2026-11-04 15:02:28.834 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w net.ipv4.tcp_keepalive_time=60
+2026-11-04 15:02:28.839 | net.ipv4.tcp_keepalive_time = 60
+2026-11-04 15:02:28.840 | + lib/host:configure_sysctl_net_parmaters:109 :   set_sysctl_parameter net.ipv4.tcp_keepalive_intvl 10
+2026-11-04 15:02:28.841 | + lib/host:set_sysctl_parameter:30         :   local name=net.ipv4.tcp_keepalive_intvl
+2026-11-04 15:02:28.842 | + lib/host:set_sysctl_parameter:31         :   local value=10
+2026-11-04 15:02:28.843 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w net.ipv4.tcp_keepalive_intvl=10
+2026-11-04 15:02:28.848 | net.ipv4.tcp_keepalive_intvl = 10
+2026-11-04 15:02:28.849 | + lib/host:configure_sysctl_net_parmaters:110 :   set_sysctl_parameter net.ipv4.tcp_keepalive_probes 6
+2026-11-04 15:02:28.850 | + lib/host:set_sysctl_parameter:30         :   local name=net.ipv4.tcp_keepalive_probes
+2026-11-04 15:02:28.851 | + lib/host:set_sysctl_parameter:31         :   local value=6
+2026-11-04 15:02:28.852 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w net.ipv4.tcp_keepalive_probes=6
+2026-11-04 15:02:28.857 | net.ipv4.tcp_keepalive_probes = 6
+2026-11-04 15:02:28.858 | + lib/host:configure_sysctl_net_parmaters:112 :   set_sysctl_parameter net.ipv4.tcp_fastopen 3
+2026-11-04 15:02:28.859 | + lib/host:set_sysctl_parameter:30         :   local name=net.ipv4.tcp_fastopen
+2026-11-04 15:02:28.860 | + lib/host:set_sysctl_parameter:31         :   local value=3
+2026-11-04 15:02:28.861 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w net.ipv4.tcp_fastopen=3
+2026-11-04 15:02:28.865 | net.ipv4.tcp_fastopen = 3
+2026-11-04 15:02:28.867 | + lib/host:configure_sysctl_net_parmaters:114 :   sudo grep -R . /proc/sys/net/ipv4/tcp_abort_on_overflow /proc/sys/net/ipv4/tcp_adv_win_scale /proc/sys/net/ipv4/tcp_allowed_congestion_control /proc/sys/net/ipv4/tcp_app_win /proc/sys/net/ipv4/tcp_autocorking /proc/sys/net/ipv4/tcp_available_congestion_control /proc/sys/net/ipv4/tcp_available_ulp /proc/sys/net/ipv4/tcp_backlog_ack_defer /proc/sys/net/ipv4/tcp_base_mss /proc/sys/net/ipv4/tcp_challenge_ack_limit /proc/sys/net/ipv4/tcp_child_ehash_entries /proc/sys/net/ipv4/tcp_comp_sack_delay_ns /proc/sys/net/ipv4/tcp_comp_sack_nr /proc/sys/net/ipv4/tcp_comp_sack_rtt_percent /proc/sys/net/ipv4/tcp_comp_sack_slack_ns /proc/sys/net/ipv4/tcp_congestion_control /proc/sys/net/ipv4/tcp_dsack /proc/sys/net/ipv4/tcp_early_demux /proc/sys/net/ipv4/tcp_early_retrans /proc/sys/net/ipv4/tcp_ecn /proc/sys/net/ipv4/tcp_ecn_fallback /proc/sys/net/ipv4/tcp_ecn_option /proc/sys/net/ipv4/tcp_ecn_option_beacon /proc/sys/net/ipv4/tcp_ehash_entries /proc/sys/net/ipv4/tcp_fack /proc/sys/net/ipv4/tcp_fastopen /proc/sys/net/ipv4/tcp_fastopen_blackhole_timeout_sec /proc/sys/net/ipv4/tcp_fastopen_key /proc/sys/net/ipv4/tcp_fin_timeout /proc/sys/net/ipv4/tcp_frto /proc/sys/net/ipv4/tcp_fwmark_accept /proc/sys/net/ipv4/tcp_invalid_ratelimit /proc/sys/net/ipv4/tcp_keepalive_intvl /proc/sys/net/ipv4/tcp_keepalive_probes /proc/sys/net/ipv4/tcp_keepalive_time /proc/sys/net/ipv4/tcp_l3mdev_accept /proc/sys/net/ipv4/tcp_limit_output_bytes /proc/sys/net/ipv4/tcp_low_latency /proc/sys/net/ipv4/tcp_max_orphans /proc/sys/net/ipv4/tcp_max_reordering /proc/sys/net/ipv4/tcp_max_syn_backlog /proc/sys/net/ipv4/tcp_max_tw_buckets /proc/sys/net/ipv4/tcp_mem /proc/sys/net/ipv4/tcp_migrate_req /proc/sys/net/ipv4/tcp_min_rtt_wlen /proc/sys/net/ipv4/tcp_min_snd_mss /proc/sys/net/ipv4/tcp_min_tso_segs /proc/sys/net/ipv4/tcp_moderate_rcvbuf /proc/sys/net/ipv4/tcp_mtu_probe_floor /proc/sys/net/ipv4/tcp_mtu_probing /proc/sys/net/ipv4/tcp_no_metrics_save /proc/sys/net/ipv4/tcp_no_ssthresh_metrics_save /proc/sys/net/ipv4/tcp_notsent_lowat /proc/sys/net/ipv4/tcp_orphan_retries /proc/sys/net/ipv4/tcp_pacing_ca_ratio /proc/sys/net/ipv4/tcp_pacing_ss_ratio /proc/sys/net/ipv4/tcp_pingpong_thresh /proc/sys/net/ipv4/tcp_plb_cong_thresh /proc/sys/net/ipv4/tcp_plb_enabled /proc/sys/net/ipv4/tcp_plb_idle_rehash_rounds /proc/sys/net/ipv4/tcp_plb_rehash_rounds /proc/sys/net/ipv4/tcp_plb_suspend_rto_sec /proc/sys/net/ipv4/tcp_probe_interval /proc/sys/net/ipv4/tcp_probe_threshold /proc/sys/net/ipv4/tcp_rcvbuf_low_rtt /proc/sys/net/ipv4/tcp_recovery /proc/sys/net/ipv4/tcp_reflect_tos /proc/sys/net/ipv4/tcp_reordering /proc/sys/net/ipv4/tcp_retrans_collapse /proc/sys/net/ipv4/tcp_retries1 /proc/sys/net/ipv4/tcp_retries2 /proc/sys/net/ipv4/tcp_rfc1337 /proc/sys/net/ipv4/tcp_rmem /proc/sys/net/ipv4/tcp_rto_max_ms /proc/sys/net/ipv4/tcp_rto_min_us /proc/sys/net/ipv4/tcp_sack /proc/sys/net/ipv4/tcp_shrink_window /proc/sys/net/ipv4/tcp_slow_start_after_idle /proc/sys/net/ipv4/tcp_stdurg /proc/sys/net/ipv4/tcp_synack_retries /proc/sys/net/ipv4/tcp_syncookies /proc/sys/net/ipv4/tcp_syn_linear_timeouts /proc/sys/net/ipv4/tcp_syn_retries /proc/sys/net/ipv4/tcp_thin_linear_timeouts /proc/sys/net/ipv4/tcp_timestamps /proc/sys/net/ipv4/tcp_tso_rtt_log /proc/sys/net/ipv4/tcp_tso_win_divisor /proc/sys/net/ipv4/tcp_tw_reuse /proc/sys/net/ipv4/tcp_tw_reuse_delay /proc/sys/net/ipv4/tcp_window_scaling /proc/sys/net/ipv4/tcp_wmem /proc/sys/net/ipv4/tcp_workaround_signed_windows
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_abort_on_overflow:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_adv_win_scale:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_allowed_congestion_control:reno cubic
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_app_win:31
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_autocorking:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_available_congestion_control:reno cubic
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_available_ulp:espintcp mptcp
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_backlog_ack_defer:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_base_mss:1024
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_challenge_ack_limit:2147483647
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_child_ehash_entries:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_comp_sack_delay_ns:1000000
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_comp_sack_nr:44
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_comp_sack_rtt_percent:33
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_comp_sack_slack_ns:10000
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_congestion_control:cubic
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_dsack:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_early_demux:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_early_retrans:3
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_ecn:2
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_ecn_fallback:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_ecn_option:2
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_ecn_option_beacon:3
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_ehash_entries:65536
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_fack:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_fastopen:3
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_fastopen_blackhole_timeout_sec:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_fastopen_key:3f53396b-15c7ee88-6af01a85-4b32500b
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_fin_timeout:60
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_frto:2
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_fwmark_accept:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_invalid_ratelimit:500
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_keepalive_intvl:10
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_keepalive_probes:6
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_keepalive_time:60
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_l3mdev_accept:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_limit_output_bytes:4194304
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_low_latency:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_max_orphans:32768
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_max_reordering:300
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_max_syn_backlog:512
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_max_tw_buckets:32768
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_mem:93012	124019	186024
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_migrate_req:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_min_rtt_wlen:300
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_min_snd_mss:48
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_min_tso_segs:2
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_moderate_rcvbuf:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_mtu_probe_floor:48
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_mtu_probing:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_no_metrics_save:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_no_ssthresh_metrics_save:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_notsent_lowat:4294967295
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_orphan_retries:0
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_pacing_ca_ratio:120
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_pacing_ss_ratio:200
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_pingpong_thresh:1
+2026-11-04 15:02:28.873 | /proc/sys/net/ipv4/tcp_plb_cong_thresh:128
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_plb_enabled:0
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_plb_idle_rehash_rounds:3
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_plb_rehash_rounds:12
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_plb_suspend_rto_sec:60
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_probe_interval:600
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_probe_threshold:8
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_rcvbuf_low_rtt:1000
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_recovery:1
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_reflect_tos:0
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_reordering:3
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_retrans_collapse:1
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_retries1:3
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_retries2:15
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_rfc1337:0
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_rmem:4096	131072	33554432
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_rto_max_ms:120000
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_rto_min_us:200000
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_sack:1
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_shrink_window:0
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_slow_start_after_idle:1
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_stdurg:0
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_synack_retries:5
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_syncookies:1
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_syn_linear_timeouts:4
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_syn_retries:6
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_thin_linear_timeouts:0
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_timestamps:1
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_tso_rtt_log:9
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_tso_win_divisor:3
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_tw_reuse:2
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_tw_reuse_delay:1000
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_window_scaling:1
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_wmem:4096	16384	4194304
+2026-11-04 15:02:28.874 | /proc/sys/net/ipv4/tcp_workaround_signed_windows:0
+2026-11-04 15:02:28.875 | + lib/host:configure_sysctl_net_parmaters:116 :   set_sysctl_parameter net.core.default_qdisc pfifo_fast
+2026-11-04 15:02:28.876 | + lib/host:set_sysctl_parameter:30         :   local name=net.core.default_qdisc
+2026-11-04 15:02:28.877 | + lib/host:set_sysctl_parameter:31         :   local value=pfifo_fast
+2026-11-04 15:02:28.878 | + lib/host:set_sysctl_parameter:33         :   sudo sysctl -w net.core.default_qdisc=pfifo_fast
+2026-11-04 15:02:28.883 | net.core.default_qdisc = pfifo_fast
+2026-11-04 15:02:28.884 | + ./stack.sh:main:600                      :   fetch_plugins
+2026-11-04 15:02:28.885 | + functions-common:fetch_plugins:1766      :   local plugins=
+2026-11-04 15:02:28.886 | + functions-common:fetch_plugins:1767      :   local plugin
+2026-11-04 15:02:28.888 | + functions-common:fetch_plugins:1770      :   [[ -z '' ]]
+2026-11-04 15:02:28.889 | + functions-common:fetch_plugins:1771      :   return
+2026-11-04 15:02:28.890 | + ./stack.sh:main:604                      :   run_phase override_defaults
+2026-11-04 15:02:28.891 | + functions-common:run_phase:1848          :   local mode=override_defaults
+2026-11-04 15:02:28.892 | + functions-common:run_phase:1849          :   local phase=
+2026-11-04 15:02:28.893 | + functions-common:run_phase:1850          :   [[ -d /opt/stack/devstack/extras.d ]]
+2026-11-04 15:02:28.894 | + functions-common:run_phase:1851          :   local extra_plugin_file_name
+2026-11-04 15:02:28.895 | + functions-common:run_phase:1852          :   for extra_plugin_file_name in $TOP_DIR/extras.d/*.sh
+2026-11-04 15:02:28.896 | + functions-common:run_phase:1857          :   local exceptions=80-tempest.sh
+2026-11-04 15:02:28.897 | + functions-common:run_phase:1858          :   local extra
+2026-11-04 15:02:28.898 | ++ functions-common:run_phase:1859          :   basename /opt/stack/devstack/extras.d/80-tempest.sh
+2026-11-04 15:02:28.902 | + functions-common:run_phase:1859          :   extra=80-tempest.sh
+2026-11-04 15:02:28.903 | + functions-common:run_phase:1860          :   [[ 80-tempest.sh =~ 80-tempest\.sh ]]
+2026-11-04 15:02:28.904 | + functions-common:run_phase:1864          :   [[ -r /opt/stack/devstack/extras.d/80-tempest.sh ]]
+2026-11-04 15:02:28.905 | + functions-common:run_phase:1864          :   source /opt/stack/devstack/extras.d/80-tempest.sh override_defaults
+2026-11-04 15:02:28.906 | ++ extras.d/80-tempest.sh:source:3          :   is_service_enabled tempest
+2026-11-04 15:02:28.913 | ++ functions-common:is_service_enabled:2076 :   return 0
+2026-11-04 15:02:28.914 | ++ extras.d/80-tempest.sh:source:4          :   [[ override_defaults == source ]]
+2026-11-04 15:02:28.915 | ++ extras.d/80-tempest.sh:source:7          :   [[ override_defaults == stack ]]
+2026-11-04 15:02:28.916 | ++ extras.d/80-tempest.sh:source:10         :   [[ override_defaults == stack ]]
+2026-11-04 15:02:28.917 | ++ extras.d/80-tempest.sh:source:13         :   [[ override_defaults == stack ]]
+2026-11-04 15:02:28.918 | ++ extras.d/80-tempest.sh:source:16         :   [[ override_defaults == stack ]]
+2026-11-04 15:02:28.919 | ++ extras.d/80-tempest.sh:source:19         :   [[ override_defaults == stack ]]
+2026-11-04 15:02:28.920 | ++ extras.d/80-tempest.sh:source:27         :   [[ override_defaults == unstack ]]
+2026-11-04 15:02:28.921 | ++ extras.d/80-tempest.sh:source:32         :   [[ override_defaults == clean ]]
+2026-11-04 15:02:28.922 | + functions-common:run_phase:1869          :   [[ override_defaults == source ]]
+2026-11-04 15:02:28.923 | + functions-common:run_phase:1872          :   [[ override_defaults == override_defaults ]]
+2026-11-04 15:02:28.924 | + functions-common:run_phase:1873          :   plugin_override_defaults
+2026-11-04 15:02:28.925 | + functions-common:plugin_override_defaults:1807 :   local plugins=
+2026-11-04 15:02:28.926 | + functions-common:plugin_override_defaults:1808 :   local plugin
+2026-11-04 15:02:28.927 | + functions-common:plugin_override_defaults:1811 :   [[ -z '' ]]
+2026-11-04 15:02:28.928 | + functions-common:plugin_override_defaults:1812 :   return
+2026-11-04 15:02:28.929 | + ./stack.sh:main:607                      :   source /opt/stack/devstack/lib/apache
+2026-11-04 15:02:28.939 | + ./stack.sh:main:610                      :   source /opt/stack/devstack/lib/tls
+2026-11-04 15:02:28.941 | ++ lib/tls:source:38                        :   is_service_enabled tls-proxy
+2026-11-04 15:02:28.947 | ++ functions-common:is_service_enabled:2076 :   return 0
+2026-11-04 15:02:28.949 | +++ lib/tls:source:40                        :   ipv6_unquote 10.241.128.136
+2026-11-04 15:02:28.950 | +++ functions-common:ipv6_unquote:2218       :   echo 10.241.128.136
+2026-11-04 15:02:28.950 | +++ functions-common:ipv6_unquote:2218       :   tr -d '[]'
+2026-11-04 15:02:28.954 | ++ lib/tls:source:40                        :   TLS_IP=10.241.128.136
+2026-11-04 15:02:28.955 | +++ lib/tls:source:43                        :   hostname -f
+2026-11-04 15:02:28.957 | ++ lib/tls:source:43                        :   DEVSTACK_HOSTNAME=localhost
+2026-11-04 15:02:28.958 | ++ lib/tls:source:44                        :   DEVSTACK_CERT_NAME=devstack-cert
+2026-11-04 15:02:28.959 | ++ lib/tls:source:45                        :   DEVSTACK_CERT=/opt/stack/data/devstack-cert.pem
+2026-11-04 15:02:28.960 | ++ lib/tls:source:48                        :   ROOT_CA_DIR=/opt/stack/data/CA/root-ca
+2026-11-04 15:02:28.961 | ++ lib/tls:source:49                        :   INT_CA_DIR=/opt/stack/data/CA/int-ca
+2026-11-04 15:02:28.962 | ++ lib/tls:source:51                        :   ORG_NAME=OpenStack
+2026-11-04 15:02:28.963 | ++ lib/tls:source:52                        :   ORG_UNIT_NAME=DevStack
+2026-11-04 15:02:28.964 | ++ lib/tls:source:55                        :   STUD_PROTO=--tls
+2026-11-04 15:02:28.965 | ++ lib/tls:source:56                        :   STUD_CIPHERS='TLSv1+HIGH:!DES:!aNULL:!eNULL:@STRENGTH'
+2026-11-04 15:02:28.966 | ++ lib/tls:source:63                        :   OPENSSL=/usr/bin/openssl
+2026-11-04 15:02:28.968 | + ./stack.sh:main:613                      :   source /opt/stack/devstack/lib/infra
+2026-11-04 15:02:28.974 | + ./stack.sh:main:614                      :   source /opt/stack/devstack/lib/libraries
+2026-11-04 15:02:28.982 | + ./stack.sh:main:615                      :   source /opt/stack/devstack/lib/lvm
+2026-11-04 15:02:28.989 | + ./stack.sh:main:616                      :   source /opt/stack/devstack/lib/horizon
+2026-11-04 15:02:28.995 | + ./stack.sh:main:617                      :   source /opt/stack/devstack/lib/keystone
+2026-11-04 15:02:29.014 | + ./stack.sh:main:618                      :   source /opt/stack/devstack/lib/glance
+2026-11-04 15:02:29.052 | + ./stack.sh:main:619                      :   source /opt/stack/devstack/lib/nova
+2026-11-04 15:02:29.106 | + ./stack.sh:main:620                      :   source /opt/stack/devstack/lib/placement
+2026-11-04 15:02:29.119 | + ./stack.sh:main:621                      :   source /opt/stack/devstack/lib/cinder
+2026-11-04 15:02:29.146 | + ./stack.sh:main:622                      :   source /opt/stack/devstack/lib/swift
+2026-11-04 15:02:29.176 | + ./stack.sh:main:623                      :   source /opt/stack/devstack/lib/neutron
+2026-11-04 15:02:29.177 | ++ lib/neutron:source:61                    :   is_service_enabled tls-proxy
+2026-11-04 15:02:29.186 | ++ functions-common:is_service_enabled:2076 :   return 0
+2026-11-04 15:02:29.187 | ++ lib/neutron:source:62                    :   Q_PROTOCOL=https
+2026-11-04 15:02:29.189 | ++ lib/neutron:source:66                    :   GITDIR["python-neutronclient"]=/opt/stack/python-neutronclient
+2026-11-04 15:02:29.190 | ++ lib/neutron:source:68                    :   NEUTRON_DIR=/opt/stack/neutron
+2026-11-04 15:02:29.191 | ++ lib/neutron:source:69                    :   NEUTRON_FWAAS_DIR=/opt/stack/neutron-fwaas
+2026-11-04 15:02:29.193 | ++ lib/neutron:source:72                    :   [[ -d /opt/stack/neutron/bin/neutron-server ]]
+2026-11-04 15:02:29.195 | +++ lib/neutron:source:75                    :   get_python_exec_prefix
+2026-11-04 15:02:29.202 | +++ inc/python:get_python_exec_prefix:80     :   [[ True == True ]]
+2026-11-04 15:02:29.203 | +++ inc/python:get_python_exec_prefix:81     :   echo /opt/stack/data/venv/bin
+2026-11-04 15:02:29.205 | ++ lib/neutron:source:75                    :   NEUTRON_BIN_DIR=/opt/stack/data/venv/bin
+2026-11-04 15:02:29.206 | ++ lib/neutron:source:78                    :   NEUTRON_CONF_DIR=/etc/neutron
+2026-11-04 15:02:29.208 | ++ lib/neutron:source:79                    :   NEUTRON_CONF=/etc/neutron/neutron.conf
+2026-11-04 15:02:29.209 | ++ lib/neutron:source:80                    :   export NEUTRON_TEST_CONFIG_FILE=/etc/neutron/debug.ini
+2026-11-04 15:02:29.210 | ++ lib/neutron:source:80                    :   NEUTRON_TEST_CONFIG_FILE=/etc/neutron/debug.ini
+2026-11-04 15:02:29.211 | ++ lib/neutron:source:82                    :   NEUTRON_UWSGI=neutron.wsgi.api:application
+2026-11-04 15:02:29.213 | ++ lib/neutron:source:83                    :   NEUTRON_UWSGI_CONF=/etc/neutron/neutron-api-uwsgi.ini
+2026-11-04 15:02:29.214 | +++ lib/neutron:source:89                    :   trueorfalse True NEUTRON_ENFORCE_NEW_DEFAULTS
+2026-11-04 15:02:29.222 | ++ lib/neutron:source:89                    :   NEUTRON_ENFORCE_NEW_DEFAULTS=True
+2026-11-04 15:02:29.224 | ++ lib/neutron:source:90                    :   [[ -n '' ]]
+2026-11-04 15:02:29.225 | ++ lib/neutron:source:96                    :   AGENT_DHCP_BINARY=/opt/stack/data/venv/bin/neutron-dhcp-agent
+2026-11-04 15:02:29.226 | ++ lib/neutron:source:97                    :   AGENT_L3_BINARY=/opt/stack/data/venv/bin/neutron-l3-agent
+2026-11-04 15:02:29.227 | ++ lib/neutron:source:98                    :   AGENT_META_BINARY=/opt/stack/data/venv/bin/neutron-metadata-agent
+2026-11-04 15:02:29.228 | ++ lib/neutron:source:102                   :   Q_DHCP_CONF_FILE=/etc/neutron/dhcp_agent.ini
+2026-11-04 15:02:29.229 | ++ lib/neutron:source:105                   :   NEUTRON_DHCP_CONF=/etc/neutron/dhcp_agent.ini
+2026-11-04 15:02:29.231 | ++ lib/neutron:source:106                   :   Q_L3_CONF_FILE=/etc/neutron/l3_agent.ini
+2026-11-04 15:02:29.232 | ++ lib/neutron:source:109                   :   NEUTRON_L3_CONF=/etc/neutron/l3_agent.ini
+2026-11-04 15:02:29.233 | ++ lib/neutron:source:110                   :   Q_META_CONF_FILE=/etc/neutron/metadata_agent.ini
+2026-11-04 15:02:29.234 | ++ lib/neutron:source:113                   :   Q_DB_NAME=neutron
+2026-11-04 15:02:29.235 | ++ lib/neutron:source:115                   :   Q_PLUGIN=ml2
+2026-11-04 15:02:29.236 | ++ lib/neutron:source:117                   :   Q_HOST=10.241.128.136
+2026-11-04 15:02:29.237 | ++ lib/neutron:source:119                   :   Q_PROTOCOL=https
+2026-11-04 15:02:29.239 | +++ lib/neutron:source:121                   :   ipv6_unquote 0.0.0.0
+2026-11-04 15:02:29.241 | +++ functions-common:ipv6_unquote:2218       :   tr -d '[]'
+2026-11-04 15:02:29.241 | +++ functions-common:ipv6_unquote:2218       :   echo 0.0.0.0
+2026-11-04 15:02:29.244 | ++ lib/neutron:source:121                   :   Q_LISTEN_ADDRESS=0.0.0.0
+2026-11-04 15:02:29.245 | ++ lib/neutron:source:123                   :   Q_ADMIN_USERNAME=neutron
+2026-11-04 15:02:29.246 | ++ lib/neutron:source:125                   :   Q_AUTH_STRATEGY=keystone
+2026-11-04 15:02:29.247 | ++ lib/neutron:source:127                   :   Q_OVS_USE_VETH=False
+2026-11-04 15:02:29.249 | ++ lib/neutron:source:128                   :   Q_USE_ROOTWRAP=True
+2026-11-04 15:02:29.250 | +++ lib/neutron:source:129                   :   trueorfalse True Q_USE_ROOTWRAP_DAEMON
+2026-11-04 15:02:29.259 | ++ lib/neutron:source:129                   :   Q_USE_ROOTWRAP_DAEMON=True
+2026-11-04 15:02:29.260 | +++ lib/neutron:source:131                   :   ipv6_unquote 10.241.128.136
+2026-11-04 15:02:29.262 | +++ functions-common:ipv6_unquote:2218       :   echo 10.241.128.136
+2026-11-04 15:02:29.262 | +++ functions-common:ipv6_unquote:2218       :   tr -d '[]'
+2026-11-04 15:02:29.266 | ++ lib/neutron:source:131                   :   Q_META_DATA_IP=10.241.128.136
+2026-11-04 15:02:29.267 | ++ lib/neutron:source:133                   :   Q_ALLOW_OVERLAPPING_IP=True
+2026-11-04 15:02:29.268 | ++ lib/neutron:source:134                   :   Q_NOTIFY_NOVA_PORT_STATUS_CHANGES=True
+2026-11-04 15:02:29.269 | ++ lib/neutron:source:135                   :   Q_NOTIFY_NOVA_PORT_DATA_CHANGES=True
+2026-11-04 15:02:29.270 | ++ lib/neutron:source:136                   :   VIF_PLUGGING_IS_FATAL=True
+2026-11-04 15:02:29.272 | ++ lib/neutron:source:137                   :   VIF_PLUGGING_TIMEOUT=300
+2026-11-04 15:02:29.273 | ++ lib/neutron:source:140                   :   SKIP_STOP_OVN=False
+2026-11-04 15:02:29.274 | ++ lib/neutron:source:144                   :   _Q_PLUGIN_EXTRA_CONF_PATH=/etc/neutron
+2026-11-04 15:02:29.275 | ++ lib/neutron:source:147                   :   NEUTRON_ENDPOINT_SERVICE_NAME=networking
+2026-11-04 15:02:29.276 | ++ lib/neutron:source:148                   :   [[ -z networking ]]
+2026-11-04 15:02:29.277 | ++ lib/neutron:source:153                   :   ALEMBIC_REPO=https://github.com/sqlalchemy/alembic.git
+2026-11-04 15:02:29.278 | ++ lib/neutron:source:154                   :   ALEMBIC_DIR=/opt/stack/alembic
+2026-11-04 15:02:29.279 | ++ lib/neutron:source:155                   :   ALEMBIC_BRANCH=main
+2026-11-04 15:02:29.280 | ++ lib/neutron:source:156                   :   SQLALCHEMY_REPO=https://github.com/sqlalchemy/sqlalchemy.git
+2026-11-04 15:02:29.281 | ++ lib/neutron:source:157                   :   SQLALCHEMY_DIR=/opt/stack/sqlalchemy
+2026-11-04 15:02:29.283 | ++ lib/neutron:source:158                   :   SQLALCHEMY_BRANCH=main
+2026-11-04 15:02:29.284 | ++ lib/neutron:source:169                   :   declare -a -g Q_PLUGIN_EXTRA_CONF_FILES
+2026-11-04 15:02:29.285 | ++ lib/neutron:source:172                   :   declare -a -g _Q_PLUGIN_EXTRA_CONF_FILES_ABS
+2026-11-04 15:02:29.286 | ++ lib/neutron:source:175                   :   Q_RR_CONF_FILE=/etc/neutron/rootwrap.conf
+2026-11-04 15:02:29.287 | ++ lib/neutron:source:176                   :   [[ True == False ]]
+2026-11-04 15:02:29.289 | +++ lib/neutron:source:179                   :   get_rootwrap_location neutron
+2026-11-04 15:02:29.290 | +++ functions:get_rootwrap_location:601      :   local module=neutron
+2026-11-04 15:02:29.291 | ++++ functions:get_rootwrap_location:603      :   get_python_exec_prefix
+2026-11-04 15:02:29.299 | ++++ inc/python:get_python_exec_prefix:80     :   [[ True == True ]]
+2026-11-04 15:02:29.300 | ++++ inc/python:get_python_exec_prefix:81     :   echo /opt/stack/data/venv/bin
+2026-11-04 15:02:29.302 | +++ functions:get_rootwrap_location:603      :   echo /opt/stack/data/venv/bin/neutron-rootwrap
+2026-11-04 15:02:29.303 | ++ lib/neutron:source:179                   :   NEUTRON_ROOTWRAP=/opt/stack/data/venv/bin/neutron-rootwrap
+2026-11-04 15:02:29.304 | ++ lib/neutron:source:180                   :   Q_RR_COMMAND='sudo /opt/stack/data/venv/bin/neutron-rootwrap /etc/neutron/rootwrap.conf'
+2026-11-04 15:02:29.305 | ++ lib/neutron:source:181                   :   [[ True == True ]]
+2026-11-04 15:02:29.306 | ++ lib/neutron:source:182                   :   Q_RR_DAEMON_COMMAND='sudo /opt/stack/data/venv/bin/neutron-rootwrap-daemon /etc/neutron/rootwrap.conf'
+2026-11-04 15:02:29.308 | ++ lib/neutron:source:194                   :   Q_DVR_MODE=legacy
+2026-11-04 15:02:29.309 | ++ lib/neutron:source:195                   :   [[ legacy != legacy ]]
+2026-11-04 15:02:29.310 | ++ lib/neutron:source:211                   :   ENABLE_TENANT_TUNNELS=True
+2026-11-04 15:02:29.311 | ++ lib/neutron:source:216                   :   TENANT_TUNNEL_RANGES=1:1000
+2026-11-04 15:02:29.313 | ++ lib/neutron:source:221                   :   ENABLE_TENANT_VLANS=False
+2026-11-04 15:02:29.314 | ++ lib/neutron:source:229                   :   TENANT_VLAN_RANGE=
+2026-11-04 15:02:29.315 | ++ lib/neutron:source:237                   :   PHYSICAL_NETWORK=public
+2026-11-04 15:02:29.316 | ++ lib/neutron:source:247                   :   OVS_PHYSICAL_BRIDGE=br-ex
+2026-11-04 15:02:29.317 | ++ lib/neutron:source:253                   :   OVS_ENABLE_TUNNELING=True
+2026-11-04 15:02:29.318 | ++ lib/neutron:source:257                   :   ENABLE_ISOLATED_METADATA=False
+2026-11-04 15:02:29.320 | ++ lib/neutron:source:262                   :   ENABLE_METADATA_NETWORK=False
+2026-11-04 15:02:29.321 | ++ lib/neutron:source:267                   :   '[' -f /opt/stack/devstack/lib/neutron_plugins/ml2 ']'
+2026-11-04 15:02:29.322 | ++ lib/neutron:source:268                   :   source /opt/stack/devstack/lib/neutron_plugins/ml2
+2026-11-04 15:02:29.385 | ++ lib/neutron:source:275                   :   source /opt/stack/devstack/lib/neutron_plugins/services/metering
+2026-11-04 15:02:29.392 | ++ lib/neutron:source:278                   :   source /opt/stack/devstack/lib/neutron_plugins/services/l3
+2026-11-04 15:02:29.393 | +++ lib/neutron_plugins/services/l3:source:3 :   IP_VERSION=4+6
+2026-11-04 15:02:29.394 | +++ lib/neutron_plugins/services/l3:source:5 :   [[ 4+6 != 4 ]]
+2026-11-04 15:02:29.396 | +++ lib/neutron_plugins/services/l3:source:5 :   [[ 4+6 != 6 ]]
+2026-11-04 15:02:29.397 | +++ lib/neutron_plugins/services/l3:source:5 :   [[ 4+6 != 4+6 ]]
+2026-11-04 15:02:29.399 | +++ lib/neutron_plugins/services/l3:source:9 :   NEUTRON_CREATE_INITIAL_NETWORKS=True
+2026-11-04 15:02:29.400 | +++ lib/neutron_plugins/services/l3:source:12 :   PROVIDER_SUBNET_NAME=provider_net
+2026-11-04 15:02:29.401 | +++ lib/neutron_plugins/services/l3:source:13 :   IPV6_PROVIDER_SUBNET_NAME=provider_net_v6
+2026-11-04 15:02:29.402 | +++ lib/neutron_plugins/services/l3:source:14 :   IPV6_PROVIDER_FIXED_RANGE=
+2026-11-04 15:02:29.403 | +++ lib/neutron_plugins/services/l3:source:15 :   IPV6_PROVIDER_NETWORK_GATEWAY=
+2026-11-04 15:02:29.404 | +++ lib/neutron_plugins/services/l3:source:17 :   PUBLIC_BRIDGE=br-ex
+2026-11-04 15:02:29.406 | +++ lib/neutron_plugins/services/l3:source:18 :   PUBLIC_BRIDGE_MTU=1500
+2026-11-04 15:02:29.407 | +++ lib/neutron_plugins/services/l3:source:23 :   Q_ASSIGN_GATEWAY_TO_PUBLIC_BRIDGE=True
+2026-11-04 15:02:29.408 | +++ lib/neutron_plugins/services/l3:source:26 :   Q_ROUTER_NAME=router1
+2026-11-04 15:02:29.409 | +++ lib/neutron_plugins/services/l3:source:31 :   Q_USE_PUBLIC_VETH=False
+2026-11-04 15:02:29.411 | +++ lib/neutron_plugins/services/l3:source:32 :   Q_PUBLIC_VETH_EX=veth-pub-ex
+2026-11-04 15:02:29.412 | +++ lib/neutron_plugins/services/l3:source:33 :   Q_PUBLIC_VETH_INT=veth-pub-int
+2026-11-04 15:02:29.413 | +++ lib/neutron_plugins/services/l3:source:39 :   Q_L3_ROUTER_PER_TENANT=True
+2026-11-04 15:02:29.414 | +++ lib/neutron_plugins/services/l3:source:72 :   Q_USE_PROVIDERNET_FOR_PUBLIC=True
+2026-11-04 15:02:29.415 | +++ lib/neutron_plugins/services/l3:source:73 :   PUBLIC_PHYSICAL_NETWORK=public
+2026-11-04 15:02:29.417 | ++++ lib/neutron_plugins/services/l3:source:76 :   sed s/-//g
+2026-11-04 15:02:29.417 | ++++ lib/neutron_plugins/services/l3:source:76 :   uuidgen
+2026-11-04 15:02:29.418 | ++++ lib/neutron_plugins/services/l3:source:76 :   cut -c 23-
+2026-11-04 15:02:29.420 | ++++ lib/neutron_plugins/services/l3:source:76 :   sed -e 's/\(..\)\(....\)\(....\)/\1:\2:\3/'
+2026-11-04 15:02:29.422 | +++ lib/neutron_plugins/services/l3:source:76 :   IPV6_GLOBAL_ID=29:0ce8:f273
+2026-11-04 15:02:29.423 | +++ lib/neutron_plugins/services/l3:source:79 :   IPV6_RA_MODE=slaac
+2026-11-04 15:02:29.424 | +++ lib/neutron_plugins/services/l3:source:80 :   IPV6_ADDRESS_MODE=slaac
+2026-11-04 15:02:29.425 | +++ lib/neutron_plugins/services/l3:source:81 :   IPV6_PUBLIC_SUBNET_NAME=ipv6-public-subnet
+2026-11-04 15:02:29.426 | +++ lib/neutron_plugins/services/l3:source:82 :   IPV6_PRIVATE_SUBNET_NAME=ipv6-private-subnet
+2026-11-04 15:02:29.427 | +++ lib/neutron_plugins/services/l3:source:83 :   IPV6_ADDRS_SAFE_TO_USE=fd29:0ce8:f273::/56
+2026-11-04 15:02:29.429 | ++++ lib/neutron_plugins/services/l3:source:86 :   echo fd29:0ce8:f273::/56
+2026-11-04 15:02:29.430 | ++++ lib/neutron_plugins/services/l3:source:86 :   awk -F / '{ print $1"/"($2>63 ? $2 : 64) }'
+2026-11-04 15:02:29.432 | +++ lib/neutron_plugins/services/l3:source:86 :   FIXED_RANGE_V6=fd29:0ce8:f273::/64
+2026-11-04 15:02:29.433 | +++ lib/neutron_plugins/services/l3:source:87 :   IPV6_PRIVATE_NETWORK_GATEWAY=
+2026-11-04 15:02:29.434 | +++ lib/neutron_plugins/services/l3:source:88 :   IPV6_PUBLIC_RANGE=2001:db8::/64
+2026-11-04 15:02:29.435 | +++ lib/neutron_plugins/services/l3:source:89 :   IPV6_PUBLIC_NETWORK_GATEWAY=2001:db8::2
+2026-11-04 15:02:29.436 | +++ lib/neutron_plugins/services/l3:source:90 :   IPV6_ROUTER_GW_IP=2001:db8::1
+2026-11-04 15:02:29.437 | +++ lib/neutron_plugins/services/l3:source:93 :   NETWORK_GATEWAY=10.1.0.1
+2026-11-04 15:02:29.438 | +++ lib/neutron_plugins/services/l3:source:94 :   PUBLIC_NETWORK_GATEWAY=172.24.5.1
+2026-11-04 15:02:29.439 | +++ lib/neutron_plugins/services/l3:source:95 :   PRIVATE_SUBNET_NAME=private-subnet
+2026-11-04 15:02:29.440 | +++ lib/neutron_plugins/services/l3:source:96 :   PUBLIC_SUBNET_NAME=public-subnet
+2026-11-04 15:02:29.442 | +++ lib/neutron_plugins/services/l3:source:97 :   PUBLIC_SUBNET_ENABLE_DHCP=False
+2026-11-04 15:02:29.443 | +++ lib/neutron_plugins/services/l3:source:100 :   USE_SUBNETPOOL=True
+2026-11-04 15:02:29.444 | +++ lib/neutron_plugins/services/l3:source:101 :   SUBNETPOOL_NAME_V4=shared-default-subnetpool-v4
+2026-11-04 15:02:29.446 | +++ lib/neutron_plugins/services/l3:source:102 :   SUBNETPOOL_NAME_V6=shared-default-subnetpool-v6
+2026-11-04 15:02:29.447 | +++ lib/neutron_plugins/services/l3:source:104 :   SUBNETPOOL_PREFIX_V4=10.1.0.0/20
+2026-11-04 15:02:29.448 | +++ lib/neutron_plugins/services/l3:source:105 :   SUBNETPOOL_PREFIX_V6=fd29:0ce8:f273::/56
+2026-11-04 15:02:29.449 | +++ lib/neutron_plugins/services/l3:source:107 :   SUBNETPOOL_SIZE_V4=26
+2026-11-04 15:02:29.450 | +++ lib/neutron_plugins/services/l3:source:108 :   SUBNETPOOL_SIZE_V6=64
+2026-11-04 15:02:29.453 | ++++ lib/neutron_plugins/services/l3:source:110 :   ip -4 route
+2026-11-04 15:02:29.453 | ++++ lib/neutron_plugins/services/l3:source:110 :   grep '^default'
+2026-11-04 15:02:29.453 | ++++ lib/neutron_plugins/services/l3:source:110 :   awk '{print $5}'
+2026-11-04 15:02:29.457 | +++ lib/neutron_plugins/services/l3:source:110 :   default_v4_route_devs=enp3s0
+2026-11-04 15:02:29.459 | ++++ lib/neutron_plugins/services/l3:source:112 :   ip -6 route list match default table all
+2026-11-04 15:02:29.459 | ++++ lib/neutron_plugins/services/l3:source:112 :   grep via
+2026-11-04 15:02:29.460 | ++++ lib/neutron_plugins/services/l3:source:112 :   awk '{print $5}'
+2026-11-04 15:02:29.462 | +++ lib/neutron_plugins/services/l3:source:112 :   default_v6_route_devs=
+2026-11-04 15:02:29.464 | ++ lib/neutron:source:281                   :   source /opt/stack/devstack/lib/neutron_plugins/services/placement
+2026-11-04 15:02:29.466 | ++ lib/neutron:source:282                   :   source /opt/stack/devstack/lib/neutron_plugins/services/trunk
+2026-11-04 15:02:29.467 | ++ lib/neutron:source:283                   :   source /opt/stack/devstack/lib/neutron_plugins/services/qos
+2026-11-04 15:02:29.468 | ++ lib/neutron:source:284                   :   source /opt/stack/devstack/lib/neutron_plugins/services/segments
+2026-11-04 15:02:29.469 | ++ lib/neutron:source:285                   :   source /opt/stack/devstack/lib/neutron_plugins/services/ovn-bgp
+2026-11-04 15:02:29.470 | ++ lib/neutron:source:286                   :   source /opt/stack/devstack/lib/neutron_plugins/services/evpn
+2026-11-04 15:02:29.472 | ++ lib/neutron:source:289                   :   has_neutron_plugin_security_group
+2026-11-04 15:02:29.473 | ++ lib/neutron_plugins/ml2:has_neutron_plugin_security_group:146 :   return 0
+2026-11-04 15:02:29.474 | ++ lib/neutron:source:290                   :   Q_USE_SECGROUP=True
+2026-11-04 15:02:29.475 | ++ lib/neutron:source:298                   :   OVN_BRIDGE_MAPPINGS=public:br-ex
+2026-11-04 15:02:29.484 | + ./stack.sh:main:624                      :   source /opt/stack/devstack/lib/ldap
+2026-11-04 15:02:29.491 | + ./stack.sh:main:625                      :   source /opt/stack/devstack/lib/dstat
+2026-11-04 15:02:29.498 | + ./stack.sh:main:626                      :   source /opt/stack/devstack/lib/atop
+2026-11-04 15:02:29.504 | + ./stack.sh:main:627                      :   source /opt/stack/devstack/lib/tcpdump
+2026-11-04 15:02:29.511 | + ./stack.sh:main:628                      :   source /opt/stack/devstack/lib/etcd3
+2026-11-04 15:02:29.532 | + ./stack.sh:main:629                      :   source /opt/stack/devstack/lib/os-vif
+2026-11-04 15:02:29.534 | +++ lib/os-vif:source:12                     :   is_ml2_ovs
+2026-11-04 15:02:29.535 | +++ lib/os-vif:is_ml2_ovs:4                  :   [[ ovn == openvswitch ]]
+2026-11-04 15:02:29.536 | +++ lib/os-vif:is_ml2_ovs:7                  :   echo False
+2026-11-04 15:02:29.538 | ++ lib/os-vif:source:12                     :   OS_VIF_OVS_ISOLATE_VIF=False
+2026-11-04 15:02:29.539 | +++ lib/os-vif:source:13                     :   trueorfalse False OS_VIF_OVS_ISOLATE_VIF
+2026-11-04 15:02:29.547 | ++ lib/os-vif:source:13                     :   OS_VIF_OVS_ISOLATE_VIF=False
+2026-11-04 15:02:29.548 | + ./stack.sh:main:635                      :   run_phase source
+2026-11-04 15:02:29.549 | + functions-common:run_phase:1848          :   local mode=source
+2026-11-04 15:02:29.551 | + functions-common:run_phase:1849          :   local phase=
+2026-11-04 15:02:29.552 | + functions-common:run_phase:1850          :   [[ -d /opt/stack/devstack/extras.d ]]
+2026-11-04 15:02:29.553 | + functions-common:run_phase:1851          :   local extra_plugin_file_name
+2026-11-04 15:02:29.554 | + functions-common:run_phase:1852          :   for extra_plugin_file_name in $TOP_DIR/extras.d/*.sh
+2026-11-04 15:02:29.555 | + functions-common:run_phase:1857          :   local exceptions=80-tempest.sh
+2026-11-04 15:02:29.556 | + functions-common:run_phase:1858          :   local extra
+2026-11-04 15:02:29.558 | ++ functions-common:run_phase:1859          :   basename /opt/stack/devstack/extras.d/80-tempest.sh
+2026-11-04 15:02:29.561 | + functions-common:run_phase:1859          :   extra=80-tempest.sh
+2026-11-04 15:02:29.562 | + functions-common:run_phase:1860          :   [[ 80-tempest.sh =~ 80-tempest\.sh ]]
+2026-11-04 15:02:29.563 | + functions-common:run_phase:1864          :   [[ -r /opt/stack/devstack/extras.d/80-tempest.sh ]]
+2026-11-04 15:02:29.564 | + functions-common:run_phase:1864          :   source /opt/stack/devstack/extras.d/80-tempest.sh source
+2026-11-04 15:02:29.566 | ++ extras.d/80-tempest.sh:source:3          :   is_service_enabled tempest
+2026-11-04 15:02:29.573 | ++ functions-common:is_service_enabled:2076 :   return 0
+2026-11-04 15:02:29.574 | ++ extras.d/80-tempest.sh:source:4          :   [[ source == source ]]
+2026-11-04 15:02:29.575 | ++ extras.d/80-tempest.sh:source:6          :   source /opt/stack/devstack/lib/tempest
+2026-11-04 15:02:29.598 | ++ extras.d/80-tempest.sh:source:27         :   [[ source == unstack ]]
+2026-11-04 15:02:29.599 | ++ extras.d/80-tempest.sh:source:32         :   [[ source == clean ]]
+2026-11-04 15:02:29.600 | + functions-common:run_phase:1869          :   [[ source == source ]]
+2026-11-04 15:02:29.602 | + functions-common:run_phase:1870          :   load_plugin_settings
+2026-11-04 15:02:29.603 | + functions-common:load_plugin_settings:1784 :   local plugins=
+2026-11-04 15:02:29.604 | + functions-common:load_plugin_settings:1785 :   local plugin
+2026-11-04 15:02:29.605 | + functions-common:load_plugin_settings:1788 :   [[ -z '' ]]
+2026-11-04 15:02:29.607 | + functions-common:load_plugin_settings:1789 :   return
+2026-11-04 15:02:29.608 | + functions-common:run_phase:1871          :   verify_disabled_services
+2026-11-04 15:02:29.609 | + functions-common:verify_disabled_services:2131 :   local service
+2026-11-04 15:02:29.611 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.612 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,c-api, ]]
+2026-11-04 15:02:29.613 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.614 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,c-sch, ]]
+2026-11-04 15:02:29.616 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.617 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,c-vol, ]]
+2026-11-04 15:02:29.618 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.620 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,dstat, ]]
+2026-11-04 15:02:29.621 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.622 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,etcd3, ]]
+2026-11-04 15:02:29.623 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.625 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,file_tracker, ]]
+2026-11-04 15:02:29.626 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.628 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,g-api, ]]
+2026-11-04 15:02:29.629 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.631 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,key, ]]
+2026-11-04 15:02:29.632 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.633 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,memory_tracker, ]]
+2026-11-04 15:02:29.635 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.636 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,mysql, ]]
+2026-11-04 15:02:29.637 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.638 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,n-api, ]]
+2026-11-04 15:02:29.640 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.641 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,n-api-meta, ]]
+2026-11-04 15:02:29.643 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.644 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,n-cond, ]]
+2026-11-04 15:02:29.645 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.646 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,n-cpu, ]]
+2026-11-04 15:02:29.648 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.649 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,n-novnc, ]]
+2026-11-04 15:02:29.650 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.651 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,n-sch, ]]
+2026-11-04 15:02:29.653 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.654 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,neutron-placement, ]]
+2026-11-04 15:02:29.655 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.656 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,neutron-qos, ]]
+2026-11-04 15:02:29.658 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.659 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,openstack-cli-server, ]]
+2026-11-04 15:02:29.660 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.661 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,ovn-controller, ]]
+2026-11-04 15:02:29.663 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.664 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,ovn-northd, ]]
+2026-11-04 15:02:29.665 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.666 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,ovs-vswitchd, ]]
+2026-11-04 15:02:29.668 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.669 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,ovsdb-server, ]]
+2026-11-04 15:02:29.670 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.671 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,placement-api, ]]
+2026-11-04 15:02:29.673 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.674 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,q-ovn-agent, ]]
+2026-11-04 15:02:29.675 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.676 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,q-svc, ]]
+2026-11-04 15:02:29.678 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.679 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,rabbit, ]]
+2026-11-04 15:02:29.680 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.681 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,tempest, ]]
+2026-11-04 15:02:29.682 | + functions-common:verify_disabled_services:2132 :   for service in ${ENABLED_SERVICES//,/ }
+2026-11-04 15:02:29.684 | + functions-common:verify_disabled_services:2133 :   [[ ,c-bak,horizon,s-account,s-container,s-object,s-proxy, =~ ,tls-proxy, ]]
+2026-11-04 15:02:29.685 | + ./stack.sh:main:706                      :   initialize_database_backends
+2026-11-04 15:02:29.687 | + lib/database:initialize_database_backends:65 :   for backend in $DATABASE_BACKENDS
+2026-11-04 15:02:29.688 | + lib/database:initialize_database_backends:66 :   is_service_enabled mysql
+2026-11-04 15:02:29.696 | + functions-common:is_service_enabled:2076 :   return 0
+2026-11-04 15:02:29.698 | + lib/database:initialize_database_backends:66 :   DATABASE_TYPE=mysql
+2026-11-04 15:02:29.699 | + lib/database:initialize_database_backends:65 :   for backend in $DATABASE_BACKENDS
+2026-11-04 15:02:29.700 | + lib/database:initialize_database_backends:66 :   is_service_enabled postgresql
+2026-11-04 15:02:29.709 | + functions-common:is_service_enabled:2076 :   return 1
+2026-11-04 15:02:29.710 | + lib/database:initialize_database_backends:69 :   '[' -z mysql ']'
+2026-11-04 15:02:29.711 | + lib/database:initialize_database_backends:73 :   MYSQL_HOST=127.0.0.1
+2026-11-04 15:02:29.713 | + lib/database:initialize_database_backends:74 :   MYSQL_USER=root
+2026-11-04 15:02:29.714 | + lib/database:initialize_database_backends:80 :   [[ 4 == 6 ]]
+2026-11-04 15:02:29.715 | + lib/database:initialize_database_backends:83 :   DATABASE_HOST=127.0.0.1
+2026-11-04 15:02:29.716 | + lib/database:initialize_database_backends:86 :   DATABASE_USER=root
+2026-11-04 15:02:29.718 | + lib/database:initialize_database_backends:88 :   '[' -n '' ']'
+2026-11-04 15:02:29.719 | + lib/database:initialize_database_backends:92 :   return 0
+2026-11-04 15:02:29.720 | + ./stack.sh:main:707                      :   echo 'Using mysql database backend'
+2026-11-04 15:02:29.720 | Using mysql database backend
+2026-11-04 15:02:29.722 | + ./stack.sh:main:710                      :   read_password DATABASE_PASSWORD 'ENTER A PASSWORD TO USE FOR THE DATABASE.'
+2026-11-04 15:02:29.730 | + ./stack.sh:main:712                      :   define_database_baseurl
+2026-11-04 15:02:29.732 | ++ lib/database:define_database_baseurl:106 :   get_database_type_mysql
+2026-11-04 15:02:29.734 | ++ lib/databases/mysql:get_database_type_mysql:32 :   [[ PyMySQL == PyMySQL ]]
+2026-11-04 15:02:29.735 | ++ lib/databases/mysql:get_database_type_mysql:33 :   echo mysql+pymysql
+2026-11-04 15:02:29.737 | + lib/database:define_database_baseurl:106 :   BASE_SQL_CONN=mysql+pymysql://root:secretdatabase@127.0.0.1
+2026-11-04 15:02:29.738 | + ./stack.sh:main:724                      :   is_service_enabled rabbit
+2026-11-04 15:02:29.747 | + functions-common:is_service_enabled:2076 :   return 0
+2026-11-04 15:02:29.748 | + ./stack.sh:main:725                      :   read_password RABBIT_PASSWORD 'ENTER A PASSWORD TO USE FOR RABBIT.'
+2026-11-04 15:02:29.757 | + ./stack.sh:main:732                      :   is_service_enabled keystone
+2026-11-04 15:02:29.766 | + functions-common:is_service_enabled:2076 :   return 0
+2026-11-04 15:02:29.767 | + ./stack.sh:main:734                      :   read_password SERVICE_PASSWORD 'ENTER A SERVICE_PASSWORD TO USE FOR THE SERVICE AUTHENTICATION.'
+2026-11-04 15:02:29.775 | + ./stack.sh:main:736                      :   read_password ADMIN_PASSWORD 'ENTER A PASSWORD TO USE FOR HORIZON AND KEYSTONE (20 CHARS OR LESS).'
+2026-11-04 15:02:29.784 | + ./stack.sh:main:747                      :   is_service_enabled ldap
+2026-11-04 15:02:29.792 | + functions-common:is_service_enabled:2076 :   return 1
+2026-11-04 15:02:29.793 | + ./stack.sh:main:756                      :   is_service_enabled s-proxy
+2026-11-04 15:02:29.802 | + functions-common:is_service_enabled:2076 :   return 1
+2026-11-04 15:02:29.803 | + ./stack.sh:main:768                      :   save_stackenv 768
+2026-11-04 15:02:29.805 | + functions-common:save_stackenv:65        :   local tag=768
+2026-11-04 15:02:29.806 | ++ functions-common:save_stackenv:67        :   date +%F-%H%M%S
+2026-11-04 15:02:29.811 | + functions-common:save_stackenv:67        :   time_stamp=2026-11-04-150229
+2026-11-04 15:02:29.812 | + functions-common:save_stackenv:68        :   echo '# 2026-11-04-150229 768'
+2026-11-04 15:02:29.814 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.815 | + functions-common:save_stackenv:70        :   echo BASE_SQL_CONN=mysql+pymysql://root:secretdatabase@127.0.0.1
+2026-11-04 15:02:29.817 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.818 | + functions-common:save_stackenv:70        :   echo DATA_DIR=/opt/stack/data
+2026-11-04 15:02:29.819 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.821 | + functions-common:save_stackenv:70        :   echo DEST=/opt/stack
+2026-11-04 15:02:29.822 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.823 | + functions-common:save_stackenv:70        :   echo ENABLED_SERVICES=c-api,c-sch,c-vol,dstat,etcd3,file_tracker,g-api,key,memory_tracker,mysql,n-api,n-api-meta,n-cond,n-cpu,n-novnc,n-sch,neutron-placement,neutron-qos,openstack-cli-server,ovn-controller,ovn-northd,ovs-vswitchd,ovsdb-server,placement-api,q-ovn-agent,q-svc,rabbit,tempest,tls-proxy
+2026-11-04 15:02:29.825 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.826 | + functions-common:save_stackenv:70        :   echo HOST_IP=10.241.128.136
+2026-11-04 15:02:29.828 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.829 | + functions-common:save_stackenv:70        :   echo KEYSTONE_SERVICE_URI=https://10.241.128.136/identity
+2026-11-04 15:02:29.830 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.832 | + functions-common:save_stackenv:70        :   echo LOGFILE=/opt/stack/logs/devstacklog.txt.2026-11-04-150218
+2026-11-04 15:02:29.833 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.834 | + functions-common:save_stackenv:70        :   echo OS_CACERT=
+2026-11-04 15:02:29.836 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.837 | + functions-common:save_stackenv:70        :   echo SERVICE_HOST=10.241.128.136
+2026-11-04 15:02:29.838 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.840 | + functions-common:save_stackenv:70        :   echo STACK_USER=stack
+2026-11-04 15:02:29.841 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.842 | + functions-common:save_stackenv:70        :   echo TLS_IP=10.241.128.136
+2026-11-04 15:02:29.844 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.845 | + functions-common:save_stackenv:70        :   echo HOST_IPV6=::1
+2026-11-04 15:02:29.846 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.848 | + functions-common:save_stackenv:70        :   echo SERVICE_IP_VERSION=4
+2026-11-04 15:02:29.849 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.850 | + functions-common:save_stackenv:70        :   echo TUNNEL_ENDPOINT_IP=10.241.128.136
+2026-11-04 15:02:29.852 | + functions-common:save_stackenv:69        :   for i in $STACK_ENV_VARS
+2026-11-04 15:02:29.853 | + functions-common:save_stackenv:70        :   echo TUNNEL_IP_VERSION=4
+2026-11-04 15:02:29.854 | + ./stack.sh:main:781                      :   GIT_DEPTH=0
+2026-11-04 15:02:29.856 | + ./stack.sh:main:781                      :   git_clone https://opendev.org/openstack/requirements.git /opt/stack/requirements master
+2026-11-04 15:02:29.857 | + functions-common:git_clone:589           :   local git_remote=https://opendev.org/openstack/requirements.git
+2026-11-04 15:02:29.858 | + functions-common:git_clone:590           :   local git_dest=/opt/stack/requirements
+2026-11-04 15:02:29.859 | + functions-common:git_clone:591           :   local git_ref=master
+2026-11-04 15:02:29.860 | + functions-common:git_clone:592           :   local orig_dir
+2026-11-04 15:02:29.862 | ++ functions-common:git_clone:593           :   pwd
+2026-11-04 15:02:29.863 | + functions-common:git_clone:593           :   orig_dir=/opt/stack/devstack
+2026-11-04 15:02:29.864 | + functions-common:git_clone:594           :   local git_clone_flags=
+2026-11-04 15:02:29.866 | ++ functions-common:git_clone:596           :   trueorfalse False RECLONE
+2026-11-04 15:02:29.874 | + functions-common:git_clone:596           :   RECLONE=False
+2026-11-04 15:02:29.875 | + functions-common:git_clone:597           :   [[ 0 -gt 0 ]]
+2026-11-04 15:02:29.876 | + functions-common:git_clone:601           :   [[ False = True ]]
+2026-11-04 15:02:29.877 | + functions-common:git_clone:610           :   echo master
+2026-11-04 15:02:29.878 | + functions-common:git_clone:610           :   egrep -q '^refs'
+2026-11-04 15:02:29.881 | + functions-common:git_clone:624           :   [[ ! -d /opt/stack/requirements ]]
+2026-11-04 15:02:29.882 | + functions-common:git_clone:634           :   [[ False = True ]]
+2026-11-04 15:02:29.884 | + functions-common:git_clone:669           :   sudo git config --system --add safe.directory /opt/stack/requirements
+2026-11-04 15:02:29.891 | + functions-common:git_clone:672           :   cd /opt/stack/requirements
+2026-11-04 15:02:29.893 | + functions-common:git_clone:673           :   git show --oneline
+2026-11-04 15:02:29.896 | + functions-common:git_clone:673           :   head -1
+2026-11-04 15:02:29.896 | a403d79c Merge "Drop every reference to passlib"
+2026-11-04 15:02:29.897 | + functions-common:git_clone:674           :   cd /opt/stack/devstack
+2026-11-04 15:02:29.899 | + ./stack.sh:main:785                      :   echo_summary 'Installing package prerequisites'
+2026-11-04 15:02:29.900 | + ./stack.sh:echo_summary:444              :   [[ -t 3 ]]
+2026-11-04 15:02:29.902 | + ./stack.sh:echo_summary:450              :   echo -e Installing package prerequisites
+2026-11-04 15:02:29.903 | + ./stack.sh:main:786                      :   source /opt/stack/devstack/tools/install_prereqs.sh
+2026-11-04 15:02:29.905 | ++ tools/install_prereqs.sh:source:11       :   FORCE_PREREQ=0
+2026-11-04 15:02:29.906 | ++ tools/install_prereqs.sh:source:13       :   getopts :f opt
+2026-11-04 15:02:29.908 | ++ tools/install_prereqs.sh:source:23       :   [[ -z /opt/stack/devstack ]]
+2026-11-04 15:02:29.910 | ++ tools/install_prereqs.sh:source:43       :   PREREQ_RERUN_MARKER=/opt/stack/devstack/.prereqs
+2026-11-04 15:02:29.911 | ++ tools/install_prereqs.sh:source:44       :   PREREQ_RERUN_HOURS=2
+2026-11-04 15:02:29.912 | ++ tools/install_prereqs.sh:source:45       :   PREREQ_RERUN_SECONDS=7200
+2026-11-04 15:02:29.915 | +++ tools/install_prereqs.sh:source:47       :   date +%s
+2026-11-04 15:02:29.919 | ++ tools/install_prereqs.sh:source:47       :   NOW=1793804549
+2026-11-04 15:02:29.921 | +++ tools/install_prereqs.sh:source:48       :   head -1 /opt/stack/devstack/.prereqs
+2026-11-04 15:02:29.925 | +++ tools/install_prereqs.sh:source:48       :   echo 0
+2026-11-04 15:02:29.927 | ++ tools/install_prereqs.sh:source:48       :   LAST_RUN=0
+2026-11-04 15:02:29.928 | ++ tools/install_prereqs.sh:source:49       :   DELTA=1793804549
+2026-11-04 15:02:29.929 | ++ tools/install_prereqs.sh:source:50       :   [[ 1793804549 -lt 7200 ]]
+2026-11-04 15:02:29.931 | ++ tools/install_prereqs.sh:source:57       :   export_proxy_variables
+2026-11-04 15:02:29.932 | ++ functions-common:export_proxy_variables:2238 :   isset http_proxy
+2026-11-04 15:02:29.933 | ++ functions-common:isset:266               :   [[ -v http_proxy ]]
+2026-11-04 15:02:29.935 | ++ functions-common:export_proxy_variables:2241 :   isset https_proxy
+2026-11-04 15:02:29.936 | ++ functions-common:isset:266               :   [[ -v https_proxy ]]
+2026-11-04 15:02:29.937 | ++ functions-common:export_proxy_variables:2244 :   isset no_proxy
+2026-11-04 15:02:29.939 | ++ functions-common:isset:266               :   [[ -v no_proxy ]]
+2026-11-04 15:02:29.940 | +++ tools/install_prereqs.sh:source:64       :   get_packages general,c-api,c-sch,c-vol,dstat,etcd3,file_tracker,g-api,key,memory_tracker,mysql,n-api,n-api-meta,n-cond,n-cpu,n-novnc,n-sch,neutron-placement,neutron-qos,openstack-cli-server,ovn-controller,ovn-northd,ovs-vswitchd,ovsdb-server,placement-api,q-ovn-agent,q-svc,rabbit,tempest,tls-proxy
+2026-11-04 15:02:29.956 | ++ tools/install_prereqs.sh:source:64       :   PACKAGES=$'apache2\napache2-dev\nbc\nbsdmainutils\ncurl\ng++\ngawk\ngcc\ngettext  \ngit\ngraphviz \niputils-ping\nlibffi-dev \nlibjpeg-dev \nlibpq-dev  \nlibssl-dev \nlibsystemd-dev \nlibxml2-dev  \nlibxslt1-dev  \nlibyaml-dev\nlsof \nopenssh-server\nopenssl\npkg-config\npsmisc\npython3-dev\npython3-pip\npython3-systemd\npython3-venv\ntar\ntcpdump\nunzip\nuuid-runtime\nwget\nzlib1g-dev\nlvm2\nqemu-utils\nthin-provisioning-tools\nlsscsi\nopen-iscsi\npcp\nlibkrb5-dev\nlibldap2-dev\nlibsasl2-dev\nmemcached\npython3-mysqldb\nsqlite3\nconntrack\ncurl\nebtables\ngenisoimage \niptables\niputils-arping\nkpartx\nlibjs-jquery-tablesorter \nparted\npm-utils\npython3-mysqldb\nsocat \nsqlite3\nsudo\nvlan\ncryptsetup\ndosfstools\ngenisoimage\ngir1.2-libosinfo-1.0\nnetcat-openbsd\nopen-iscsi\nqemu-utils\nsg3-utils\nsysfsutils\nacl\ndnsmasq-base\ndnsmasq-utils \nebtables\nhaproxy \niptables\niputils-arping\niputils-ping\npostgresql-server-dev-all\npython3-mysqldb\nsqlite3\nsudo\nvlan\napache2'
+2026-11-04 15:02:29.958 | +++ tools/install_prereqs.sh:source:65       :   get_plugin_packages
+2026-11-04 15:02:29.968 | ++ tools/install_prereqs.sh:source:65       :   PACKAGES=$'apache2\napache2-dev\nbc\nbsdmainutils\ncurl\ng++\ngawk\ngcc\ngettext  \ngit\ngraphviz \niputils-ping\nlibffi-dev \nlibjpeg-dev \nlibpq-dev  \nlibssl-dev \nlibsystemd-dev \nlibxml2-dev  \nlibxslt1-dev  \nlibyaml-dev\nlsof \nopenssh-server\nopenssl\npkg-config\npsmisc\npython3-dev\npython3-pip\npython3-systemd\npython3-venv\ntar\ntcpdump\nunzip\nuuid-runtime\nwget\nzlib1g-dev\nlvm2\nqemu-utils\nthin-provisioning-tools\nlsscsi\nopen-iscsi\npcp\nlibkrb5-dev\nlibldap2-dev\nlibsasl2-dev\nmemcached\npython3-mysqldb\nsqlite3\nconntrack\ncurl\nebtables\ngenisoimage \niptables\niputils-arping\nkpartx\nlibjs-jquery-tablesorter \nparted\npm-utils\npython3-mysqldb\nsocat \nsqlite3\nsudo\nvlan\ncryptsetup\ndosfstools\ngenisoimage\ngir1.2-libosinfo-1.0\nnetcat-openbsd\nopen-iscsi\nqemu-utils\nsg3-utils\nsysfsutils\nacl\ndnsmasq-base\ndnsmasq-utils \nebtables\nhaproxy \niptables\niputils-arping\niputils-ping\npostgresql-server-dev-all\npython3-mysqldb\nsqlite3\nsudo\nvlan\napache2 '
+2026-11-04 15:02:29.970 | ++ tools/install_prereqs.sh:source:67       :   is_ubuntu
+2026-11-04 15:02:29.971 | ++ functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-04 15:02:29.972 | ++ functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-04 15:02:29.974 | ++ tools/install_prereqs.sh:source:67       :   echo apache2 apache2-dev bc bsdmainutils curl g++ gawk gcc gettext git graphviz iputils-ping libffi-dev libjpeg-dev libpq-dev libssl-dev libsystemd-dev libxml2-dev libxslt1-dev libyaml-dev lsof openssh-server openssl pkg-config psmisc python3-dev python3-pip python3-systemd python3-venv tar tcpdump unzip uuid-runtime wget zlib1g-dev lvm2 qemu-utils thin-provisioning-tools lsscsi open-iscsi pcp libkrb5-dev libldap2-dev libsasl2-dev memcached python3-mysqldb sqlite3 conntrack curl ebtables genisoimage iptables iputils-arping kpartx libjs-jquery-tablesorter parted pm-utils python3-mysqldb socat sqlite3 sudo vlan cryptsetup dosfstools genisoimage gir1.2-libosinfo-1.0 netcat-openbsd open-iscsi qemu-utils sg3-utils sysfsutils acl dnsmasq-base dnsmasq-utils ebtables haproxy iptables iputils-arping iputils-ping postgresql-server-dev-all python3-mysqldb sqlite3 sudo vlan apache2
+2026-11-04 15:02:29.974 | ++ tools/install_prereqs.sh:source:67       :   grep -q dkms
+2026-11-04 15:02:29.977 | ++ tools/install_prereqs.sh:source:72       :   install_package apache2 apache2-dev bc bsdmainutils curl g++ gawk gcc gettext git graphviz iputils-ping libffi-dev libjpeg-dev libpq-dev libssl-dev libsystemd-dev libxml2-dev libxslt1-dev libyaml-dev lsof openssh-server openssl pkg-config psmisc python3-dev python3-pip python3-systemd python3-venv tar tcpdump unzip uuid-runtime wget zlib1g-dev lvm2 qemu-utils thin-provisioning-tools lsscsi open-iscsi pcp libkrb5-dev libldap2-dev libsasl2-dev memcached python3-mysqldb sqlite3 conntrack curl ebtables genisoimage iptables iputils-arping kpartx libjs-jquery-tablesorter parted pm-utils python3-mysqldb socat sqlite3 sudo vlan cryptsetup dosfstools genisoimage gir1.2-libosinfo-1.0 netcat-openbsd open-iscsi qemu-utils sg3-utils sysfsutils acl dnsmasq-base dnsmasq-utils ebtables haproxy iptables iputils-arping iputils-ping postgresql-server-dev-all python3-mysqldb sqlite3 sudo vlan apache2
+2026-11-04 15:02:29.978 | ++ functions-common:install_package:1438    :   update_package_repo
+2026-11-04 15:02:29.979 | ++ functions-common:update_package_repo:1412 :   NO_UPDATE_REPOS=False
+2026-11-04 15:02:29.980 | ++ functions-common:update_package_repo:1413 :   REPOS_UPDATED=True
+2026-11-04 15:02:29.982 | ++ functions-common:update_package_repo:1414 :   RETRY_UPDATE=False
+2026-11-04 15:02:29.983 | ++ functions-common:update_package_repo:1416 :   [[ False = True ]]
+2026-11-04 15:02:29.984 | ++ functions-common:update_package_repo:1420 :   is_ubuntu
+2026-11-04 15:02:29.985 | ++ functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-04 15:02:29.986 | ++ functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-04 15:02:29.987 | ++ functions-common:update_package_repo:1421 :   apt_get_update
+2026-11-04 15:02:29.988 | ++ functions-common:apt_get_update:1166     :   [[ True == True ]]
+2026-11-04 15:02:29.990 | ++ functions-common:apt_get_update:1166     :   [[ False != True ]]
+2026-11-04 15:02:29.991 | ++ functions-common:apt_get_update:1167     :   return
+2026-11-04 15:02:29.992 | ++ functions-common:install_package:1439    :   real_install_package apache2 apache2-dev bc bsdmainutils curl g++ gawk gcc gettext git graphviz iputils-ping libffi-dev libjpeg-dev libpq-dev libssl-dev libsystemd-dev libxml2-dev libxslt1-dev libyaml-dev lsof openssh-server openssl pkg-config psmisc python3-dev python3-pip python3-systemd python3-venv tar tcpdump unzip uuid-runtime wget zlib1g-dev lvm2 qemu-utils thin-provisioning-tools lsscsi open-iscsi pcp libkrb5-dev libldap2-dev libsasl2-dev memcached python3-mysqldb sqlite3 conntrack curl ebtables genisoimage iptables iputils-arping kpartx libjs-jquery-tablesorter parted pm-utils python3-mysqldb socat sqlite3 sudo vlan cryptsetup dosfstools genisoimage gir1.2-libosinfo-1.0 netcat-openbsd open-iscsi qemu-utils sg3-utils sysfsutils acl dnsmasq-base dnsmasq-utils ebtables haproxy iptables iputils-arping iputils-ping postgresql-server-dev-all python3-mysqldb sqlite3 sudo vlan apache2
+2026-11-04 15:02:29.993 | ++ functions-common:real_install_package:1426 :   is_ubuntu
+2026-11-04 15:02:29.994 | ++ functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-04 15:02:29.996 | ++ functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-04 15:02:29.997 | ++ functions-common:real_install_package:1427 :   apt_get install apache2 apache2-dev bc bsdmainutils curl g++ gawk gcc gettext git graphviz iputils-ping libffi-dev libjpeg-dev libpq-dev libssl-dev libsystemd-dev libxml2-dev libxslt1-dev libyaml-dev lsof openssh-server openssl pkg-config psmisc python3-dev python3-pip python3-systemd python3-venv tar tcpdump unzip uuid-runtime wget zlib1g-dev lvm2 qemu-utils thin-provisioning-tools lsscsi open-iscsi pcp libkrb5-dev libldap2-dev libsasl2-dev memcached python3-mysqldb sqlite3 conntrack curl ebtables genisoimage iptables iputils-arping kpartx libjs-jquery-tablesorter parted pm-utils python3-mysqldb socat sqlite3 sudo vlan cryptsetup dosfstools genisoimage gir1.2-libosinfo-1.0 netcat-openbsd open-iscsi qemu-utils sg3-utils sysfsutils acl dnsmasq-base dnsmasq-utils ebtables haproxy iptables iputils-arping iputils-ping postgresql-server-dev-all python3-mysqldb sqlite3 sudo vlan apache2
+2026-11-04 15:02:30.012 | ++ functions-common:apt_get:1207            :   sudo DEBIAN_FRONTEND=noninteractive http_proxy= https_proxy= no_proxy= apt-get --option Dpkg::Options::=--force-confold --assume-yes install apache2 apache2-dev bc bsdmainutils curl g++ gawk gcc gettext git graphviz iputils-ping libffi-dev libjpeg-dev libpq-dev libssl-dev libsystemd-dev libxml2-dev libxslt1-dev libyaml-dev lsof openssh-server openssl pkg-config psmisc python3-dev python3-pip python3-systemd python3-venv tar tcpdump unzip uuid-runtime wget zlib1g-dev lvm2 qemu-utils thin-provisioning-tools lsscsi open-iscsi pcp libkrb5-dev libldap2-dev libsasl2-dev memcached python3-mysqldb sqlite3 conntrack curl ebtables genisoimage iptables iputils-arping kpartx libjs-jquery-tablesorter parted pm-utils python3-mysqldb socat sqlite3 sudo vlan cryptsetup dosfstools genisoimage gir1.2-libosinfo-1.0 netcat-openbsd open-iscsi qemu-utils sg3-utils sysfsutils acl dnsmasq-base dnsmasq-utils ebtables haproxy iptables iputils-arping iputils-ping postgresql-server-dev-all python3-mysqldb sqlite3 sudo vlan apache2
+2026-11-04 15:02:30.038 | Reading package lists...
+2026-11-04 15:02:30.182 | Building dependency tree...
+2026-11-04 15:02:30.183 | Reading state information...
+2026-11-04 15:02:30.217 | curl is already the newest version (8.18.0-1ubuntu2.8).
+2026-11-04 15:02:30.217 | g++ is already the newest version (4:15.2.0-5ubuntu1).
+2026-11-04 15:02:30.217 | g++ set to manually installed.
+2026-11-04 15:02:30.217 | gcc is already the newest version (4:15.2.0-5ubuntu1).
+2026-11-04 15:02:30.217 | gcc set to manually installed.
+2026-11-04 15:02:30.217 | git is already the newest version (1:2.53.0-1ubuntu1.1).
+2026-11-04 15:02:30.217 | iputils-ping is already the newest version (3:20250605-1ubuntu1).
+2026-11-04 15:02:30.217 | openssh-server is already the newest version (1:10.2p1-2ubuntu3.8).
+2026-11-04 15:02:30.217 | openssl is already the newest version (3.5.5-1ubuntu3.7).
+2026-11-04 15:02:30.218 | openssl set to manually installed.
+2026-11-04 15:02:30.218 | python3-dev is already the newest version (3.14.3-0ubuntu2).
+2026-11-04 15:02:30.218 | python3-pip is already the newest version (25.1.1+dfsg-1ubuntu2).
+2026-11-04 15:02:30.218 | python3-venv is already the newest version (3.14.3-0ubuntu2).
+2026-11-04 15:02:30.218 | tar is already the newest version (1.35+dfsg-4ubuntu0.4).
+2026-11-04 15:02:30.218 | tcpdump is already the newest version (4.99.6-1).
+2026-11-04 15:02:30.218 | uuid-runtime is already the newest version (2.41.3-3ubuntu2.2).
+2026-11-04 15:02:30.218 | wget is already the newest version (1.25.0-2ubuntu4.4).
+2026-11-04 15:02:30.218 | zlib1g-dev is already the newest version (1:1.3.dfsg+really1.3.1-1ubuntu3.2).
+2026-11-04 15:02:30.218 | zlib1g-dev set to manually installed.
+2026-11-04 15:02:30.218 | qemu-utils is already the newest version (1:10.2.1+ds-1ubuntu3.3).
+2026-11-04 15:02:30.218 | qemu-utils set to manually installed.
+2026-11-04 15:02:30.218 | open-iscsi is already the newest version (2.1.11-3ubuntu3.1).
+2026-11-04 15:02:30.218 | genisoimage is already the newest version (9:1.1.11-5).
+2026-11-04 15:02:30.218 | genisoimage set to manually installed.
+2026-11-04 15:02:30.218 | iptables is already the newest version (1.8.11-2ubuntu3).
+2026-11-04 15:02:30.218 | iptables set to manually installed.
+2026-11-04 15:02:30.218 | kpartx is already the newest version (0.14.3-2ubuntu1).
+2026-11-04 15:02:30.218 | kpartx set to manually installed.
+2026-11-04 15:02:30.218 | parted is already the newest version (3.6-6).
+2026-11-04 15:02:30.218 | sudo is already the newest version (1.9.17p2-1ubuntu3.2).
+2026-11-04 15:02:30.218 | sg3-utils is already the newest version (1.48-3ubuntu3.2).
+2026-11-04 15:02:30.218 | sg3-utils set to manually installed.
+2026-11-04 15:02:30.218 | acl is already the newest version (2.3.2-2).
+2026-11-04 15:02:30.260 | Solving dependencies...
+2026-11-04 15:02:30.345 | The following additional packages will be installed:
+2026-11-04 15:02:30.345 |   apache2-bin apache2-data apache2-utils autoconf automake autopoint
+2026-11-04 15:02:30.346 |   autotools-dev bsdextrautils clang-21 comerr-dev cryptsetup-bin
+2026-11-04 15:02:30.346 |   dconf-gsettings-backend dconf-service debhelper debugedit dh-autoreconf
+2026-11-04 15:02:30.346 |   dh-strip-nondeterminism dmeventd dwz fontconfig fontconfig-config
+2026-11-04 15:02:30.346 |   fonts-dejavu-core fonts-dejavu-mono gir1.2-freedesktop glib-networking
+2026-11-04 15:02:30.346 |   glib-networking-common glib-networking-services groff-base
+2026-11-04 15:02:30.346 |   gsettings-desktop-schemas intltool-debian krb5-multidev libaom3 libapr1-dev
+2026-11-04 15:02:30.346 |   libapr1t64 libaprutil1-dbd-sqlite3 libaprutil1-dev libaprutil1-ldap
+2026-11-04 15:02:30.346 |   libaprutil1t64 libarchive-zip-perl libcairo-gobject2 libcairo2 libcdt6
+2026-11-04 15:02:30.346 |   libcgraph8 libclang-common-21-dev libclang-cpp21 libclang1-21 libdatrie1
+2026-11-04 15:02:30.346 |   libdconf1 libdebhelper-perl libdeflate0 libdevmapper-event1.02.1
+2026-11-04 15:02:30.346 |   libdrm-amdgpu1 libdrm-common libdrm2 libdw1t64
+2026-11-04 15:02:30.346 |   libfile-stripnondeterminism-perl libfontconfig1 libfribidi0 libgc1 libgd3
+2026-11-04 15:02:30.346 |   libgraphite2-3 libgssrpc4t64 libgvc7 libgvplugin-gd8 libgvplugin-pango8
+2026-11-04 15:02:30.346 |   libgvpr2 libharfbuzz0b libheif-plugin-aomdec libheif1 libimagequant0
+2026-11-04 15:02:30.346 |   libinih1 libio-pty-perl libipc-run-perl libjbig0 libjpeg-turbo8
+2026-11-04 15:02:30.347 |   libjpeg-turbo8-dev libjpeg8 libjpeg8-dev libjs-jquery libjs-jquery-metadata
+2026-11-04 15:02:30.347 |   libjson-perl libkadm5clnt-mit12 libkadm5srv-mit12 libkdb5-10t64 libldap-dev
+2026-11-04 15:02:30.347 |   liblerc4 libllvm21 liblsof0 libltdl7 liblua5.4-0 liblvm2cmd2.03 liblzma-dev
+2026-11-04 15:02:30.347 |   libmysqlclient24 libncurses-dev libncurses6 libnftables1 libobjc-15-dev
+2026-11-04 15:02:30.347 |   libobjc4 libosinfo-1.0-0 libosinfo-l10n libpango-1.0-0 libpangocairo-1.0-0
+2026-11-04 15:02:30.347 |   libpangoft2-1.0-0 libpathplan4 libpcp-archive1 libpcp-gui2 libpcp-import1
+2026-11-04 15:02:30.347 |   libpcp-mmv1 libpcp-pmda3 libpcp-trace2 libpcp-web1 libpcp4 libpcre2-16-0
+2026-11-04 15:02:30.347 |   libpcre2-32-0 libpcre2-8-0 libpcre2-dev libpcre2-posix3 libpfm4 libpipeline1
+2026-11-04 15:02:30.347 |   libpixman-1-0 libpkgconf7 libpq5 libproxy1v5 libsctp-dev libsctp1
+2026-11-04 15:02:30.347 |   libsharpyuv0 libsoup-3.0-0 libsoup-3.0-common libsysfs2 libthai-data
+2026-11-04 15:02:30.347 |   libthai0 libtiff6 libtool libuchardet0 libwebp7 libx11-6 libx11-data libxau6
+2026-11-04 15:02:30.347 |   libxcb-render0 libxcb-shm0 libxcb1 libxdmcp6 libxdot4 libxext6 libxpm4
+2026-11-04 15:02:30.347 |   libxrender1 libxslt1.1 libyaml-0-2 llvm-21 llvm-21-dev llvm-21-linker-tools
+2026-11-04 15:02:30.347 |   llvm-21-runtime llvm-21-tools m4 man-db mysql-common ncal osinfo-db pcp-conf
+2026-11-04 15:02:30.347 |   pkgconf pkgconf-bin po-debconf postgresql-client-18 postgresql-client-common
+2026-11-04 15:02:30.347 |   postgresql-common postgresql-common-dev postgresql-server-dev-18
+2026-11-04 15:02:30.347 |   powermgmt-base python3-pcp python3-pygments python3-yaml ssl-cert
+2026-11-04 15:02:30.347 |   user-session-migration uuid-dev zstd
+2026-11-04 15:02:30.348 | Suggested packages:
+2026-11-04 15:02:30.348 |   apache2-doc apache2-suexec-pristine | apache2-suexec-custom ufw www-browser
+2026-11-04 15:02:30.348 |   autoconf-archive gnu-standards autoconf-doc calendar whois vacation
+2026-11-04 15:02:30.348 |   mailutils clang-21-doc wasi-libc doc-base nftables keyutils
+2026-11-04 15:02:30.348 |   liblocale-gettext-perl dh-make gawk-doc gettext-doc libasprintf-dev
+2026-11-04 15:02:30.348 |   libgettextpo-dev gnulib-l10n gsfonts graphviz-doc groff vim-haproxy
+2026-11-04 15:02:30.348 |   haproxy-doc krb5-doc libgd-tools krb5-user libheif-plugin-libde265
+2026-11-04 15:02:30.348 |   libheif-plugin-x265 libheif-plugin-ffmpegdec libheif-plugin-jpegdec
+2026-11-04 15:02:30.348 |   libheif-plugin-jpegenc libheif-plugin-j2kdec libheif-plugin-j2kenc
+2026-11-04 15:02:30.348 |   libheif-plugin-kvazaar libheif-plugin-rav1e libheif-plugin-svtenc
+2026-11-04 15:02:30.348 |   liblzma-doc ncurses-doc postgresql-doc-18 libpq-oauth lksctp-tools
+2026-11-04 15:02:30.348 |   libssl-doc libtool-doc gfortran | fortran95-compiler libyaml-doc llvm-21-doc
+2026-11-04 15:02:30.348 |   m4-doc apparmor less libanyevent-perl libcache-memcached-perl libmemcached
+2026-11-04 15:02:30.348 |   liburi-perl libterm-readkey-perl libyaml-perl pcp-gui libpcp-import-perl
+2026-11-04 15:02:30.348 |   redis-server bpftrace cpufrequtils wireless-tools radeontool
+2026-11-04 15:02:30.348 |   libmail-box-perl postgresql-18 default-mysql-server | virtual-mysql-server
+2026-11-04 15:02:30.348 |   python-pygments-doc ttf-bitstream-vera sqlite3-doc zip
+2026-11-04 15:02:30.348 | Recommended packages:
+2026-11-04 15:02:30.348 |   clang-tools-21 dracut | cryptsetup-initramfs dns-root-data fonts-liberation
+2026-11-04 15:02:30.348 |   libclang-rt-21-dev libarchive-cpio-perl libheif-plugin-aomenc
+2026-11-04 15:02:30.348 |   javascript-common libjson-xs-perl libltdl-dev libpcp-pmda-perl vbetool
+2026-11-04 15:02:30.348 |   hdparm ethtool kbd | console-tools libmail-sendmail-perl logrotate
+2026-11-04 15:02:30.379 | The following NEW packages will be installed:
+2026-11-04 15:02:30.379 |   apache2 apache2-bin apache2-data apache2-dev apache2-utils autoconf automake
+2026-11-04 15:02:30.379 |   autopoint autotools-dev bc bsdextrautils bsdmainutils clang-21 comerr-dev
+2026-11-04 15:02:30.379 |   conntrack cryptsetup cryptsetup-bin dconf-gsettings-backend dconf-service
+2026-11-04 15:02:30.379 |   debhelper debugedit dh-autoreconf dh-strip-nondeterminism dmeventd
+2026-11-04 15:02:30.379 |   dnsmasq-base dnsmasq-utils dosfstools dwz ebtables fontconfig
+2026-11-04 15:02:30.379 |   fontconfig-config fonts-dejavu-core fonts-dejavu-mono gawk gettext
+2026-11-04 15:02:30.379 |   gir1.2-freedesktop gir1.2-libosinfo-1.0 glib-networking
+2026-11-04 15:02:30.379 |   glib-networking-common glib-networking-services graphviz groff-base
+2026-11-04 15:02:30.379 |   gsettings-desktop-schemas haproxy intltool-debian iputils-arping
+2026-11-04 15:02:30.379 |   krb5-multidev libaom3 libapr1-dev libapr1t64 libaprutil1-dbd-sqlite3
+2026-11-04 15:02:30.379 |   libaprutil1-dev libaprutil1-ldap libaprutil1t64 libarchive-zip-perl
+2026-11-04 15:02:30.379 |   libcairo-gobject2 libcairo2 libcdt6 libcgraph8 libclang-common-21-dev
+2026-11-04 15:02:30.379 |   libclang-cpp21 libclang1-21 libdatrie1 libdconf1 libdebhelper-perl
+2026-11-04 15:02:30.379 |   libdeflate0 libdevmapper-event1.02.1 libdrm-amdgpu1 libdrm-common libdrm2
+2026-11-04 15:02:30.379 |   libdw1t64 libffi-dev libfile-stripnondeterminism-perl libfontconfig1
+2026-11-04 15:02:30.379 |   libfribidi0 libgc1 libgd3 libgraphite2-3 libgssrpc4t64 libgvc7
+2026-11-04 15:02:30.379 |   libgvplugin-gd8 libgvplugin-pango8 libgvpr2 libharfbuzz0b
+2026-11-04 15:02:30.379 |   libheif-plugin-aomdec libheif1 libimagequant0 libinih1 libio-pty-perl
+2026-11-04 15:02:30.379 |   libipc-run-perl libjbig0 libjpeg-dev libjpeg-turbo8 libjpeg-turbo8-dev
+2026-11-04 15:02:30.379 |   libjpeg8 libjpeg8-dev libjs-jquery libjs-jquery-metadata
+2026-11-04 15:02:30.379 |   libjs-jquery-tablesorter libjson-perl libkadm5clnt-mit12 libkadm5srv-mit12
+2026-11-04 15:02:30.379 |   libkdb5-10t64 libkrb5-dev libldap-dev libldap2-dev liblerc4 libllvm21
+2026-11-04 15:02:30.379 |   liblsof0 libltdl7 liblua5.4-0 liblvm2cmd2.03 liblzma-dev libmysqlclient24
+2026-11-04 15:02:30.380 |   libncurses-dev libncurses6 libnftables1 libobjc-15-dev libobjc4
+2026-11-04 15:02:30.380 |   libosinfo-1.0-0 libosinfo-l10n libpango-1.0-0 libpangocairo-1.0-0
+2026-11-04 15:02:30.380 |   libpangoft2-1.0-0 libpathplan4 libpcp-archive1 libpcp-gui2 libpcp-import1
+2026-11-04 15:02:30.380 |   libpcp-mmv1 libpcp-pmda3 libpcp-trace2 libpcp-web1 libpcp4 libpcre2-16-0
+2026-11-04 15:02:30.380 |   libpcre2-32-0 libpcre2-dev libpcre2-posix3 libpfm4 libpipeline1
+2026-11-04 15:02:30.380 |   libpixman-1-0 libpkgconf7 libpq-dev libpq5 libproxy1v5 libsasl2-dev
+2026-11-04 15:02:30.380 |   libsctp-dev libsctp1 libsharpyuv0 libsoup-3.0-0 libsoup-3.0-common
+2026-11-04 15:02:30.380 |   libssl-dev libsysfs2 libsystemd-dev libthai-data libthai0 libtiff6 libtool
+2026-11-04 15:02:30.380 |   libuchardet0 libwebp7 libx11-6 libx11-data libxau6 libxcb-render0
+2026-11-04 15:02:30.380 |   libxcb-shm0 libxcb1 libxdmcp6 libxdot4 libxext6 libxml2-dev libxpm4
+2026-11-04 15:02:30.380 |   libxrender1 libxslt1-dev libxslt1.1 libyaml-0-2 libyaml-dev llvm-21
+2026-11-04 15:02:30.380 |   llvm-21-dev llvm-21-linker-tools llvm-21-runtime llvm-21-tools lsof lsscsi
+2026-11-04 15:02:30.380 |   lvm2 m4 man-db memcached mysql-common ncal netcat-openbsd osinfo-db pcp
+2026-11-04 15:02:30.380 |   pcp-conf pkg-config pkgconf pkgconf-bin pm-utils po-debconf
+2026-11-04 15:02:30.380 |   postgresql-client-18 postgresql-client-common postgresql-common
+2026-11-04 15:02:30.380 |   postgresql-common-dev postgresql-server-dev-18 postgresql-server-dev-all
+2026-11-04 15:02:30.380 |   powermgmt-base psmisc python3-mysqldb python3-pcp python3-pygments
+2026-11-04 15:02:30.380 |   python3-systemd python3-yaml socat sqlite3 ssl-cert sysfsutils
+2026-11-04 15:02:30.380 |   thin-provisioning-tools unzip user-session-migration uuid-dev vlan zstd
+2026-11-04 15:02:30.381 | The following packages will be upgraded:
+2026-11-04 15:02:30.382 |   libpcre2-8-0
+2026-11-04 15:02:34.897 | 1 upgraded, 220 newly installed, 0 to remove and 3 not upgraded.
+2026-11-04 15:02:34.897 | Need to get 180 MB of archives.
+2026-11-04 15:02:34.897 | After this operation, 939 MB of additional disk space will be used.
+2026-11-04 15:02:34.897 | Get:1 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 gawk amd64 1:5.3.2-1ubuntu1.1 [527 kB]
+2026-11-04 15:02:35.698 | Get:2 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libjson-perl all 4.10000-1 [81.9 kB]
+2026-11-04 15:02:35.699 | Get:3 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 postgresql-client-common all 290ubuntu1 [49.4 kB]
+2026-11-04 15:02:35.734 | Get:4 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 ssl-cert all 1.1.3ubuntu2 [18.8 kB]
+2026-11-04 15:02:35.734 | Get:5 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 postgresql-common all 290ubuntu1 [101 kB]
+2026-11-04 15:02:35.741 | Get:6 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libsysfs2 amd64 2.1.1-7build1 [20.3 kB]
+2026-11-04 15:02:35.742 | Get:7 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 sysfsutils amd64 2.1.1-7build1 [17.5 kB]
+2026-11-04 15:02:35.768 | Err:8 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-8-0 amd64 10.46-1ubuntu0.1
+2026-11-04 15:02:35.768 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:02:35.768 | Get:9 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libfribidi0 amd64 1.0.16-5 [26.6 kB]
+2026-11-04 15:02:35.768 | Get:10 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libyaml-0-2 amd64 0.2.5-2build3 [52.6 kB]
+2026-11-04 15:02:35.768 | Get:11 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 netcat-openbsd amd64 1.234-1 [44.0 kB]
+2026-11-04 15:02:35.774 | Get:12 http://mirrors.kernel.org/ubuntu resolute/main amd64 python3-pygments all 2.19.2+dfsg-1 [843 kB]
+2026-11-04 15:02:35.935 | Get:13 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 python3-yaml amd64 6.0.3-1build1 [137 kB]
+2026-11-04 15:02:35.939 | Get:14 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 bsdextrautils amd64 2.41.3-3ubuntu2.2 [86.7 kB]
+2026-11-04 15:02:35.968 | Get:15 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 dosfstools amd64 4.2-1.2build1 [87.9 kB]
+2026-11-04 15:02:35.968 | Get:16 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libuchardet0 amd64 0.0.8-2 [75.8 kB]
+2026-11-04 15:02:35.972 | Get:17 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 groff-base amd64 1.23.0-10 [1,023 kB]
+2026-11-04 15:02:36.105 | Get:18 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdrm-common all 2.4.131-1 [9,774 B]
+2026-11-04 15:02:36.105 | Get:19 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdrm2 amd64 2.4.131-1 [42.3 kB]
+2026-11-04 15:02:36.135 | Get:20 http://mirrors.kernel.org/ubuntu resolute/main amd64 liblsof0 amd64 4.99.4+dfsg-2build2 [56.5 kB]
+2026-11-04 15:02:36.758 | Get:21 http://mirrors.kernel.org/ubuntu resolute/main amd64 libncurses6 amd64 6.6+20251231-1 [114 kB]
+2026-11-04 15:02:36.793 | Get:22 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libnftables1 amd64 1.1.6-1 [390 kB]
+2026-11-04 15:02:36.860 | Get:23 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libpipeline1 amd64 1.5.8-2 [31.4 kB]
+2026-11-04 15:02:36.860 | Get:24 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxau6 amd64 1:1.0.11-1build2 [7,502 B]
+2026-11-04 15:02:36.861 | Get:25 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxdmcp6 amd64 1:1.1.5-2 [10.8 kB]
+2026-11-04 15:02:36.861 | Get:26 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxcb1 amd64 1.17.0-2ubuntu1 [49.0 kB]
+2026-11-04 15:02:36.861 | Get:27 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libx11-data all 2:1.8.13-1ubuntu0.1 [115 kB]
+2026-11-04 15:02:36.893 | Get:28 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libx11-6 amd64 2:1.8.13-1ubuntu0.1 [658 kB]
+2026-11-04 15:02:36.961 | Get:29 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxext6 amd64 2:1.3.4-1build3 [30.8 kB]
+2026-11-04 15:02:36.961 | Get:30 http://mirrors.kernel.org/ubuntu resolute/main amd64 lsof amd64 4.99.4+dfsg-2build2 [239 kB]
+2026-11-04 15:02:36.994 | Get:31 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 man-db amd64 2.13.1-1build1 [1,392 kB]
+2026-11-04 15:02:37.699 | Get:32 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 powermgmt-base all 1.38ubuntu2 [7,878 B]
+2026-11-04 15:02:37.882 | Get:33 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 psmisc amd64 23.7-2ubuntu2 [179 kB]
+2026-11-04 15:02:37.918 | Get:34 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libapr1t64 amd64 1.7.6-3 [109 kB]
+2026-11-04 15:02:37.951 | Get:35 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libaprutil1t64 amd64 1.6.3-3ubuntu3.1 [93.3 kB]
+2026-11-04 15:02:37.951 | Get:36 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libaprutil1-dbd-sqlite3 amd64 1.6.3-3ubuntu3.1 [11.4 kB]
+2026-11-04 15:02:37.952 | Get:37 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libaprutil1-ldap amd64 1.6.3-3ubuntu3.1 [9,228 B]
+2026-11-04 15:02:37.952 | Get:38 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 liblua5.4-0 amd64 5.4.8-1build1 [163 kB]
+2026-11-04 15:02:37.984 | Get:39 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 apache2-bin amd64 2.4.66-2ubuntu2.6 [1,355 kB]
+2026-11-04 15:02:38.118 | Get:40 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 apache2-data all 2.4.66-2ubuntu2.6 [163 kB]
+2026-11-04 15:02:38.119 | Get:41 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 apache2-utils amd64 2.4.66-2ubuntu2.6 [95.4 kB]
+2026-11-04 15:02:38.151 | Get:42 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 apache2 amd64 2.4.66-2ubuntu2.6 [102 kB]
+2026-11-04 15:02:38.151 | Get:43 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 m4 amd64 1.4.21-1 [219 kB]
+2026-11-04 15:02:38.153 | Get:44 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 autoconf all 2.72-3.1ubuntu2 [384 kB]
+2026-11-04 15:02:38.187 | Get:45 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 autotools-dev all 20240727.1build1 [43.4 kB]
+2026-11-04 15:02:38.212 | Get:46 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 automake all 1:1.18.1-3build1 [582 kB]
+2026-11-04 15:02:38.252 | Get:47 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 autopoint all 0.23.2-1 [620 kB]
+2026-11-04 15:02:38.288 | Get:48 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdebhelper-perl all 13.31ubuntu1 [78.8 kB]
+2026-11-04 15:02:38.288 | Get:49 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libllvm21 amd64 1:21.1.8-6ubuntu1 [30.7 MB]
+2026-11-04 15:03:11.387 | Ign:49 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libllvm21 amd64 1:21.1.8-6ubuntu1
+2026-11-04 15:03:18.819 | Get:50 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libclang-cpp21 amd64 1:21.1.8-6ubuntu1 [13.7 MB]
+2026-11-04 15:03:22.218 | Get:51 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libgc1 amd64 1:8.2.12-1 [92.9 kB]
+2026-11-04 15:03:22.220 | Get:52 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libobjc4 amd64 16-20260322-1ubuntu1 [48.2 kB]
+2026-11-04 15:03:22.256 | Get:53 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libobjc-15-dev amd64 15.2.0-16ubuntu1 [196 kB]
+2026-11-04 15:03:22.289 | Get:54 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libclang-common-21-dev amd64 1:21.1.8-6ubuntu1 [770 kB]
+2026-11-04 15:03:22.326 | Get:55 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 llvm-21-linker-tools amd64 1:21.1.8-6ubuntu1 [1,325 kB]
+2026-11-04 15:03:22.399 | Get:56 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libclang1-21 amd64 1:21.1.8-6ubuntu1 [8,158 kB]
+2026-11-04 15:03:24.980 | Get:57 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 clang-21 amd64 1:21.1.8-6ubuntu1 [128 kB]
+2026-11-04 15:03:24.980 | Get:58 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libtool all 2.5.4-9 [169 kB]
+2026-11-04 15:03:25.012 | Get:59 http://mirrors.kernel.org/ubuntu resolute/main amd64 dh-autoreconf all 21+nmu1 [11.9 kB]
+2026-11-04 15:03:25.095 | Get:49 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libllvm21 amd64 1:21.1.8-6ubuntu1 [30.7 MB]
+2026-11-04 15:03:27.884 | Get:60 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libarchive-zip-perl all 1.68-1 [90.2 kB]
+2026-11-04 15:03:27.885 | Get:61 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libfile-stripnondeterminism-perl all 1.15.0-1build1 [20.6 kB]
+2026-11-04 15:03:27.885 | Get:62 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 dh-strip-nondeterminism all 1.15.0-1build1 [5,110 B]
+2026-11-04 15:03:27.885 | Get:63 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdw1t64 amd64 0.194-4 [285 kB]
+2026-11-04 15:03:27.917 | Get:64 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 debugedit amd64 1:5.3-4 [52.9 kB]
+2026-11-04 15:03:27.918 | Get:65 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 dwz amd64 0.16-4 [112 kB]
+2026-11-04 15:03:27.918 | Get:66 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 gettext amd64 0.23.2-1 [1,019 kB]
+2026-11-04 15:03:27.986 | Get:67 http://mirrors.kernel.org/ubuntu resolute/main amd64 intltool-debian all 0.35.0+20060710.6build1 [24.1 kB]
+2026-11-04 15:03:27.987 | Get:68 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 po-debconf all 1.0.22 [215 kB]
+2026-11-04 15:03:28.660 | Get:69 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 debhelper all 13.31ubuntu1 [925 kB]
+2026-11-04 15:03:28.762 | Get:70 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 uuid-dev amd64 2.41.3-3ubuntu2.2 [49.1 kB]
+2026-11-04 15:03:28.768 | Get:71 http://mirrors.kernel.org/ubuntu resolute/main amd64 libsctp1 amd64 1.0.21+dfsg-1build2 [9,352 B]
+2026-11-04 15:03:28.768 | Get:72 http://mirrors.kernel.org/ubuntu resolute/main amd64 libsctp-dev amd64 1.0.21+dfsg-1build2 [57.0 kB]
+2026-11-04 15:03:28.769 | Get:73 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libapr1-dev amd64 1.7.6-3 [769 kB]
+2026-11-04 15:03:28.805 | Get:74 http://mirrors.kernel.org/ubuntu resolute/main amd64 libldap-dev amd64 2.6.10+dfsg-1ubuntu5 [315 kB]
+2026-11-04 15:03:28.838 | Get:75 http://mirrors.kernel.org/ubuntu resolute/main amd64 libldap2-dev all 2.6.10+dfsg-1ubuntu5 [12.1 kB]
+2026-11-04 15:03:28.838 | Get:76 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libaprutil1-dev amd64 1.6.3-3ubuntu3.1 [445 kB]
+2026-11-04 15:03:28.871 | Err:77 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-16-0 amd64 10.46-1ubuntu0.1
+2026-11-04 15:03:28.871 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:03:28.871 | Err:78 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-32-0 amd64 10.46-1ubuntu0.1
+2026-11-04 15:03:28.871 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:03:29.399 | Err:79 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-posix3 amd64 10.46-1ubuntu0.1
+2026-11-04 15:03:29.399 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:03:29.414 | Err:80 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-dev amd64 10.46-1ubuntu0.1
+2026-11-04 15:03:29.414 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:03:29.417 | Get:81 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 apache2-dev amd64 2.4.66-2ubuntu2.6 [199 kB]
+2026-11-04 15:03:29.452 | Get:82 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 bc amd64 1.07.1-4build1 [86.5 kB]
+2026-11-04 15:03:29.453 | Get:83 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 ncal amd64 12.1.8build1 [20.8 kB]
+2026-11-04 15:03:29.453 | Get:84 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 bsdmainutils all 12.1.8build1 [3,154 B]
+2026-11-04 15:03:29.453 | Get:85 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 conntrack amd64 1:1.4.9-1 [39.9 kB]
+2026-11-04 15:03:29.453 | Get:86 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 cryptsetup-bin amd64 2:2.8.4-1ubuntu4 [230 kB]
+2026-11-04 15:03:29.486 | Get:87 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 cryptsetup amd64 2:2.8.4-1ubuntu4 [225 kB]
+2026-11-04 15:03:29.488 | Get:88 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdconf1 amd64 0.49.0-4 [40.5 kB]
+2026-11-04 15:03:29.511 | Get:89 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 dconf-service amd64 0.49.0-4 [27.7 kB]
+2026-11-04 15:03:29.516 | Get:90 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 dconf-gsettings-backend amd64 0.49.0-4 [22.2 kB]
+2026-11-04 15:03:29.555 | Get:91 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdevmapper-event1.02.1 amd64 2:1.02.205-2ubuntu3 [13.0 kB]
+2026-11-04 15:03:29.560 | Get:92 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 liblvm2cmd2.03 amd64 2.03.31-2ubuntu3 [842 kB]
+2026-11-04 15:03:29.631 | Get:93 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 dmeventd amd64 2:1.02.205-2ubuntu3 [40.1 kB]
+2026-11-04 15:03:29.632 | Get:94 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 dnsmasq-base amd64 2.92-1ubuntu0.5 [439 kB]
+2026-11-04 15:03:29.663 | Get:95 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 dnsmasq-utils amd64 2.92-1ubuntu0.5 [16.3 kB]
+2026-11-04 15:03:29.663 | Get:96 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 ebtables amd64 2.0.11-6build2 [89.0 kB]
+2026-11-04 15:03:29.665 | Get:97 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 fonts-dejavu-mono all 2.37-8build1 [502 kB]
+2026-11-04 15:03:29.700 | Get:98 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 fonts-dejavu-core all 2.37-8build1 [834 kB]
+2026-11-04 15:03:29.798 | Get:99 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 fontconfig-config amd64 2.17.1-3ubuntu1 [38.5 kB]
+2026-11-04 15:03:29.799 | Get:100 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libfontconfig1 amd64 2.17.1-3ubuntu1 [144 kB]
+2026-11-04 15:03:29.800 | Get:101 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 fontconfig amd64 2.17.1-3ubuntu1 [180 kB]
+2026-11-04 15:03:29.832 | Get:102 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libpixman-1-0 amd64 0.46.4-1 [287 kB]
+2026-11-04 15:03:29.864 | Get:103 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxcb-render0 amd64 1.17.0-2ubuntu1 [16.2 kB]
+2026-11-04 15:03:29.953 | Get:104 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxcb-shm0 amd64 1.17.0-2ubuntu1 [5,808 B]
+2026-11-04 15:03:29.953 | Get:105 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxrender1 amd64 1:0.9.12-1build1 [19.2 kB]
+2026-11-04 15:03:29.955 | Get:106 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libcairo2 amd64 1.18.4-3 [579 kB]
+2026-11-04 15:03:29.992 | Get:107 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libcairo-gobject2 amd64 1.18.4-3 [127 kB]
+2026-11-04 15:03:30.019 | Get:108 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 gir1.2-freedesktop amd64 1.86.0-6build1 [66.0 kB]
+2026-11-04 15:03:30.024 | Get:109 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libproxy1v5 amd64 0.5.12-1 [28.3 kB]
+2026-11-04 15:03:30.024 | Get:110 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 glib-networking-common all 2.80.1-1build2 [6,834 B]
+2026-11-04 15:03:30.024 | Get:111 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 glib-networking-services amd64 2.80.1-1build2 [13.1 kB]
+2026-11-04 15:03:30.024 | Get:112 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 user-session-migration amd64 0.5.1 [10.7 kB]
+2026-11-04 15:03:30.025 | Get:113 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 gsettings-desktop-schemas all 50.0-1ubuntu2 [37.8 kB]
+2026-11-04 15:03:30.025 | Get:114 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 glib-networking amd64 2.80.1-1build2 [64.8 kB]
+2026-11-04 15:03:30.070 | Get:115 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libcdt6 amd64 14.1.2-1ubuntu1 [20.1 kB]
+2026-11-04 15:03:30.072 | Get:116 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libcgraph8 amd64 14.1.2-1ubuntu1 [55.3 kB]
+2026-11-04 15:03:30.076 | Get:117 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libltdl7 amd64 2.5.4-9 [43.7 kB]
+2026-11-04 15:03:30.108 | Get:118 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpathplan4 amd64 14.1.2-1ubuntu1 [26.3 kB]
+2026-11-04 15:03:30.115 | Get:119 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libxdot4 amd64 14.1.2-1ubuntu1 [23.5 kB]
+2026-11-04 15:03:30.125 | Get:120 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libgvc7 amd64 14.1.2-1ubuntu1 [397 kB]
+2026-11-04 15:03:30.160 | Get:121 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libgvpr2 amd64 14.1.2-1ubuntu1 [127 kB]
+2026-11-04 15:03:30.161 | Get:122 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libsharpyuv0 amd64 1.5.0-0.1build1 [17.6 kB]
+2026-11-04 15:03:30.162 | Get:123 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libaom3 amd64 3.13.1-2ubuntu0.1 [1,969 kB]
+2026-11-04 15:03:30.331 | Get:124 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libheif-plugin-aomdec amd64 1.21.2-3ubuntu0.6 [15.5 kB]
+2026-11-04 15:03:30.331 | Get:125 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libheif1 amd64 1.21.2-3ubuntu0.6 [550 kB]
+2026-11-04 15:03:30.396 | Get:126 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libimagequant0 amd64 4.4.1-1 [264 kB]
+2026-11-04 15:03:30.412 | Get:127 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libjpeg-turbo8 amd64 2.1.5-4ubuntu4 [153 kB]
+2026-11-04 15:03:30.430 | Get:128 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libjpeg8 amd64 8c-2ubuntu12 [2,142 B]
+2026-11-04 15:03:30.430 | Get:129 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdeflate0 amd64 1.23-2ubuntu1 [51.7 kB]
+2026-11-04 15:03:30.430 | Get:130 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libjbig0 amd64 2.1-6.1ubuntu3 [30.0 kB]
+2026-11-04 15:03:30.431 | Get:131 http://mirrors.kernel.org/ubuntu resolute/main amd64 liblerc4 amd64 4.0.0+ds-5ubuntu2 [207 kB]
+2026-11-04 15:03:30.461 | Get:132 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libwebp7 amd64 1.5.0-0.1build1 [264 kB]
+2026-11-04 15:03:30.653 | Get:133 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libtiff6 amd64 4.7.0-3ubuntu5 [206 kB]
+2026-11-04 15:03:30.913 | Get:134 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libxpm4 amd64 1:3.5.17-1ubuntu0.26.04.2 [37.2 kB]
+2026-11-04 15:03:30.924 | Get:135 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libgd3 amd64 2.3.3-13ubuntu2 [130 kB]
+2026-11-04 15:03:30.929 | Get:136 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libgvplugin-gd8 amd64 14.1.2-1ubuntu1 [26.4 kB]
+2026-11-04 15:03:30.946 | Get:137 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libgraphite2-3 amd64 1.3.14-11ubuntu1.1 [72.9 kB]
+2026-11-04 15:03:30.957 | Get:138 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libharfbuzz0b amd64 12.3.2-2 [519 kB]
+2026-11-04 15:03:30.992 | Get:139 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libthai-data all 0.1.30-1 [155 kB]
+2026-11-04 15:03:31.014 | Get:140 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdatrie1 amd64 0.2.14-1 [19.8 kB]
+2026-11-04 15:03:31.024 | Get:141 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libthai0 amd64 0.1.30-1 [19.2 kB]
+2026-11-04 15:03:31.026 | Get:142 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libpango-1.0-0 amd64 1.57.0-1 [241 kB]
+2026-11-04 15:03:31.753 | Get:143 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libpangoft2-1.0-0 amd64 1.57.0-1 [53.3 kB]
+2026-11-04 15:03:31.784 | Get:144 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libpangocairo-1.0-0 amd64 1.57.0-1 [29.0 kB]
+2026-11-04 15:03:32.785 | Get:145 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libgvplugin-pango8 amd64 14.1.2-1ubuntu1 [24.6 kB]
+2026-11-04 15:03:32.818 | Get:146 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 graphviz amd64 14.1.2-1ubuntu1 [58.5 kB]
+2026-11-04 15:03:32.851 | Err:147 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 haproxy amd64 3.2.25-0ubuntu0.26.04.2
+2026-11-04 15:03:32.851 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:03:32.851 | Get:148 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 iputils-arping amd64 3:20250605-1ubuntu1 [16.5 kB]
+2026-11-04 15:03:32.851 | Get:149 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 comerr-dev amd64 2.1-1.47.2-3ubuntu4 [44.6 kB]
+2026-11-04 15:03:32.852 | Get:150 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libgssrpc4t64 amd64 1.22.1-2ubuntu4.1 [57.9 kB]
+2026-11-04 15:03:32.884 | Get:151 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libkadm5clnt-mit12 amd64 1.22.1-2ubuntu4.1 [40.2 kB]
+2026-11-04 15:03:32.885 | Get:152 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libkdb5-10t64 amd64 1.22.1-2ubuntu4.1 [41.6 kB]
+2026-11-04 15:03:32.886 | Get:153 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libkadm5srv-mit12 amd64 1.22.1-2ubuntu4.1 [55.2 kB]
+2026-11-04 15:03:32.917 | Get:154 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 krb5-multidev amd64 1.22.1-2ubuntu4.1 [126 kB]
+2026-11-04 15:03:32.919 | Get:155 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libdrm-amdgpu1 amd64 2.4.131-1 [23.2 kB]
+2026-11-04 15:03:33.893 | Get:156 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libinih1 amd64 61-1ubuntu1 [7,726 B]
+2026-11-04 15:03:33.901 | Get:157 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libio-pty-perl amd64 1:1.20-1build3 [31.4 kB]
+2026-11-04 15:03:35.089 | Get:158 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libipc-run-perl all 20250809.0-1build1 [94.5 kB]
+2026-11-04 15:03:35.156 | Get:159 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libjpeg-turbo8-dev amd64 2.1.5-4ubuntu4 [300 kB]
+2026-11-04 15:03:35.273 | Get:160 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libjpeg8-dev amd64 8c-2ubuntu12 [1,480 B]
+2026-11-04 15:03:35.274 | Get:161 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libjpeg-dev amd64 8c-2ubuntu12 [1,480 B]
+2026-11-04 15:03:35.274 | Get:162 http://mirrors.kernel.org/ubuntu resolute/main amd64 libjs-jquery all 3.7.1+dfsg+~3.5.33-1build1 [321 kB]
+2026-11-04 15:03:35.277 | Get:163 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libjs-jquery-metadata all 12-4build1 [6,692 B]
+2026-11-04 15:03:35.280 | Get:164 http://mirrors.kernel.org/ubuntu resolute/universe amd64 libjs-jquery-tablesorter all 1:2.31.3+dfsg1-5 [192 kB]
+2026-11-04 15:03:35.309 | Get:165 http://mirrors.kernel.org/ubuntu resolute/main amd64 mysql-common all 5.8+1.1.1ubuntu2 [7,002 B]
+2026-11-04 15:03:35.310 | Get:166 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libmysqlclient24 amd64 8.4.11-0ubuntu0.26.04.1 [1,256 kB]
+2026-11-04 15:03:35.411 | Get:167 http://mirrors.kernel.org/ubuntu resolute/main amd64 libncurses-dev amd64 6.6+20251231-1 [389 kB]
+2026-11-04 15:03:35.445 | Get:168 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 pcp-conf amd64 7.1.1-1 [22.4 kB]
+2026-11-04 15:03:35.445 | Get:169 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpcp4 amd64 7.1.1-1 [340 kB]
+2026-11-04 15:03:35.478 | Get:170 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libpkgconf7 amd64 2.5.1-4 [38.8 kB]
+2026-11-04 15:03:36.372 | Get:171 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libpq5 amd64 18.6-0ubuntu0.26.04.1 [163 kB]
+2026-11-04 15:03:36.615 | Get:172 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libssl-dev amd64 3.5.5-1ubuntu3.7 [2,937 kB]
+2026-11-04 15:03:36.857 | Get:173 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libpq-dev amd64 18.6-0ubuntu0.26.04.1 [176 kB]
+2026-11-04 15:03:36.888 | Get:174 http://mirrors.kernel.org/ubuntu resolute/main amd64 libsasl2-dev amd64 2.1.28+dfsg1-9ubuntu3 [247 kB]
+2026-11-04 15:03:36.890 | Err:175 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libsoup-3.0-common all 3.6.6-1ubuntu0.2
+2026-11-04 15:03:36.890 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:03:36.890 | Err:176 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libsoup-3.0-0 amd64 3.6.6-1ubuntu0.2
+2026-11-04 15:03:36.890 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:03:36.890 | Get:177 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libsystemd-dev amd64 259.9-0ubuntu0.1 [1,366 kB]
+2026-11-04 15:03:37.021 | Get:178 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 liblzma-dev amd64 5.8.3-1ubuntu0.1 [179 kB]
+2026-11-04 15:03:37.033 | Get:179 http://mirrors.kernel.org/ubuntu resolute-updates/main amd64 libxml2-dev amd64 2.15.2+dfsg-0.1ubuntu0.3 [712 kB]
+2026-11-04 15:03:37.098 | Get:180 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxslt1.1 amd64 1.1.45-0.1 [165 kB]
+2026-11-04 15:03:37.100 | Get:181 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libxslt1-dev amd64 1.1.45-0.1 [89.7 kB]
+2026-11-04 15:03:37.110 | Get:182 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 llvm-21-runtime amd64 1:21.1.8-6ubuntu1 [564 kB]
+2026-11-04 15:03:37.165 | Get:183 http://mirrors.kernel.org/ubuntu resolute-updates/universe amd64 libpfm4 amd64 4.13.0+git106-g3e4031b-1ubuntu0.1 [427 kB]
+2026-11-04 15:03:37.198 | Get:184 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 llvm-21 amd64 1:21.1.8-6ubuntu1 [20.0 MB]
+2026-11-04 15:03:47.068 | Get:185 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libffi-dev amd64 3.5.2-4 [66.5 kB]
+2026-11-04 15:03:47.068 | Get:186 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 llvm-21-tools amd64 1:21.1.8-6ubuntu1 [476 kB]
+2026-11-04 15:03:47.120 | Get:187 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 llvm-21-dev amd64 1:21.1.8-6ubuntu1 [51.7 MB]
+2026-11-04 15:04:03.129 | Get:188 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 lsscsi amd64 0.32-2build1 [47.6 kB]
+2026-11-04 15:04:03.129 | Get:189 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 lvm2 amd64 2.03.31-2ubuntu3 [1,247 kB]
+2026-11-04 15:04:03.298 | Get:190 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 memcached amd64 1.6.40-1ubuntu0.3 [297 kB]
+2026-11-04 15:04:03.332 | Get:191 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 osinfo-db all 0.20250606-1ubuntu2 [178 kB]
+2026-11-04 15:04:03.365 | Get:192 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 pkgconf-bin amd64 2.5.1-4 [22.7 kB]
+2026-11-04 15:04:03.365 | Get:193 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 pkgconf amd64 2.5.1-4 [20.0 kB]
+2026-11-04 15:04:04.190 | Get:194 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 pkg-config amd64 2.5.1-4 [7,684 B]
+2026-11-04 15:04:04.211 | Get:195 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 pm-utils all 1.4.1-21build1 [47.0 kB]
+2026-11-04 15:04:04.245 | Get:196 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 postgresql-client-18 amd64 18.6-0ubuntu0.26.04.1 [1,401 kB]
+2026-11-04 15:04:04.456 | Get:197 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 postgresql-common-dev all 290ubuntu1 [75.2 kB]
+2026-11-04 15:04:04.459 | Get:198 http://mirrors.edge.kernel.org/ubuntu resolute-updates/universe amd64 postgresql-server-dev-18 amd64 18.6-0ubuntu0.26.04.1 [1,475 kB]
+2026-11-04 15:04:04.655 | Get:199 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 postgresql-server-dev-all all 290ubuntu1 [1,628 B]
+2026-11-04 15:04:04.655 | Get:200 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 python3-mysqldb amd64 1.4.6-2build8 [48.1 kB]
+2026-11-04 15:04:04.658 | Get:201 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 python3-systemd amd64 235-1build9 [43.6 kB]
+2026-11-04 15:04:04.675 | Get:202 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 sqlite3 amd64 3.46.1-9ubuntu0.3 [149 kB]
+2026-11-04 15:04:04.686 | Get:203 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 thin-provisioning-tools amd64 1.1.0-4ubuntu2 [1,113 kB]
+2026-11-04 15:04:04.857 | Get:204 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 unzip amd64 6.0-29ubuntu1 [180 kB]
+2026-11-04 15:04:04.862 | Get:205 http://mirrors.kernel.org/ubuntu resolute/main amd64 zstd amd64 1.5.7+dfsg-3 [672 kB]
+2026-11-04 15:04:04.960 | Get:206 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libosinfo-l10n all 1.12.0-3build1 [51.5 kB]
+2026-11-04 15:04:04.961 | Get:207 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libosinfo-1.0-0 amd64 1.12.0-3build1 [92.0 kB]
+2026-11-04 15:04:04.965 | Get:208 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 gir1.2-libosinfo-1.0 amd64 1.12.0-3build1 [18.5 kB]
+2026-11-04 15:04:04.965 | Get:209 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 libkrb5-dev amd64 1.22.1-2ubuntu4.1 [11.9 kB]
+2026-11-04 15:04:04.965 | Get:210 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpcp-archive1 amd64 7.1.1-1 [10.6 kB]
+2026-11-04 15:04:04.966 | Get:211 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpcp-gui2 amd64 7.1.1-1 [13.0 kB]
+2026-11-04 15:04:04.966 | Get:212 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpcp-import1 amd64 7.1.1-1 [17.3 kB]
+2026-11-04 15:04:04.992 | Get:213 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpcp-mmv1 amd64 7.1.1-1 [14.3 kB]
+2026-11-04 15:04:04.992 | Get:214 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpcp-pmda3 amd64 7.1.1-1 [45.9 kB]
+2026-11-04 15:04:05.051 | Get:215 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpcp-trace2 amd64 7.1.1-1 [16.9 kB]
+2026-11-04 15:04:05.207 | Get:216 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 libpcp-web1 amd64 7.1.1-1 [225 kB]
+2026-11-04 15:04:05.279 | Get:217 http://mirrors.edge.kernel.org/ubuntu resolute/main amd64 libyaml-dev amd64 0.2.5-2build3 [63.9 kB]
+2026-11-04 15:04:05.284 | Get:218 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 python3-pcp amd64 7.1.1-1 [77.9 kB]
+2026-11-04 15:04:05.285 | Get:219 http://mirrors.edge.kernel.org/ubuntu resolute/universe amd64 pcp amd64 7.1.1-1 [3,179 kB]
+2026-11-04 15:04:05.684 | Get:220 http://mirrors.edge.kernel.org/ubuntu resolute-updates/main amd64 socat amd64 1.8.1.1-1ubuntu0.1 [403 kB]
+2026-11-04 15:04:05.723 | Get:221 http://mirrors.kernel.org/ubuntu resolute/universe amd64 vlan all 2.0.5+nmu3ubuntu2 [10.0 kB]
+2026-11-04 15:04:05.727 | Fetched 157 MB in 1min 35s (1,652 kB/s)
+2026-11-04 15:04:05.728 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-8-0_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:05.728 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-16-0_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:05.728 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-32-0_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:05.728 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-posix3_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:05.728 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-dev_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:05.728 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/h/haproxy/haproxy_3.2.25-0ubuntu0.26.04.2_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:05.728 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/libs/libsoup3/libsoup-3.0-common_3.6.6-1ubuntu0.2_all.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:05.728 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/libs/libsoup3/libsoup-3.0-0_3.6.6-1ubuntu0.2_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:05.728 | E: Unable to fetch some archives, maybe run apt update or try with --fix-missing?
+2026-11-04 15:04:05.730 | ++ functions-common:apt_get:1211            :   result=100
+2026-11-04 15:04:05.732 | ++ functions-common:apt_get:1214            :   time_stop apt-get
+2026-11-04 15:04:05.733 | ++ functions-common:time_stop:2420          :   local name
+2026-11-04 15:04:05.735 | ++ functions-common:time_stop:2421          :   local end_time
+2026-11-04 15:04:05.736 | ++ functions-common:time_stop:2422          :   local elapsed_time
+2026-11-04 15:04:05.737 | ++ functions-common:time_stop:2423          :   local total
+2026-11-04 15:04:05.738 | ++ functions-common:time_stop:2424          :   local start_time
+2026-11-04 15:04:05.740 | ++ functions-common:time_stop:2426          :   name=apt-get
+2026-11-04 15:04:05.741 | ++ functions-common:time_stop:2427          :   start_time=1793804550991
+2026-11-04 15:04:05.743 | ++ functions-common:time_stop:2429          :   [[ -z 1793804550991 ]]
+2026-11-04 15:04:05.744 | +++ functions-common:time_stop:2432          :   date +%s%3N
+2026-11-04 15:04:05.749 | ++ functions-common:time_stop:2432          :   end_time=1793804645747
+2026-11-04 15:04:05.751 | ++ functions-common:time_stop:2433          :   elapsed_time=94756
+2026-11-04 15:04:05.752 | ++ functions-common:time_stop:2434          :   total=6869
+2026-11-04 15:04:05.753 | ++ functions-common:time_stop:2436          :   _TIME_START[$name]=
+2026-11-04 15:04:05.754 | ++ functions-common:time_stop:2437          :   _TIME_TOTAL[$name]=101625
+2026-11-04 15:04:05.756 | ++ functions-common:apt_get:1215            :   return 100
+2026-11-04 15:04:05.757 | ++ functions-common:install_package:1440    :   RETRY_UPDATE=True
+2026-11-04 15:04:05.759 | ++ functions-common:install_package:1440    :   update_package_repo
+2026-11-04 15:04:05.760 | ++ functions-common:update_package_repo:1412 :   NO_UPDATE_REPOS=False
+2026-11-04 15:04:05.762 | ++ functions-common:update_package_repo:1413 :   REPOS_UPDATED=True
+2026-11-04 15:04:05.763 | ++ functions-common:update_package_repo:1414 :   RETRY_UPDATE=True
+2026-11-04 15:04:05.765 | ++ functions-common:update_package_repo:1416 :   [[ False = True ]]
+2026-11-04 15:04:05.766 | ++ functions-common:update_package_repo:1420 :   is_ubuntu
+2026-11-04 15:04:05.767 | ++ functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-04 15:04:05.769 | ++ functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-04 15:04:05.770 | ++ functions-common:update_package_repo:1421 :   apt_get_update
+2026-11-04 15:04:05.771 | ++ functions-common:apt_get_update:1166     :   [[ True == True ]]
+2026-11-04 15:04:05.772 | ++ functions-common:apt_get_update:1166     :   [[ True != True ]]
+2026-11-04 15:04:05.774 | ++ functions-common:apt_get_update:1171     :   [[ False = True ]]
+2026-11-04 15:04:05.775 | ++ functions-common:apt_get_update:1173     :   local sudo=sudo
+2026-11-04 15:04:05.777 | +++ functions-common:apt_get_update:1174     :   id -u
+2026-11-04 15:04:05.781 | ++ functions-common:apt_get_update:1174     :   [[ 1001 = 0 ]]
+2026-11-04 15:04:05.782 | ++ functions-common:apt_get_update:1177     :   time_start apt-get-update
+2026-11-04 15:04:05.783 | ++ functions-common:time_start:2406         :   local name=apt-get-update
+2026-11-04 15:04:05.785 | ++ functions-common:time_start:2407         :   local start_time=
+2026-11-04 15:04:05.787 | ++ functions-common:time_start:2408         :   [[ -n '' ]]
+2026-11-04 15:04:05.789 | +++ functions-common:time_start:2411         :   date +%s%3N
+2026-11-04 15:04:05.794 | ++ functions-common:time_start:2411         :   _TIME_START[$name]=1793804645792
+2026-11-04 15:04:05.796 | ++ functions-common:apt_get_update:1179     :   local 'proxies=http_proxy= https_proxy= no_proxy= '
+2026-11-04 15:04:05.797 | ++ functions-common:apt_get_update:1180     :   local 'update_cmd=sudo http_proxy= https_proxy= no_proxy=  apt-get update'
+2026-11-04 15:04:05.799 | ++ functions-common:apt_get_update:1181     :   timeout 300 sh -c 'while ! sudo http_proxy= https_proxy= no_proxy=  apt-get update; do sleep 30; done'
+2026-11-04 15:04:07.335 | Hit:1 http://mirrors.edge.kernel.org/ubuntu resolute InRelease
+2026-11-04 15:04:07.373 | Get:2 http://mirrors.edge.kernel.org/ubuntu resolute-updates InRelease [137 kB]
+2026-11-04 15:04:07.703 | Get:3 http://mirrors.edge.kernel.org/ubuntu resolute-security InRelease [137 kB]
+2026-11-04 15:04:08.013 | Get:4 http://mirrors.edge.kernel.org/ubuntu resolute-backports InRelease [137 kB]
+2026-11-04 15:04:08.073 | Fetched 411 kB in 2s (184 kB/s)
+2026-11-04 15:04:08.658 | Reading package lists...
+2026-11-04 15:04:08.672 | ++ functions-common:apt_get_update:1185     :   REPOS_UPDATED=True
+2026-11-04 15:04:08.673 | ++ functions-common:apt_get_update:1187     :   time_stop apt-get-update
+2026-11-04 15:04:08.674 | ++ functions-common:time_stop:2420          :   local name
+2026-11-04 15:04:08.676 | ++ functions-common:time_stop:2421          :   local end_time
+2026-11-04 15:04:08.677 | ++ functions-common:time_stop:2422          :   local elapsed_time
+2026-11-04 15:04:08.678 | ++ functions-common:time_stop:2423          :   local total
+2026-11-04 15:04:08.679 | ++ functions-common:time_stop:2424          :   local start_time
+2026-11-04 15:04:08.681 | ++ functions-common:time_stop:2426          :   name=apt-get-update
+2026-11-04 15:04:08.682 | ++ functions-common:time_stop:2427          :   start_time=1793804645792
+2026-11-04 15:04:08.683 | ++ functions-common:time_stop:2429          :   [[ -z 1793804645792 ]]
+2026-11-04 15:04:08.685 | +++ functions-common:time_stop:2432          :   date +%s%3N
+2026-11-04 15:04:08.689 | ++ functions-common:time_stop:2432          :   end_time=1793804648687
+2026-11-04 15:04:08.691 | ++ functions-common:time_stop:2433          :   elapsed_time=2895
+2026-11-04 15:04:08.692 | ++ functions-common:time_stop:2434          :   total=3938
+2026-11-04 15:04:08.693 | ++ functions-common:time_stop:2436          :   _TIME_START[$name]=
+2026-11-04 15:04:08.694 | ++ functions-common:time_stop:2437          :   _TIME_TOTAL[$name]=6833
+2026-11-04 15:04:08.696 | ++ functions-common:install_package:1440    :   real_install_package apache2 apache2-dev bc bsdmainutils curl g++ gawk gcc gettext git graphviz iputils-ping libffi-dev libjpeg-dev libpq-dev libssl-dev libsystemd-dev libxml2-dev libxslt1-dev libyaml-dev lsof openssh-server openssl pkg-config psmisc python3-dev python3-pip python3-systemd python3-venv tar tcpdump unzip uuid-runtime wget zlib1g-dev lvm2 qemu-utils thin-provisioning-tools lsscsi open-iscsi pcp libkrb5-dev libldap2-dev libsasl2-dev memcached python3-mysqldb sqlite3 conntrack curl ebtables genisoimage iptables iputils-arping kpartx libjs-jquery-tablesorter parted pm-utils python3-mysqldb socat sqlite3 sudo vlan cryptsetup dosfstools genisoimage gir1.2-libosinfo-1.0 netcat-openbsd open-iscsi qemu-utils sg3-utils sysfsutils acl dnsmasq-base dnsmasq-utils ebtables haproxy iptables iputils-arping iputils-ping postgresql-server-dev-all python3-mysqldb sqlite3 sudo vlan apache2
+2026-11-04 15:04:08.697 | ++ functions-common:real_install_package:1426 :   is_ubuntu
+2026-11-04 15:04:08.698 | ++ functions-common:is_ubuntu:546           :   [[ -z deb ]]
+2026-11-04 15:04:08.700 | ++ functions-common:is_ubuntu:549           :   '[' deb = deb ']'
+2026-11-04 15:04:08.701 | ++ functions-common:real_install_package:1427 :   apt_get install apache2 apache2-dev bc bsdmainutils curl g++ gawk gcc gettext git graphviz iputils-ping libffi-dev libjpeg-dev libpq-dev libssl-dev libsystemd-dev libxml2-dev libxslt1-dev libyaml-dev lsof openssh-server openssl pkg-config psmisc python3-dev python3-pip python3-systemd python3-venv tar tcpdump unzip uuid-runtime wget zlib1g-dev lvm2 qemu-utils thin-provisioning-tools lsscsi open-iscsi pcp libkrb5-dev libldap2-dev libsasl2-dev memcached python3-mysqldb sqlite3 conntrack curl ebtables genisoimage iptables iputils-arping kpartx libjs-jquery-tablesorter parted pm-utils python3-mysqldb socat sqlite3 sudo vlan cryptsetup dosfstools genisoimage gir1.2-libosinfo-1.0 netcat-openbsd open-iscsi qemu-utils sg3-utils sysfsutils acl dnsmasq-base dnsmasq-utils ebtables haproxy iptables iputils-arping iputils-ping postgresql-server-dev-all python3-mysqldb sqlite3 sudo vlan apache2
+2026-11-04 15:04:08.716 | ++ functions-common:apt_get:1207            :   sudo DEBIAN_FRONTEND=noninteractive http_proxy= https_proxy= no_proxy= apt-get --option Dpkg::Options::=--force-confold --assume-yes install apache2 apache2-dev bc bsdmainutils curl g++ gawk gcc gettext git graphviz iputils-ping libffi-dev libjpeg-dev libpq-dev libssl-dev libsystemd-dev libxml2-dev libxslt1-dev libyaml-dev lsof openssh-server openssl pkg-config psmisc python3-dev python3-pip python3-systemd python3-venv tar tcpdump unzip uuid-runtime wget zlib1g-dev lvm2 qemu-utils thin-provisioning-tools lsscsi open-iscsi pcp libkrb5-dev libldap2-dev libsasl2-dev memcached python3-mysqldb sqlite3 conntrack curl ebtables genisoimage iptables iputils-arping kpartx libjs-jquery-tablesorter parted pm-utils python3-mysqldb socat sqlite3 sudo vlan cryptsetup dosfstools genisoimage gir1.2-libosinfo-1.0 netcat-openbsd open-iscsi qemu-utils sg3-utils sysfsutils acl dnsmasq-base dnsmasq-utils ebtables haproxy iptables iputils-arping iputils-ping postgresql-server-dev-all python3-mysqldb sqlite3 sudo vlan apache2
+2026-11-04 15:04:08.742 | Reading package lists...
+2026-11-04 15:04:08.885 | Building dependency tree...
+2026-11-04 15:04:08.886 | Reading state information...
+2026-11-04 15:04:08.920 | curl is already the newest version (8.18.0-1ubuntu2.8).
+2026-11-04 15:04:08.920 | g++ is already the newest version (4:15.2.0-5ubuntu1).
+2026-11-04 15:04:08.920 | g++ set to manually installed.
+2026-11-04 15:04:08.920 | gcc is already the newest version (4:15.2.0-5ubuntu1).
+2026-11-04 15:04:08.920 | gcc set to manually installed.
+2026-11-04 15:04:08.920 | git is already the newest version (1:2.53.0-1ubuntu1.1).
+2026-11-04 15:04:08.920 | iputils-ping is already the newest version (3:20250605-1ubuntu1).
+2026-11-04 15:04:08.920 | openssh-server is already the newest version (1:10.2p1-2ubuntu3.8).
+2026-11-04 15:04:08.920 | openssl is already the newest version (3.5.5-1ubuntu3.7).
+2026-11-04 15:04:08.920 | openssl set to manually installed.
+2026-11-04 15:04:08.920 | python3-dev is already the newest version (3.14.3-0ubuntu2).
+2026-11-04 15:04:08.920 | python3-pip is already the newest version (25.1.1+dfsg-1ubuntu2).
+2026-11-04 15:04:08.920 | python3-venv is already the newest version (3.14.3-0ubuntu2).
+2026-11-04 15:04:08.920 | tar is already the newest version (1.35+dfsg-4ubuntu0.4).
+2026-11-04 15:04:08.920 | tcpdump is already the newest version (4.99.6-1).
+2026-11-04 15:04:08.920 | uuid-runtime is already the newest version (2.41.3-3ubuntu2.2).
+2026-11-04 15:04:08.920 | wget is already the newest version (1.25.0-2ubuntu4.4).
+2026-11-04 15:04:08.920 | zlib1g-dev is already the newest version (1:1.3.dfsg+really1.3.1-1ubuntu3.2).
+2026-11-04 15:04:08.920 | zlib1g-dev set to manually installed.
+2026-11-04 15:04:08.920 | qemu-utils is already the newest version (1:10.2.1+ds-1ubuntu3.3).
+2026-11-04 15:04:08.920 | qemu-utils set to manually installed.
+2026-11-04 15:04:08.920 | open-iscsi is already the newest version (2.1.11-3ubuntu3.1).
+2026-11-04 15:04:08.920 | genisoimage is already the newest version (9:1.1.11-5).
+2026-11-04 15:04:08.920 | genisoimage set to manually installed.
+2026-11-04 15:04:08.920 | iptables is already the newest version (1.8.11-2ubuntu3).
+2026-11-04 15:04:08.920 | iptables set to manually installed.
+2026-11-04 15:04:08.920 | kpartx is already the newest version (0.14.3-2ubuntu1).
+2026-11-04 15:04:08.920 | kpartx set to manually installed.
+2026-11-04 15:04:08.920 | parted is already the newest version (3.6-6).
+2026-11-04 15:04:08.920 | sudo is already the newest version (1.9.17p2-1ubuntu3.2).
+2026-11-04 15:04:08.920 | sg3-utils is already the newest version (1.48-3ubuntu3.2).
+2026-11-04 15:04:08.920 | sg3-utils set to manually installed.
+2026-11-04 15:04:08.920 | acl is already the newest version (2.3.2-2).
+2026-11-04 15:04:08.967 | Solving dependencies...
+2026-11-04 15:04:09.052 | The following additional packages will be installed:
+2026-11-04 15:04:09.052 |   apache2-bin apache2-data apache2-utils autoconf automake autopoint
+2026-11-04 15:04:09.052 |   autotools-dev bsdextrautils clang-21 comerr-dev cryptsetup-bin
+2026-11-04 15:04:09.052 |   dconf-gsettings-backend dconf-service debhelper debugedit dh-autoreconf
+2026-11-04 15:04:09.052 |   dh-strip-nondeterminism dmeventd dwz fontconfig fontconfig-config
+2026-11-04 15:04:09.052 |   fonts-dejavu-core fonts-dejavu-mono gir1.2-freedesktop glib-networking
+2026-11-04 15:04:09.052 |   glib-networking-common glib-networking-services groff-base
+2026-11-04 15:04:09.052 |   gsettings-desktop-schemas intltool-debian krb5-multidev libaom3 libapr1-dev
+2026-11-04 15:04:09.052 |   libapr1t64 libaprutil1-dbd-sqlite3 libaprutil1-dev libaprutil1-ldap
+2026-11-04 15:04:09.052 |   libaprutil1t64 libarchive-zip-perl libcairo-gobject2 libcairo2 libcdt6
+2026-11-04 15:04:09.052 |   libcgraph8 libclang-common-21-dev libclang-cpp21 libclang1-21 libdatrie1
+2026-11-04 15:04:09.052 |   libdconf1 libdebhelper-perl libdeflate0 libdevmapper-event1.02.1
+2026-11-04 15:04:09.052 |   libdrm-amdgpu1 libdrm-common libdrm2 libdw1t64
+2026-11-04 15:04:09.052 |   libfile-stripnondeterminism-perl libfontconfig1 libfribidi0 libgc1 libgd3
+2026-11-04 15:04:09.052 |   libgraphite2-3 libgssrpc4t64 libgvc7 libgvplugin-gd8 libgvplugin-pango8
+2026-11-04 15:04:09.052 |   libgvpr2 libharfbuzz0b libheif-plugin-aomdec libheif1 libimagequant0
+2026-11-04 15:04:09.052 |   libinih1 libio-pty-perl libipc-run-perl libjbig0 libjpeg-turbo8
+2026-11-04 15:04:09.052 |   libjpeg-turbo8-dev libjpeg8 libjpeg8-dev libjs-jquery libjs-jquery-metadata
+2026-11-04 15:04:09.052 |   libjson-perl libkadm5clnt-mit12 libkadm5srv-mit12 libkdb5-10t64 libldap-dev
+2026-11-04 15:04:09.052 |   liblerc4 libllvm21 liblsof0 libltdl7 liblua5.4-0 liblvm2cmd2.03 liblzma-dev
+2026-11-04 15:04:09.052 |   libmysqlclient24 libncurses-dev libncurses6 libnftables1 libobjc-15-dev
+2026-11-04 15:04:09.052 |   libobjc4 libosinfo-1.0-0 libosinfo-l10n libpango-1.0-0 libpangocairo-1.0-0
+2026-11-04 15:04:09.052 |   libpangoft2-1.0-0 libpathplan4 libpcp-archive1 libpcp-gui2 libpcp-import1
+2026-11-04 15:04:09.052 |   libpcp-mmv1 libpcp-pmda3 libpcp-trace2 libpcp-web1 libpcp4 libpcre2-16-0
+2026-11-04 15:04:09.052 |   libpcre2-32-0 libpcre2-8-0 libpcre2-dev libpcre2-posix3 libpfm4 libpipeline1
+2026-11-04 15:04:09.053 |   libpixman-1-0 libpkgconf7 libpq5 libproxy1v5 libsctp-dev libsctp1
+2026-11-04 15:04:09.053 |   libsharpyuv0 libsoup-3.0-0 libsoup-3.0-common libsysfs2 libthai-data
+2026-11-04 15:04:09.053 |   libthai0 libtiff6 libtool libuchardet0 libwebp7 libx11-6 libx11-data libxau6
+2026-11-04 15:04:09.053 |   libxcb-render0 libxcb-shm0 libxcb1 libxdmcp6 libxdot4 libxext6 libxpm4
+2026-11-04 15:04:09.053 |   libxrender1 libxslt1.1 libyaml-0-2 llvm-21 llvm-21-dev llvm-21-linker-tools
+2026-11-04 15:04:09.053 |   llvm-21-runtime llvm-21-tools m4 man-db mysql-common ncal osinfo-db pcp-conf
+2026-11-04 15:04:09.053 |   pkgconf pkgconf-bin po-debconf postgresql-client-18 postgresql-client-common
+2026-11-04 15:04:09.053 |   postgresql-common postgresql-common-dev postgresql-server-dev-18
+2026-11-04 15:04:09.053 |   powermgmt-base python3-pcp python3-pygments python3-yaml ssl-cert
+2026-11-04 15:04:09.053 |   user-session-migration uuid-dev zstd
+2026-11-04 15:04:09.054 | Suggested packages:
+2026-11-04 15:04:09.054 |   apache2-doc apache2-suexec-pristine | apache2-suexec-custom ufw www-browser
+2026-11-04 15:04:09.054 |   autoconf-archive gnu-standards autoconf-doc calendar whois vacation
+2026-11-04 15:04:09.054 |   mailutils clang-21-doc wasi-libc doc-base nftables keyutils
+2026-11-04 15:04:09.054 |   liblocale-gettext-perl dh-make gawk-doc gettext-doc libasprintf-dev
+2026-11-04 15:04:09.054 |   libgettextpo-dev gnulib-l10n gsfonts graphviz-doc groff vim-haproxy
+2026-11-04 15:04:09.054 |   haproxy-doc krb5-doc libgd-tools krb5-user libheif-plugin-libde265
+2026-11-04 15:04:09.054 |   libheif-plugin-x265 libheif-plugin-ffmpegdec libheif-plugin-jpegdec
+2026-11-04 15:04:09.054 |   libheif-plugin-jpegenc libheif-plugin-j2kdec libheif-plugin-j2kenc
+2026-11-04 15:04:09.054 |   libheif-plugin-kvazaar libheif-plugin-rav1e libheif-plugin-svtenc
+2026-11-04 15:04:09.054 |   liblzma-doc ncurses-doc postgresql-doc-18 libpq-oauth lksctp-tools
+2026-11-04 15:04:09.054 |   libssl-doc libtool-doc gfortran | fortran95-compiler libyaml-doc llvm-21-doc
+2026-11-04 15:04:09.054 |   m4-doc apparmor less libanyevent-perl libcache-memcached-perl libmemcached
+2026-11-04 15:04:09.054 |   liburi-perl libterm-readkey-perl libyaml-perl pcp-gui libpcp-import-perl
+2026-11-04 15:04:09.054 |   redis-server bpftrace cpufrequtils wireless-tools radeontool
+2026-11-04 15:04:09.054 |   libmail-box-perl postgresql-18 default-mysql-server | virtual-mysql-server
+2026-11-04 15:04:09.054 |   python-pygments-doc ttf-bitstream-vera sqlite3-doc zip
+2026-11-04 15:04:09.054 | Recommended packages:
+2026-11-04 15:04:09.054 |   clang-tools-21 dracut | cryptsetup-initramfs dns-root-data fonts-liberation
+2026-11-04 15:04:09.054 |   libclang-rt-21-dev libarchive-cpio-perl libheif-plugin-aomenc
+2026-11-04 15:04:09.054 |   javascript-common libjson-xs-perl libltdl-dev libpcp-pmda-perl vbetool
+2026-11-04 15:04:09.054 |   hdparm ethtool kbd | console-tools libmail-sendmail-perl logrotate
+2026-11-04 15:04:09.082 | The following NEW packages will be installed:
+2026-11-04 15:04:09.082 |   apache2 apache2-bin apache2-data apache2-dev apache2-utils autoconf automake
+2026-11-04 15:04:09.082 |   autopoint autotools-dev bc bsdextrautils bsdmainutils clang-21 comerr-dev
+2026-11-04 15:04:09.082 |   conntrack cryptsetup cryptsetup-bin dconf-gsettings-backend dconf-service
+2026-11-04 15:04:09.082 |   debhelper debugedit dh-autoreconf dh-strip-nondeterminism dmeventd
+2026-11-04 15:04:09.082 |   dnsmasq-base dnsmasq-utils dosfstools dwz ebtables fontconfig
+2026-11-04 15:04:09.082 |   fontconfig-config fonts-dejavu-core fonts-dejavu-mono gawk gettext
+2026-11-04 15:04:09.082 |   gir1.2-freedesktop gir1.2-libosinfo-1.0 glib-networking
+2026-11-04 15:04:09.082 |   glib-networking-common glib-networking-services graphviz groff-base
+2026-11-04 15:04:09.082 |   gsettings-desktop-schemas haproxy intltool-debian iputils-arping
+2026-11-04 15:04:09.082 |   krb5-multidev libaom3 libapr1-dev libapr1t64 libaprutil1-dbd-sqlite3
+2026-11-04 15:04:09.082 |   libaprutil1-dev libaprutil1-ldap libaprutil1t64 libarchive-zip-perl
+2026-11-04 15:04:09.082 |   libcairo-gobject2 libcairo2 libcdt6 libcgraph8 libclang-common-21-dev
+2026-11-04 15:04:09.082 |   libclang-cpp21 libclang1-21 libdatrie1 libdconf1 libdebhelper-perl
+2026-11-04 15:04:09.082 |   libdeflate0 libdevmapper-event1.02.1 libdrm-amdgpu1 libdrm-common libdrm2
+2026-11-04 15:04:09.082 |   libdw1t64 libffi-dev libfile-stripnondeterminism-perl libfontconfig1
+2026-11-04 15:04:09.082 |   libfribidi0 libgc1 libgd3 libgraphite2-3 libgssrpc4t64 libgvc7
+2026-11-04 15:04:09.082 |   libgvplugin-gd8 libgvplugin-pango8 libgvpr2 libharfbuzz0b
+2026-11-04 15:04:09.082 |   libheif-plugin-aomdec libheif1 libimagequant0 libinih1 libio-pty-perl
+2026-11-04 15:04:09.082 |   libipc-run-perl libjbig0 libjpeg-dev libjpeg-turbo8 libjpeg-turbo8-dev
+2026-11-04 15:04:09.082 |   libjpeg8 libjpeg8-dev libjs-jquery libjs-jquery-metadata
+2026-11-04 15:04:09.082 |   libjs-jquery-tablesorter libjson-perl libkadm5clnt-mit12 libkadm5srv-mit12
+2026-11-04 15:04:09.082 |   libkdb5-10t64 libkrb5-dev libldap-dev libldap2-dev liblerc4 libllvm21
+2026-11-04 15:04:09.082 |   liblsof0 libltdl7 liblua5.4-0 liblvm2cmd2.03 liblzma-dev libmysqlclient24
+2026-11-04 15:04:09.082 |   libncurses-dev libncurses6 libnftables1 libobjc-15-dev libobjc4
+2026-11-04 15:04:09.082 |   libosinfo-1.0-0 libosinfo-l10n libpango-1.0-0 libpangocairo-1.0-0
+2026-11-04 15:04:09.082 |   libpangoft2-1.0-0 libpathplan4 libpcp-archive1 libpcp-gui2 libpcp-import1
+2026-11-04 15:04:09.082 |   libpcp-mmv1 libpcp-pmda3 libpcp-trace2 libpcp-web1 libpcp4 libpcre2-16-0
+2026-11-04 15:04:09.082 |   libpcre2-32-0 libpcre2-dev libpcre2-posix3 libpfm4 libpipeline1
+2026-11-04 15:04:09.082 |   libpixman-1-0 libpkgconf7 libpq-dev libpq5 libproxy1v5 libsasl2-dev
+2026-11-04 15:04:09.082 |   libsctp-dev libsctp1 libsharpyuv0 libsoup-3.0-0 libsoup-3.0-common
+2026-11-04 15:04:09.082 |   libssl-dev libsysfs2 libsystemd-dev libthai-data libthai0 libtiff6 libtool
+2026-11-04 15:04:09.083 |   libuchardet0 libwebp7 libx11-6 libx11-data libxau6 libxcb-render0
+2026-11-04 15:04:09.083 |   libxcb-shm0 libxcb1 libxdmcp6 libxdot4 libxext6 libxml2-dev libxpm4
+2026-11-04 15:04:09.083 |   libxrender1 libxslt1-dev libxslt1.1 libyaml-0-2 libyaml-dev llvm-21
+2026-11-04 15:04:09.083 |   llvm-21-dev llvm-21-linker-tools llvm-21-runtime llvm-21-tools lsof lsscsi
+2026-11-04 15:04:09.083 |   lvm2 m4 man-db memcached mysql-common ncal netcat-openbsd osinfo-db pcp
+2026-11-04 15:04:09.083 |   pcp-conf pkg-config pkgconf pkgconf-bin pm-utils po-debconf
+2026-11-04 15:04:09.083 |   postgresql-client-18 postgresql-client-common postgresql-common
+2026-11-04 15:04:09.083 |   postgresql-common-dev postgresql-server-dev-18 postgresql-server-dev-all
+2026-11-04 15:04:09.083 |   powermgmt-base psmisc python3-mysqldb python3-pcp python3-pygments
+2026-11-04 15:04:09.083 |   python3-systemd python3-yaml socat sqlite3 ssl-cert sysfsutils
+2026-11-04 15:04:09.083 |   thin-provisioning-tools unzip user-session-migration uuid-dev vlan zstd
+2026-11-04 15:04:09.084 | The following packages will be upgraded:
+2026-11-04 15:04:09.084 |   libpcre2-8-0
+2026-11-04 15:04:09.448 | 1 upgraded, 220 newly installed, 0 to remove and 3 not upgraded.
+2026-11-04 15:04:09.448 | Need to get 4,414 kB/180 MB of archives.
+2026-11-04 15:04:09.448 | After this operation, 939 MB of additional disk space will be used.
+2026-11-04 15:04:09.448 | Err:1 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-8-0 amd64 10.46-1ubuntu0.1
+2026-11-04 15:04:09.448 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.489 | Err:2 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-16-0 amd64 10.46-1ubuntu0.1
+2026-11-04 15:04:09.489 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.489 | Err:3 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-32-0 amd64 10.46-1ubuntu0.1
+2026-11-04 15:04:09.489 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.489 | Err:4 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-posix3 amd64 10.46-1ubuntu0.1
+2026-11-04 15:04:09.489 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.525 | Err:5 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libpcre2-dev amd64 10.46-1ubuntu0.1
+2026-11-04 15:04:09.525 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.525 | Err:6 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 haproxy amd64 3.2.25-0ubuntu0.26.04.2
+2026-11-04 15:04:09.525 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.525 | Err:7 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libsoup-3.0-common all 3.6.6-1ubuntu0.2
+2026-11-04 15:04:09.525 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.525 | Err:8 http://mirrors.edge.kernel.org/ubuntu resolute-security/main amd64 libsoup-3.0-0 amd64 3.6.6-1ubuntu0.2
+2026-11-04 15:04:09.525 |   404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-8-0_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-16-0_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-32-0_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-posix3_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/p/pcre2/libpcre2-dev_10.46-1ubuntu0.1_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/h/haproxy/haproxy_3.2.25-0ubuntu0.26.04.2_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/libs/libsoup3/libsoup-3.0-common_3.6.6-1ubuntu0.2_all.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Failed to fetch http://mirrors.edge.kernel.org/ubuntu/pool/main/libs/libsoup3/libsoup-3.0-0_3.6.6-1ubuntu0.2_amd64.deb  404  Not Found [IP: 142.0.200.124 80]
+2026-11-04 15:04:09.528 | E: Unable to fetch some archives, maybe run apt update or try with --fix-missing?
+2026-11-04 15:04:09.531 | + functions-common:apt_get:1               :   exit_trap
+2026-11-04 15:04:09.532 | + ./stack.sh:exit_trap:525                 :   local r=100
+2026-11-04 15:04:09.534 | ++ ./stack.sh:exit_trap:526                 :   jobs -p
+2026-11-04 15:04:09.535 | + ./stack.sh:exit_trap:526                 :   jobs=
+2026-11-04 15:04:09.537 | + ./stack.sh:exit_trap:529                 :   [[ -n '' ]]
+2026-11-04 15:04:09.538 | + ./stack.sh:exit_trap:535                 :   '[' -f '' ']'
+2026-11-04 15:04:09.539 | + ./stack.sh:exit_trap:540                 :   kill_spinner
+2026-11-04 15:04:09.540 | + ./stack.sh:kill_spinner:435              :   '[' '!' -z '' ']'
+2026-11-04 15:04:09.541 | + ./stack.sh:exit_trap:542                 :   [[ 100 -ne 0 ]]
+2026-11-04 15:04:09.543 | + ./stack.sh:exit_trap:543                 :   echo 'Error on exit'
+2026-11-04 15:04:09.543 | Error on exit
+2026-11-04 15:04:09.544 | + ./stack.sh:exit_trap:545                 :   type -p generate-subunit
+2026-11-04 15:04:09.545 | + ./stack.sh:exit_trap:548                 :   [[ -z /opt/stack/logs ]]
+2026-11-04 15:04:09.547 | + ./stack.sh:exit_trap:551                 :   /usr/bin/python3.14 /opt/stack/devstack/tools/worlddump.py -d /opt/stack/logs
+2026-11-04 15:04:09.766 | + ./stack.sh:exit_trap:560                 :   exit 100
