@@ -1,0 +1,170 @@
+all:
+  children:
+    tempest:
+      hosts:
+        controller: null
+  hosts:
+    controller:
+      ansible_connection: ssh
+      ansible_host: 192.168.1.115
+      ansible_port: 22
+      ansible_python_interpreter: auto
+      ansible_user: zuul
+      juju_snap_channel: 2.9/stable
+      nodepool:
+        az: nova
+        cloud: kolla-admin
+        external_id: ba4cc64a-a37b-41dc-beda-0039758691c4
+        host_id: 93ea75c2bafffe7fd7921bde6f304bb079518677c9e8bd1013a73e22
+        interface_ip: 192.168.1.115
+        label: dsvm-noble-MANILA-aio
+        private_ipv4: 192.168.1.115
+        private_ipv6: null
+        provider: cinderci
+        public_ipv4: 192.168.1.115
+        public_ipv6: ''
+        region: cinderci
+        slot: null
+      tox_config_file: src/tox.ini
+      tox_environment:
+        NOSE_HTML_OUT_FILE: nose_results.html
+        NOSE_WITH_HTML_OUTPUT: 1
+        NOSE_WITH_XUNIT: 1
+        OS_PURESTORAGE_API_TOKEN: REDACTED
+        OS_PURESTORAGE_SAN_IP: 10.241.127.20
+      tox_envlist: func-target
+      tox_extra_args: -- noble-caracal
+      zuul_use_fetch_output: true
+  vars:
+    juju_snap_channel: 2.9/stable
+    tox_config_file: src/tox.ini
+    tox_environment:
+      NOSE_HTML_OUT_FILE: nose_results.html
+      NOSE_WITH_HTML_OUTPUT: 1
+      NOSE_WITH_XUNIT: 1
+      OS_PURESTORAGE_API_TOKEN: REDACTED
+      OS_PURESTORAGE_SAN_IP: 10.241.127.20
+    tox_envlist: func-target
+    tox_extra_args: -- noble-caracal
+    zuul:
+      _inheritance_path:
+      - '<Job base branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#2>'
+      - '<Job unittests branches: None source: zuul/zuul-jobs/zuul.d/general-jobs.yaml@master#9>'
+      - '<Job tox branches: None source: zuul/zuul-jobs/zuul.d/python-jobs.yaml@master#1>'
+      - '<Job configure-juju branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#798>'
+      - '<Job func-target-caracal branches: None source: thirdparty-ci-config/zuul.d/jobs.yaml@master#810>'
+      - '<Job func-target-caracal branches: None source: thirdparty-ci-config/zuul.d/project.yaml@master#168>'
+      ansible_version: '8'
+      attempts: 1
+      branch: master
+      build: 8278cb2740c74d85b8049dc3ca3b3ecb
+      buildset: 40fb23df7b9e4928b7ca0e5004c3b5c3
+      change: '1014558'
+      change_message: 'Cleanup master CI
+
+
+        Bring the build and test tooling in line with the other reactive
+
+        charms: build with charm 3.x/stable without the Rust toolchain, pin
+
+        dnspython below 2.9 so the wheelhouse no longer pulls in rustup, move
+
+        to pip-compiled py3.12 requirements with setuptools pinned so stestr
+
+        finds pkg_resources, use zaza''s juju36 constraints and point the test
+
+        bundle at the charmcraft 3 artifact name. Without this both charmbuild
+
+        and openstack-tox-py312 fail on master.
+
+
+        Assisted-By: Claude Code claude-fable-5-1
+
+        Change-Id: Ib75b822de11dfac2f4a362187dc5f12a65255232
+
+        Signed-off-by: Simon Dodsley <simon@purestorage.com>
+
+        '
+      change_url: https://review.opendev.org/c/openstack/charm-cinder-purestorage/+/1014558
+      child_jobs: []
+      commit_id: 26a8d1c7cb415f4b6317689680f2bb320fb37447
+      event_id: 9b38fcb4e2314cfba7a621f51f0bf43a
+      executor:
+        hostname: managesf.cinderci-sf.dev.purestorage.com
+        inventory_file: /var/lib/zuul/builds/8278cb2740c74d85b8049dc3ca3b3ecb/ansible/inventory.yaml
+        log_root: /var/lib/zuul/builds/8278cb2740c74d85b8049dc3ca3b3ecb/work/logs
+        result_data_file: /var/lib/zuul/builds/8278cb2740c74d85b8049dc3ca3b3ecb/work/results.json
+        src_root: /var/lib/zuul/builds/8278cb2740c74d85b8049dc3ca3b3ecb/work/src
+        work_root: /var/lib/zuul/builds/8278cb2740c74d85b8049dc3ca3b3ecb/work
+      items:
+      - branch: master
+        change: '1014558'
+        change_url: https://review.opendev.org/c/openstack/charm-cinder-purestorage/+/1014558
+        patchset: '1'
+        project:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/charm-cinder-purestorage
+          name: openstack/charm-cinder-purestorage
+          short_name: charm-cinder-purestorage
+          src_dir: src/opendev.org/openstack/charm-cinder-purestorage
+      job: func-target-caracal
+      jobtags: []
+      max_attempts: 4
+      message: Q2xlYW51cCBtYXN0ZXIgQ0kKCkJyaW5nIHRoZSBidWlsZCBhbmQgdGVzdCB0b29saW5nIGluIGxpbmUgd2l0aCB0aGUgb3RoZXIgcmVhY3RpdmUKY2hhcm1zOiBidWlsZCB3aXRoIGNoYXJtIDMueC9zdGFibGUgd2l0aG91dCB0aGUgUnVzdCB0b29sY2hhaW4sIHBpbgpkbnNweXRob24gYmVsb3cgMi45IHNvIHRoZSB3aGVlbGhvdXNlIG5vIGxvbmdlciBwdWxscyBpbiBydXN0dXAsIG1vdmUKdG8gcGlwLWNvbXBpbGVkIHB5My4xMiByZXF1aXJlbWVudHMgd2l0aCBzZXR1cHRvb2xzIHBpbm5lZCBzbyBzdGVzdHIKZmluZHMgcGtnX3Jlc291cmNlcywgdXNlIHphemEncyBqdWp1MzYgY29uc3RyYWludHMgYW5kIHBvaW50IHRoZSB0ZXN0CmJ1bmRsZSBhdCB0aGUgY2hhcm1jcmFmdCAzIGFydGlmYWN0IG5hbWUuIFdpdGhvdXQgdGhpcyBib3RoIGNoYXJtYnVpbGQKYW5kIG9wZW5zdGFjay10b3gtcHkzMTIgZmFpbCBvbiBtYXN0ZXIuCgpBc3Npc3RlZC1CeTogQ2xhdWRlIENvZGUgY2xhdWRlLWZhYmxlLTUtMQpDaGFuZ2UtSWQ6IEliNzViODIyZGUxMWRmYWMyZjRhMzYyMTg3ZGM1ZjEyYTY1MjU1MjMyClNpZ25lZC1vZmYtYnk6IFNpbW9uIERvZHNsZXkgPHNpbW9uQHB1cmVzdG9yYWdlLmNvbT4K
+      patchset: '1'
+      pipeline: charm-check
+      playbook_context:
+        playbook_projects:
+          trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config:
+            canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            checkout: master
+            commit: 07e7c61b37971e30664b86e1c089aabe5b4d1c3b
+          trusted/project_1/opendev.org/zuul/zuul-jobs:
+            canonical_name: opendev.org/zuul/zuul-jobs
+            checkout: master
+            commit: e32aba41d8c56949186b63be5ae6dea3cc72b035
+          untrusted/project_0/opendev.org/zuul/zuul-jobs:
+            canonical_name: opendev.org/zuul/zuul-jobs
+            checkout: master
+            commit: e32aba41d8c56949186b63be5ae6dea3cc72b035
+          untrusted/project_1/cinderci-sf.dev.purestorage.com/thirdparty-ci-config:
+            canonical_name: cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            checkout: master
+            commit: 07e7c61b37971e30664b86e1c089aabe5b4d1c3b
+        playbooks:
+        - path: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config/playbooks/juju/run.yaml
+          roles:
+          - checkout: master
+            checkout_description: playbook branch
+            link_name: ansible/playbook_0/role_0/thirdparty-ci-config
+            link_target: trusted/project_0/cinderci-sf.dev.purestorage.com/thirdparty-ci-config
+            role_path: ansible/playbook_0/role_0/thirdparty-ci-config/roles
+          - checkout: master
+            checkout_description: zuul branch
+            link_name: ansible/playbook_0/role_1/zuul-jobs
+            link_target: trusted/project_1/opendev.org/zuul/zuul-jobs
+            role_path: ansible/playbook_0/role_1/zuul-jobs/roles
+      post_review: false
+      project:
+        canonical_hostname: opendev.org
+        canonical_name: opendev.org/openstack/charm-cinder-purestorage
+        name: openstack/charm-cinder-purestorage
+        short_name: charm-cinder-purestorage
+        src_dir: src/opendev.org/openstack/charm-cinder-purestorage
+      projects:
+        opendev.org/openstack/charm-cinder-purestorage:
+          canonical_hostname: opendev.org
+          canonical_name: opendev.org/openstack/charm-cinder-purestorage
+          checkout: master
+          checkout_description: zuul branch
+          commit: 26a8d1c7cb415f4b6317689680f2bb320fb37447
+          name: openstack/charm-cinder-purestorage
+          required: false
+          short_name: charm-cinder-purestorage
+          src_dir: src/opendev.org/openstack/charm-cinder-purestorage
+      ref: refs/changes/58/1014558/1
+      resources: {}
+      tenant: third-party-ci
+      timeout: 10800
+      voting: true
+    zuul_use_fetch_output: true
